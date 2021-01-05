@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Carousel from 'react-material-ui-carousel'
@@ -8,18 +8,12 @@ import './Home.css';
 function Home() {
     var items = [
         {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!",
             img : "Images/Card1.jpg"
         },
         {
-            name: "Random Name #2",
-            description: "Hello World!",
             img : "Images/exam.jpg"
         },
         {
-            name: "Random Name #3",
-            description: "Hello World!",
             img : "Images/exam.jpg"
         }
     ];

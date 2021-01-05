@@ -1,0 +1,40 @@
+.signUp{
+    background-color: #e8ffff;
+}
+
+
+.login{
+    display: flex;
+    flex-direction: column;
+
+    width:300px;
+    margin: 20px auto;
+    background-color: white;
+    border:  2px solid  black;
+
+}
+.login__header{
+    text-align: center;
+    margin: 20px 10px;
+    font-size: large;
+    border-bottom: 1px solid black;
+}
+
+.login__body{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.login__body > h2{
+    margin-bottom: 10px;
+}
+.name{
+    display: flex;
+    flex-direction: row;
+}
+.input__field {
+    flex: 1;
+    font-size: 16px;
+    width:280px;
+    padding:5px 10px;
+}
