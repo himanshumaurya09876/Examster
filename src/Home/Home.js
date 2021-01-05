@@ -28,20 +28,22 @@ function Home() {
         <div className="home">
             <Header />
             <div className="slider">
-                    <Carousel>
+                    <Carousel  navButtonsAlwaysVisible="true" animation="slide">
                         {
                             items.map( (item, i) => {
-                            return (  
-                                <Paper>
-                                    <div className="slides">
-                                        <img src={item.img} className="slider__img" />
-                                    </div>
-                                </Paper>
-                            )
-                        })
+                                return (  
+                                    <Paper>
+                                        <div className="slides">
+                                            <img src={item.img} className="slider__img" />
+                                        </div>
+                                    </Paper>
+                                )
+                            })
                         }
                     </Carousel>
-                </div>
+            </div>
+
+
             <div className='home__reviews'>
                 <div className="review__item">
                     <div className="review__img">
