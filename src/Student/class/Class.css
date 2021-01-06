@@ -1,0 +1,21 @@
+.list__block{
+    background-color: cadetblue;
+    width: 70%;
+    margin: 20px auto;
+    padding: 5px;
+}
+.list__item{
+    margin: 15px ;
+    padding: 10px;
+    background-color: cornsilk;
+    font-size: 26px;
+    font-weight: 500;
+    display: flex;
+}
+.list__itemContent{
+    flex: 4;
+}
+.list__itemButton{
+    flex: 1;
+    text-align: right;
+}

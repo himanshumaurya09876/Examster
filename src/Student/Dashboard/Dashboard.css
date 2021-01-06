@@ -1,0 +1,9 @@
+img{
+    object-fit: contain;   
+    width: 100%;
+}
+
+.dashboard{
+    width: 70%;
+    margin: 10px auto;
+}

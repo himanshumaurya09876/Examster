@@ -21,3 +21,6 @@
 .login__body > h2{
     margin-bottom: 10px;
 }
+.login__input{
+    margin: 5px 20px;
+}

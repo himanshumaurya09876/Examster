@@ -45,9 +45,10 @@ function Login() {
             return {
                   ...prev ,
                   email : "",
-                  password:""
+                  password:"",
+                  userType:"",
             };
-        })
+        });
         console.log(user);
 
     }
@@ -56,29 +57,31 @@ function Login() {
         <Header/>
         <div className="login">
             <div className="login__header">
-                <i class="fas fa-laptop-code"></i>
+                <i clasName="fas fa-laptop-code"></i>
                 <h1>Exam Master</h1>
             </div>
             <div className="login__body">
                 <h2>Login</h2>
-                <FormControl required className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-required-label">User Type</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-required-label"
-                        id="demo-simple-select-required"
-                        value={user.userType}
-                        onChange={handleChange}
-                        name="userType"
-                        className={classes.selectEmpty}
-                    >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem  value={"Teacher"}>Teacher</MenuItem>
-                    <MenuItem value={"Student"}>Student</MenuItem>
-                    </Select>
-                </FormControl>
-
+                <div className="login__input">
+                    <FormControl required className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-required-label">User Type</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-required-label"
+                            id="demo-simple-select-required"
+                            value={user.userType}
+                            onChange={handleChange}
+                            name="userType"
+                            className={classes.selectEmpty}
+                        >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem  value={"Teacher"}>Teacher</MenuItem>
+                        <MenuItem value={"Student"}>Student</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+                <div className="login__input">
                     <Input 
                         placeholder="Email"
                         type="text"
@@ -87,6 +90,8 @@ function Login() {
                         value={user.email}
                         onChange={handleChange}
                     />
+                </div>
+                <div className="login__input">
                     <Input 
                         placeholder="Password"
                         type="password"    
@@ -95,10 +100,14 @@ function Login() {
                         value={user.password}                        
                         onChange={handleChange}
                     />
+                </div>
+                <div className="login__input">
                     <Button
+                        style={{backgroundColor : "lightBlue"}}
                         className={classes.selectEmpty}
                         onClick={onSubmit}
                      >Submit</Button>
+                </div>
             </div>
         </div>
         <Footer />

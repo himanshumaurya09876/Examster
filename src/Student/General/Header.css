@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+}
+.home__header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #41aea9;
+    margin: 20px 15%;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;  
+
+}
+.home__headerLeft{
+    flex: 3; 
+}
+.home__headerRight{
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.home__nav{
+    flex: 1;
+    width: 60px;
+}

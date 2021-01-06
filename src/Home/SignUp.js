@@ -1,6 +1,6 @@
 import { FormControl, Input , FormHelperText, InputLabel, MenuItem, Select, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react'
+import React , {useState} from 'react'
 import Header from './Header';
 import Footer from './Footer';
 import './SignUp.css';
@@ -17,25 +17,53 @@ const useStyles = makeStyles((theme) => ({
             
     },
   }));
-  
+const defaultUser= {
+    firstName :"",
+    lastName:"",
+    email : null ,
+    password : null,
+    userType : null,
+    collegeID:"",
+};
 
 function SignUp() {
+    const [user, setUser] = useState({...defaultUser})
 
 
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
   
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-
-    
+    function handleChange(event){
+        const {name , value} = event.target;
+        setUser( ( prev)=>{
+            return {
+                  ...prev ,
+                  [name] : value
+            };
+        })
+    }
+    function onSubmit(event){
+        event.preventDefault();
+        console.log(user);
+        setUser( ( prev)=>{
+            return {
+                  ...prev ,
+                  firstName :"",
+                  lastName:"",
+                  email : "" ,
+                  password : "",
+                  userType : "",
+                  collegeID:"",
+            };
+        });
+        console.log(user);
+    }
+    console.log(user);
     return (
         <div className="signUp">
         <Header/>
         <div className="login">
             <div className="login__header">
-                <i class="fas fa-laptop-code"></i>
+                <i className="fas fa-laptop-code"></i>
                 <h1>Exam Master</h1>
             </div>
             <div className="login__body">
@@ -44,13 +72,19 @@ function SignUp() {
                     <div className="input__field">
                         <Input 
                             placeholder="First Name"
-                            type="text"    
+                            type="text" 
+                            name ="firstName"
+                            value={user.firstName}
+                            onChange={handleChange}   
                         />
                     </div>
                     <div className="input__field">
                         <Input 
+                        name ="lastName"
                             placeholder="Last Name"
-                            type="text"    
+                            type="text" 
+                            value={user.lastName}
+                            onChange={handleChange}      
                         />
                     </div>
                 </div>
@@ -58,14 +92,20 @@ function SignUp() {
                     <Input 
                         placeholder="Email"
                         type="text"
+                        name ="email"
                         className={classes.selectEmpty}
+                        value={user.email}
+                        onChange={handleChange}   
                     />
                 </div>
                 <div className="input__field">
                     <Input 
+                        name ="password"
                         placeholder="Password"
                         type="password"    
                         className={classes.selectEmpty}
+                        value={user.password}
+                        onChange={handleChange}   
                     />
                 </div>
                 <div className="input__field" style={{marginLeft:"-7px"}}>
@@ -75,28 +115,33 @@ function SignUp() {
                         <Select
                             labelId="demo-simple-select-required-label"
                             id="demo-simple-select-required"
-                            value={age}
-                            onChange={handleChange}
-                            
+                            value={user.userType}
+                            onChange={handleChange}   
+                            name="userType"
                             className={classes.selectEmpty}
                         >
                             
-                            <MenuItem  value={1}>Teacher</MenuItem>
-                            <MenuItem value={2}>Student</MenuItem>
+                            <MenuItem  value={"Teacher"}>Teacher</MenuItem>
+                            <MenuItem value={"Student"}>Student</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
                 <div className="input__field">
                     <Input 
                         placeholder="Teacher / Student Id"
-                        type="text"    
+                        type="text" 
+                        name="collegeID"   
                         className={classes.selectEmpty}
+                        value={user.collegeID}
+                        onChange={handleChange}   
+                        
                     />
                 </div>
                 <div className="input__field">
                     <Button
                         className={classes.selectEmpty}
                         style={{width:'100%' , backgroundColor:"lightBlue"}}
+                        onClick={onSubmit}
                      >Submit</Button>
                 </div>
 
