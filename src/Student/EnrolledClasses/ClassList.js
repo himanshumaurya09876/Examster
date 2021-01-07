@@ -1,5 +1,5 @@
 import React ,{useState}from 'react';
-import List from './List';
+import CList from './CList';
 import { Button } from '@material-ui/core';
 import './ClassList.css';
 
@@ -18,14 +18,15 @@ function Student() {
     const [joinClass, setJoinClass] = useState(false);
    
     return (
-        <div>
+        <div className="classList__body">
+            <img  src="Images/Student/head.png"/>
+
             {
-                enrolledClasses.map( (Oneclass)=>{
-                    return (<List 
-                        class = {Oneclass}
-                    />);
-                })
+                <CList
+                    enrolledClasses ={enrolledClasses}
+                    />
             }
+                
 
            <div style={{
                             width : "fit-content",

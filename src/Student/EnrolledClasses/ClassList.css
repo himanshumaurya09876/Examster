@@ -1,3 +1,8 @@
+.classList__body{
+    width: 70%;
+    margin: auto;
+}
+
 .student__joinClass{
     display: flex;
     flex-direction: column;

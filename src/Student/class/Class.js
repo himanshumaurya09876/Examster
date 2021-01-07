@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import React from 'react';
 import "./Class.css";
 const scheduledTest ={
@@ -27,41 +27,72 @@ const tests = [
     ]; 
 
 
+function listItemStyle(){
+    return {
+        marginTop : "20px",
+        border : "1px  solid black",
+        borderRadius : "5px",
+        padding: "10px",
+
+    }
+}
+
 
 function Class() {
+
+    const listStyle = listItemStyle();
+
     return (
-        <div className="list__block">
+        <div className="class__list__block">
+            <img  src="Images/Student/head.png"/>
             { scheduledTest && 
-                <div className="list__item">
-                            <div className="list__itemContent">
-                                <p>{scheduledTest.testName +"   -    "+scheduledTest.date+"  -  "+scheduledTest.time +" -   Max Marks :"+scheduledTest.maximumMarks}</p>
-                            </div>
-                            <div className="list__itemButton">
-                            <Button
-                                style={{
-                                    width:"100px" , 
-                                    backgroundColor:"cyan"
-                                }}
-                            >Start</Button>
-                            </div>
-                        </div>
-
-            }
-            {
-                tests.map((test)=>{
+                <List component="nav" aria-label="secondary mailbox folder" >
+                
+                <ListItem
+                    button
+                    style={listStyle}
+                    // onClick={(event) => handleListItemClick(event, 2)}
+                    >
+                    <ListItemText primary={scheduledTest.testName + " [ "+scheduledTest.date+" -- "+ scheduledTest.time+" ] "} />
+                    <ListItemSecondaryAction>
+                    <Button
+                    style={{
+                        width:"100px" , 
+                        backgroundColor:"cyan"
+                    }}
+                >Start</Button>
+                    </ListItemSecondaryAction>
+                </ListItem> 
+            </List>
+            }     
+            
+             
+            { tests &&
+            <List component="nav" aria-label="secondary mailbox folder" >
+                {tests.map((test)=>{
                     return (
-                        <div className="list__item">
-                            <div className="list__itemContent">
-                                <p>{test.testName +"     - "+test.date}</p>
-                            </div>
-                            <div className="list__itemButton">
-                            <p>{test.marksObtained +"/"+test.maximumMarks}</p>
-
-                            </div>
+                        <div>
+                            <ListItem
+                                button
+                                style={listStyle}
+                                // onClick={(event) => handleListItemClick(event, 2)}
+                                >
+                                <ListItemText primary={test.testName + " ["+test.date +"/"+ test.time+" ] "} />
+                                <ListItemSecondaryAction>
+                                
+                                </ListItemSecondaryAction>
+                            </ListItem>
                         </div>
-                    );
-                })
+                        );
+                     })
+                }
+                    
+                
+            </List>
             }
+       
+                
+            
             
         </div>
     )
