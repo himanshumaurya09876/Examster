@@ -11,10 +11,10 @@ function Home() {
             img : "Images/Card1.jpg"
         },
         {
-            img : "Images/exam.jpg"
+            img : "Images/Card2.jpg"
         },
         {
-            img : "Images/exam.jpg"
+            img : "Images/Card3.jpg"
         }
     ];
     const img_style = { height: '50%', width: '50%' , margin : 'auto' };

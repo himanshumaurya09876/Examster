@@ -1,0 +1,30 @@
+.classtest{
+    width: 100%;
+    margin: 20px auto;
+    border: 1px solid black ;
+    background-color: #F0EBF8;
+}
+.classtest__header{
+    width: 90%;
+    margin: 10px auto;
+    border: 1px solid black ;
+    background-color: plum;
+    padding: 20px;
+    font-size: 24px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.classtest__headerSubjectName{
+    flex: 1;
+    align-self:flex-start;
+}
+.classtest__headerTestName{
+    flex: 1;
+    text-align: center;
+}
+.classtest__headerRemTime{
+    flex: 1;
+    text-align: right;
+}
