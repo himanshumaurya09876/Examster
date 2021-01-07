@@ -76,6 +76,8 @@ function Home() {
                      </div>
                 </div>         
             </div>        
+
+            
             <div className="home__features">
                 <div className="home__featureContainer">
                     <div className="home__featureImg">
