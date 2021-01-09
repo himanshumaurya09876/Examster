@@ -23,9 +23,8 @@ function CList(props) {
                     return (
                         <div>
                             <ListItem
-                                button
+                                //button
                                 style={listStyle}
-                                Disable
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
                                 <ListItemText primary={Aclass.className + " ["+Aclass.classCode+" ] "} />
@@ -48,27 +47,4 @@ function CList(props) {
     )
 }
 
-
-
 export default CList;
-
-
-
-
-
-
-
-
-// <div className="list__item">
-//                 <div className="list__itemContent">
-//                     <p>{props.class.className +" - " +props.class.classCode}</p>
-//                 </div>
-//                 <div className="list__itemButton">
-//                     <Button
-//                         style={{
-//                             width:"100px" , 
-//                             backgroundColor:"cyan"
-//                         }}
-//                     >Open</Button>
-//                 </div>
-// </div>

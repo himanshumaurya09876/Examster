@@ -32,7 +32,8 @@ function listItemStyle(){
         marginTop : "20px",
         border : "1px  solid black",
         borderRadius : "5px",
-        padding: "10px",
+        padding: "15px",
+        fontSize:"20px",
 
     }
 }
@@ -49,11 +50,10 @@ function Class() {
                 <List component="nav" aria-label="secondary mailbox folder" >
                 
                 <ListItem
-                    button
                     style={listStyle}
                     // onClick={(event) => handleListItemClick(event, 2)}
                     >
-                    <ListItemText primary={scheduledTest.testName + " [ "+scheduledTest.date+" -- "+ scheduledTest.time+" ] "} />
+                    <ListItemText primary={scheduledTest.testName + " : ( "+scheduledTest.date+" -- "+ scheduledTest.time+" ) "} />
                     <ListItemSecondaryAction>
                     <Button
                     style={{
@@ -73,13 +73,18 @@ function Class() {
                     return (
                         <div>
                             <ListItem
-                                button
                                 style={listStyle}
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
-                                <ListItemText primary={test.testName + " ["+test.date +"/"+ test.time+" ] "} />
-                                <ListItemSecondaryAction>
-                                
+                                <ListItemText primary={test.testName + " : ( "+test.date +" -- "+ test.time+" ) "} />
+                                <ListItemSecondaryAction
+                                    style={{
+                                        fontSize:"20px",
+                                        fontWeight:"bold",
+                                        paddingRight:"4%"
+                                    }}
+                                >
+                                {test.marksObtained +" /"+test.maximumMarks}
                                 </ListItemSecondaryAction>
                             </ListItem>
                         </div>

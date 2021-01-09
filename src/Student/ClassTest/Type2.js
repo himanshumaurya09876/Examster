@@ -12,6 +12,9 @@ function Type2() {
             <div className="type1__question">
                 <h2>What is your name ? </h2>
             </div>
+            <div className="type1__points">
+                <h6>{"*Points : 2"}</h6>
+            </div>
             <div className="type1__body">
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset">

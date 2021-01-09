@@ -12,3 +12,8 @@
 .addFileIcon{
     margin: 15px 10px;
 }
+.type4__points{
+    text-align: right;
+    font-size: 25px;
+    color: red;
+}
