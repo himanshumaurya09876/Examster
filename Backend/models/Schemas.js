@@ -8,8 +8,10 @@ const TeacherSchema = new mongoose.Schema({
     collegeID : String,
     classes : [
         {
-            subjectCode : String,
-            subjectName : String, 
+            classBranch : String,
+            classSection : String,
+            classSubjectCode : String,
+            classSubjectName : String, 
         }
     ],
     questionPaperCodes :[ String],
@@ -54,8 +56,10 @@ const TestSchema = new mongoose.Schema({
 const ClassSchema = new mongoose.Schema({
     teacherId : String,
     students : [  String],
-    subjectName : String,
-    subjectCode : String,
+    classBranch : String,
+    classSection : String,
+    classSubjectCode : String,
+    classSubjectName : String, 
     scheduledTest : TestSchema,
     OldTests :[ TestSchema],
 });

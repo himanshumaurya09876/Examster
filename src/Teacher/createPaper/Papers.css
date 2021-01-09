@@ -1,0 +1,42 @@
+.classtest{
+    width: 100%;
+    margin: 20px auto;
+    border: 1px solid black ;
+    background-color: #F0EBF8;
+}
+.classtest__header{
+    width: 60%;
+    margin: 10px auto;
+    border: 1px solid black ;
+    background-color: white;
+    padding: 20px;
+    font-size: 24px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    border-top: 10px solid purple;
+}
+.classtest__headerLeft{
+    flex: 3;
+    padding-left: 2%;
+}
+.classtest__headerSubjectName{
+    align-self:flex-start;
+    font-size: 2.3rem;
+}
+.classtest__headerTestName{
+    align-self:flex-start;
+    font-size: 2.3rem;    
+}
+.classtest__headerRemTime{
+    flex: 1;
+    text-align: center;
+    align-self: flex-end;
+    font-weight:normal;
+}
+.classtest__headerMaxMarks{
+    flex: 1;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: red;
+}

@@ -42,6 +42,7 @@ function Login() {
             };
         })
     }
+
     const onSubmit = async(event)=>{
         event.preventDefault();
         console.log(user);
@@ -67,14 +68,18 @@ function Login() {
         }
     }
     if(userLoginSuccess){
-        return <Redirect to="/student/dashboard" />    
+        if(user.userType === "Teacher"){
+            return <Redirect to="/teacher/dashboard" /> 
+        } else {
+            return <Redirect to="/student/dashboard" /> 
+        }   
     }
     return (
         <div>
         <Header/>
         <div className="login">
             <div className="login__header">
-                <i clasName="fas fa-laptop-code"></i>
+                <i className="fas fa-laptop-code"></i>
                 <h1>Exam Master</h1>
             </div>
             <div className="login__body">
@@ -101,7 +106,7 @@ function Login() {
                 <div className="login__input">
                     <Input 
                         placeholder="Email"
-                        type="text"
+                        type="email"
                         className={classes.selectEmpty}
                         name="email"
                         value={user.email}

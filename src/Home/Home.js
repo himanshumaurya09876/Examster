@@ -19,6 +19,7 @@ function Home() {
         }
     ];
     const img_style = { height: '50%', width: '50%' , margin : 'auto' };
+    
     return (
         <div className="home">
             <Header />

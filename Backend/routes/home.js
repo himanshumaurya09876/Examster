@@ -69,6 +69,7 @@ router.post('/signUp' , (req ,res)=>{
 // Login
 router.post('/login', (req, res, next) => {
     console.log(req);
+    console.log(req.body);
     const userType = req.body.userType;
     if(userType==='Student'){
         passport.authenticate('StudentStrategy', )(req, res, function(){

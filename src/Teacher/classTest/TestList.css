@@ -1,0 +1,29 @@
+.testList__body{
+    width: 70%;
+    margin: auto;
+}
+
+.teacher__newTest{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin: 10px auto;
+    margin-bottom: 30px;
+    background-color: darkgrey;
+}
+.teacher__newTest > input{
+    outline-width: 0;
+    border: none;
+    height: 40px;
+    margin:  20px auto;
+    width: 80%;
+    font-size: 20px;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+.teacher__assignButton{
+    width : fit-content;
+    margin:10px auto;
+    margin-top:-20px;
+}

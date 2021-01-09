@@ -1,22 +1,37 @@
-import React from 'react'
-import Header from './Header';
-import Footer from './Footer';
-import './Teacher.css';
+import React from 'react';
+import Header from './General/Header';
+import Footer from './General/Footer';
+import TeacherClass from './EnrolledClasses/ClassList';
+import TestList from "./classTest/TestList";
+import Dashboard from './Dashboard/Dashboard';
+import MarksList from './testMarks/MarksList';
+import PapersList from './questionPapers/PapersList';
+import CreatePaper from './createPaper/Papers';
 
 function Teacher() {
     
     return (
         <div>
-        <Header/>
-        <div className="teacher_home_content">
-            <h2>Hello I'm a Teacher...</h2>
-            <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et pharetra pharetra massa massa ultricies mi quis hendrerit dolor. Proin sagittis nisl rhoncus mattis. Augue lacus viverra vitae congue eu consequat. Orci dapibus ultrices in iaculis nunc sed augue lacus. Malesuada bibendum arcu vitae elementum. Viverra mauris in aliquam sem fringilla ut. Faucibus pulvinar elementum integer enim neque. At varius vel pharetra vel turpis nunc eget lorem dolor. Cras adipiscing enim eu turpis egestas pretium aenean pharetra magna.
-            </p>
-        </div>
-        <Footer />
+           <Header/>
+           <Dashboard />
+           <Footer/>
+           <Header/>
+           <TeacherClass />
+           <Footer/>
+           <Header/>
+           <TestList />
+           <Footer/>
+           <Header/>
+           <MarksList />
+           <Footer/>
+           <Header/>
+           <PapersList />
+           <Footer/>
+           <Header/>
+           <CreatePaper />
+           <Footer/>
         </div>
     )
 }
 
-export default Teacher;
+export default Teacher
