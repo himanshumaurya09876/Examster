@@ -42,6 +42,7 @@ function Login() {
             };
         })
     }
+
     const onSubmit = async(event)=>{
         event.preventDefault();
         console.log(user);
@@ -67,7 +68,11 @@ function Login() {
         }
     }
     if(userLoginSuccess){
-        return <Redirect to="/student/dashboard" />    
+        if(user.userType === "Teacher"){
+            return <Redirect to="/teacher/dashboard" /> 
+        } else {
+            return <Redirect to="/student/dashboard" /> 
+        }   
     }
     return (
         <div>
