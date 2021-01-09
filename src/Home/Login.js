@@ -3,7 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import React ,{useState} from 'react'
 import Header from './Header';
 import Footer from './Footer';
+import Axios from '../Axios';
 import './Login.css';
+import {  Redirect} from 'react-router-dom';
+
+const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -25,7 +29,7 @@ const defaultUser= {
 
 function Login() {
     const [user, setUser] = useState({...defaultUser})
-
+    const[userLoginSuccess , setUserLogin] = useState(false);
     const classes = useStyles();
 
     
@@ -38,19 +42,32 @@ function Login() {
             };
         })
     }
-    function onSubmit(event){
+    const onSubmit = async(event)=>{
         event.preventDefault();
         console.log(user);
-        setUser( ( prev)=>{
-            return {
-                  ...prev ,
-                  email : "",
-                  password:"",
-                  userType:"",
-            };
-        });
-        console.log(user);
+     
+        if( user.firstName ==="" ||  user.password=== ""||  user.userType === ""){
+            alert("Fill all the fields");
+            
+        }else{ 
+            await Axios.post('/login' , qs.stringify(user),
+            {
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                }
+            })
+            .then(data=>{
+                console.log("login" ,data);
+                setUserLogin(true);
+                
 
+        });
+        }
+    }
+    if(userLoginSuccess){
+        return <Redirect to="/student/dashboard" />    
     }
     return (
         <div>

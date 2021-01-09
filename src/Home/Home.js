@@ -3,18 +3,19 @@ import Header from './Header';
 import Footer from './Footer';
 import Carousel from 'react-material-ui-carousel'
 import {Paper , Avatar} from '@material-ui/core'
+
 import './Home.css';
 
 function Home() {
     var items = [
         {
-            img : "Images/Card1.jpg"
+            img : "../Images/Card1.jpg"
         },
         {
-            img : "Images/Card2.jpg"
+            img : "../Images/Card2.jpg"
         },
         {
-            img : "Images/Card3.jpg"
+            img : "../Images/Card3.jpg"
         }
     ];
     const img_style = { height: '50%', width: '50%' , margin : 'auto' };
@@ -22,14 +23,14 @@ function Home() {
     return (
         <div className="home">
             <Header />
-            <div className="slider">
+            <div className="home__slider">
                     <Carousel  navButtonsAlwaysVisible="true" animation="slide">
                         {
                             items.map( (item, i) => {
                                 return (  
                                     <Paper>
-                                        <div className="slides">
-                                            <img src={item.img} className="slider__img" />
+                                        <div className="home__slides">
+                                            <img src={item.img} className="home__slider__img" />
                                         </div>
                                     </Paper>
                                 )

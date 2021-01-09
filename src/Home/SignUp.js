@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import React , {useState} from 'react'
 import Header from './Header';
 import Footer from './Footer';
+import Axios from '../Axios';
 import './SignUp.css';
+const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -41,21 +43,22 @@ function SignUp() {
             };
         })
     }
-    function onSubmit(event){
+    const onSubmit = async(event)=>{
         event.preventDefault();
         console.log(user);
-        setUser( ( prev)=>{
-            return {
-                  ...prev ,
-                  firstName :"",
-                  lastName:"",
-                  email : "" ,
-                  password : "",
-                  userType : "",
-                  collegeID:"",
-            };
-        });
-        console.log(user);
+     
+        if( user.firstName ==="" || user.lastName===""|| user.email === "" ||
+        user.password=== ""||  user.userType === ""|| user.collegeID==="" ){
+            alert("Fill all the fields");
+            return;
+        }    
+        await Axios.post('/signUp' , qs.stringify(user),
+        {
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(data=>{console.log(data);});
     }
 
 

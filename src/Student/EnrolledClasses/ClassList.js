@@ -14,12 +14,13 @@ const enrolledClasses =[
     },
 ]
 
-function Student() {
+function ClassList() {
     const [joinClass, setJoinClass] = useState(false);
    
     return (
         <div className="classList__body">
-            <img  src="Images/Student/head.png"/>
+
+            <img  src={process.env.PUBLIC_URL+"/Images/Card1.jpg"}/>
 
             {
                 <CList
@@ -75,4 +76,4 @@ function Student() {
     )
 }
 
-export default Student
+export default ClassList;
