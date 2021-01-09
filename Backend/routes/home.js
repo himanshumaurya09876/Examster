@@ -67,11 +67,12 @@ router.post('/signUp' , (req ,res)=>{
 })
 
 // Login
-router.post('/login',forwardAuthenticated, (req, res, next) => {
+router.post('/login', (req, res, next) => {
     console.log(req);
     const userType = req.body.userType;
     if(userType==='Student'){
         passport.authenticate('StudentStrategy', )(req, res, function(){
+           console.log(req.user);
             res.send("Student login successful");
         });
     }else{
