@@ -57,7 +57,8 @@ function SignUp() {
         });
         console.log(user);
     }
-    console.log(user);
+
+
     return (
         <div className="signUp">
         <Header/>
@@ -91,7 +92,7 @@ function SignUp() {
                 <div className="input__field">
                     <Input 
                         placeholder="Email"
-                        type="text"
+                        type="email"
                         name ="email"
                         className={classes.selectEmpty}
                         value={user.email}

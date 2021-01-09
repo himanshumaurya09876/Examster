@@ -5,7 +5,7 @@ function Header() {
     return (
         <div className="home__header">
             <div className="home__headerLeft">
-                <i class="fas fa-laptop-code"></i>
+                <i className="fas fa-laptop-code"></i>
             </div>
             <div className="home__headerRight">
                 

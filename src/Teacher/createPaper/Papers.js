@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React ,{useState , useEffect} from 'react';
-import './ClassTest.css';
+import PapersList from '../questionPapers/PapersList';
+import './Papers.css';
 import Type1 from './Type1';
 import Type2 from './Type2';
 import Type3 from './Type3';
@@ -8,38 +9,19 @@ import Type4 from './Type4';
 
 
 const props = {
-    subjectName : "Machine Learning",
-    subjectCode : "CO326",
-    testName : "Surprise test 2",
+    subjectName : "",
+    subjectCode : "",
+    testName : "",
     questionPaper :{
     },
     minuteLimit : 0,
-    maximumMarks : 30,
+    maximumMarks : 0
 }
 
-function ClassTest() {
+function Papers() {
      
-    const [ minutes, setMinutes ] = useState(props.minuteLimit);
-    const [seconds, setSeconds ] =  useState(10);
-    
-    useEffect(()=>{
-    let myInterval = setInterval(() => {
-            if (seconds > 0) {
-                setSeconds(seconds - 1);
-            }
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    clearInterval(myInterval)
-                } else {
-                    setMinutes(minutes - 1);
-                    setSeconds(59);
-                }
-            } 
-        }, 1000);
-        return ()=> {
-            clearInterval(myInterval);
-          };
-    });
+    const [ minutes, setMinutes ] = useState(0);
+    const [seconds, setSeconds ] =  useState(0);
 
     function submit(){
 
@@ -95,4 +77,4 @@ function ClassTest() {
     )
 }
 
-export default ClassTest;
+export default Papers;
