@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core'
+import { IconButton, TextField } from '@material-ui/core'
 import { AttachFile } from '@material-ui/icons'
 import React from 'react'
 import AddIcon from '@material-ui/icons/Add';
@@ -8,13 +8,24 @@ function Type4() {
     function addImage(){
 
     }
+
+    function handleChange(){
+        
+    }
     return (
         <div className="type4">
              <div className="type1__question">
                 <h2>What is your name ? </h2>
             </div>
             <div className="type1__points">
-                <h6>{"*Points : 2"}</h6>
+            <TextField
+                id="standard-textarea"
+                label="Points"
+                placeholder="Points"
+                multiline
+                color = 'secondary'
+                onChange ={handleChange}
+            />
             </div>
             <div className="addFileIcon" >   
                 <label htmlFor="file-upload" className="custom-file-upload"> 

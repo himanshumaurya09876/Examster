@@ -26,7 +26,14 @@ export default function Type3() {
           <h2>What is your name ? </h2>
       </div>
       <div className="type3__points">
-          <h6>{"*Points : 2"}</h6>
+      <TextField
+            id="standard-textarea"
+            label="Points"
+            placeholder="Points"
+            multiline
+            color = 'secondary'
+            onChange ={handleChange}
+      />
       </div>
       <form className={classes.root} noValidate autoComplete="off">
       <TextField

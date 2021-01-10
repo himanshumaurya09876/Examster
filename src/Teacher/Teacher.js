@@ -12,7 +12,7 @@ function Teacher() {
     
     return (
         <div>
-           <Header/>
+           {/* <Header/>
            <Dashboard />
            <Footer/>
            <Header/>
@@ -26,7 +26,7 @@ function Teacher() {
            <Footer/>
            <Header/>
            <PapersList />
-           <Footer/>
+           <Footer/> */}
            <Header/>
            <CreatePaper />
            <Footer/>

@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
 import React ,{useState} from 'react';
 import './Type1.css';
 
@@ -13,7 +13,14 @@ function Type1() {
                 <h2>What is your name ? </h2>
             </div>
             <div className="type1__points">
-                <h6>{"*Points : 2"}</h6>
+                    <TextField
+                            id="standard-textarea"
+                            label="Points"
+                            placeholder="Points"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />
             </div>
             <div className="type1__body">
                 <div className="type1__optionsBlock">

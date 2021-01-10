@@ -7,7 +7,6 @@ import {Paper , Avatar} from '@material-ui/core'
 
 
 function Dashboard(props) {
-    console.log("email : ",props.location.state.email);
 
     var items = [
         {
