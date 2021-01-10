@@ -51,19 +51,17 @@ function Login() {
             alert("Fill all the fields");
             
         }else{ 
-            await Axios.post('/login' , qs.stringify(user),
+            await Axios.post('/login' , qs.stringify(user),{withCredentials: true},
             {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                "Access-Control-Allow-Origin": "*",
+                // "Access-Control-Allow-Origin": "http://localhost:3000",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })
             .then(data=>{
                 console.log("login" ,data);
                 setUserLogin(true);
-                
-
         });
         }
     }

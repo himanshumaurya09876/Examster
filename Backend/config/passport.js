@@ -74,6 +74,7 @@ module.exports = function(passport){
 
 
       passport.deserializeUser(function (sessionConstructor, done) {
+        console.log("des" ,sessionConstructor );
         if (sessionConstructor.userGroup == 'Student') {
           Student.findOne({
               _id: sessionConstructor.userId

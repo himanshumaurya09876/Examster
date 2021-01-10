@@ -52,11 +52,11 @@ function TeacherClass() {
             alert("Fill all the fields");
             
         }else{ 
-            await Axios.post('/Teacher/CreateClass' , qs.stringify(classFormData),
+            await Axios.post('/Teacher/CreateClass' , qs.stringify(classFormData),{withCredentials: true},
             {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                "Access-Control-Allow-Origin": "*",
+                 "Access-Control-Allow-Origin": "http://localhost:3000",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })

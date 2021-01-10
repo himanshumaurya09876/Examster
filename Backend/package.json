@@ -12,6 +12,7 @@
   "dependencies": {
     "babel": "^6.23.0",
     "bcryptjs": "^2.4.3",
+    "connect-redis": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express-fileupload": "^1.2.0",

@@ -68,16 +68,20 @@ router.post('/signUp' , (req ,res)=>{
 
 // Login
 router.post('/login', (req, res, next) => {
-    console.log(req);
-    console.log(req.body);
     const userType = req.body.userType;
     if(userType==='Student'){
         passport.authenticate('StudentStrategy', )(req, res, function(){
-           console.log(req.user);
+           console.log(req.session);
             res.send("Student login successful");
         });
     }else{
         passport.authenticate('TeacherStrategy', )(req, res, function(){
+          console.log("=========================================================");
+          console.log(req);
+          console.log("=========================================================");
+
+          console.log(req.sessionID);
+
             res.send("Teacher login successful");
         });
     }   

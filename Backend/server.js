@@ -7,25 +7,33 @@ const session = require('express-session');
 const passport = require('passport');
 require('dotenv').config();
 
-const app = express();
-app.use(bodyParser.urlencoded({extended:true}));
-
-app.use(cors());
-
-// Passport Config (strategy , ser , deserialize) 
-require('./config/passport')(passport);
-
 // mongoose connection
 const db_url = "mongodb+srv://admin:"+ "77YDVesgrUVqBPuZ"+"@cluster0.gygcf.mongodb.net/OnlineExaminationSystem?retryWrites=true&w=majority";
 mongoose.connect(db_url , {useNewUrlParser:true ,useUnifiedTopology: true,useCreateIndex : true });
 
 
+const app = express();
+app.use(bodyParser.urlencoded({extended:true}));
+// app.use(express.cookieParser());
+app.use(cors());
+
+// Passport Config (strategy , ser , deserialize) 
+require('./config/passport')(passport);
+
+
 // express session
 app.use(session({
+    name :'connect.oesbackend.id',
     secret: 'keyboard cat',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { secure: true }
+    // maxAge :3600000,
+    expires:false,
+    cookie: {    
+    //    maxAge : 3600000, 
+       name :'connect.oesbackend.id',
+     expires:false,
+}
 }))
 // passport middleware
 app.use(passport.initialize());
