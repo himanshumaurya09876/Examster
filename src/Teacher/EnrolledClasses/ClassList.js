@@ -23,13 +23,14 @@ const enrolledClasses =[
     }
 ]
 
-function TeacherClass() {
+function TeacherClass(props) {
     const [newClass, setNewClass] = useState(false);
     const [classFormData,setClassFormData]=useState({
         classBranch:"",
         classSection:"",
         classSubjectName:"",
-        classSubjectCode:""
+        classSubjectCode:"",
+        email :props.location.state.email,
     })
 
     function changed(event){
@@ -42,21 +43,24 @@ function TeacherClass() {
             });
         })
     }
+ 
+    console.log(classFormData);
+
 
     const submitted = async(event)=>{
         event.preventDefault();
-        
+       
         console.log(classFormData);
 
         if( classFormData.classBranch ==="" ||  classFormData.classSection=== ""||  classFormData.classSubjectCode === "" || classFormData.classSubjectName === ""){
             alert("Fill all the fields");
             
         }else{ 
-            await Axios.post('/Teacher/CreateClass' , qs.stringify(classFormData),{withCredentials: true},
+            await Axios.post('/Teacher/CreateClass' , qs.stringify(classFormData),//{withCredentials: true},
             {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                 "Access-Control-Allow-Origin": "http://localhost:3000",
+                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })

@@ -6,14 +6,7 @@ const TeacherSchema = new mongoose.Schema({
     email : String,
     password :String,
     collegeID : String,
-    classes : [
-        {
-            classBranch : String,
-            classSection : String,
-            classSubjectCode : String,
-            classSubjectName : String, 
-        }
-    ],
+    classes : [ String ],
     questionPaperCodes :[ String],
 }) ;
 
@@ -54,7 +47,7 @@ const TestSchema = new mongoose.Schema({
 });
 
 const ClassSchema = new mongoose.Schema({
-    teacherId : String,
+    teacherEmail : String,
     students : [  String],
     classBranch : String,
     classSection : String,
@@ -101,7 +94,7 @@ module.exports = {
     Teacher : new mongoose.model('Teacher' ,TeacherSchema),
     Student :  new mongoose.model('Student' ,StudentSchema),
     Test    : TestSchema,
-    Class  : ClassSchema,
+    Class  : new mongoose.model("Class" ,ClassSchema ),
     QuestionPaper : QuestionPaperSchema,
     Type1         : Type1,
     Type3         : Type3,

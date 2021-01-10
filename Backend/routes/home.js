@@ -75,14 +75,14 @@ router.post('/login', (req, res, next) => {
             res.send("Student login successful");
         });
     }else{
-        passport.authenticate('TeacherStrategy', )(req, res, function(){
+        passport.authenticate('TeacherStrategy', )(req, res, function(err ,data){
           console.log("=========================================================");
           console.log(req);
           console.log("=========================================================");
 
           console.log(req.sessionID);
 
-            res.send("Teacher login successful");
+            res.send(data);
         });
     }   
 });

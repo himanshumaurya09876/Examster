@@ -51,23 +51,29 @@ function Login() {
             alert("Fill all the fields");
             
         }else{ 
-            await Axios.post('/login' , qs.stringify(user),{withCredentials: true},
+            await Axios.post('/login' , qs.stringify(user),//{withCredentials: true},
             {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                // "Access-Control-Allow-Origin": "http://localhost:3000",
+                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })
             .then(data=>{
-                console.log("login" ,data);
+                console.log("login" ,user.email);
+
                 setUserLogin(true);
         });
         }
     }
     if(userLoginSuccess){
         if(user.userType === "Teacher"){
-            return <Redirect to="/teacher/dashboard" /> 
+            return <Redirect to={{
+                pathname: "/teacher/dashboard",
+                state: { email: user.email }
+              }}
+
+             /> 
         } else {
             return <Redirect to="/student/dashboard" /> 
         }   

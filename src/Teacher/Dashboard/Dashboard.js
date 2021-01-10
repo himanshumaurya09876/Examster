@@ -6,7 +6,9 @@ import Carousel from 'react-material-ui-carousel'
 import {Paper , Avatar} from '@material-ui/core'
 
 
-function Dashboard() {
+function Dashboard(props) {
+    console.log("email : ",props.location.state.email);
+
     var items = [
         {
             img : "../Images/Teacher/Card1.jpg"
@@ -27,7 +29,8 @@ function Dashboard() {
     
     return (
         <div>
-            <Header />
+            <Header
+            email ={props.location.state.email} />
         <div className="dashboard">
             <div className="slider">
                     <Carousel  navButtonsAlwaysVisible="true" animation="slide">
