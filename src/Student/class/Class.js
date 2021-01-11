@@ -1,6 +1,9 @@
 import { Button, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
-import React from 'react';
+import React , {useEffect} from 'react';
+import Footer from '../General/Footer';
+import Header from '../General/Header';
 import "./Class.css";
+import Axios from '../../Axios';
 const scheduledTest ={
     date : "26/12/2020",
     time : "18:00pm",
@@ -39,13 +42,33 @@ function listItemStyle(){
 }
 
 
-function Class() {
+function Class(props) {
 
     const listStyle = listItemStyle();
+    const {email , classId} = props.location.state;
+
+    useEffect(() => {
+        loadClassData();
+    }, [])
+    const loadClassData = async(event)=>{
+        await  Axios.get('/Student/classData?' +"email="+ email+"&classId="+classId,{withCredentials: true},
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                // "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                       }
+        })
+        .then(data=>{
+            console.log("class data ",data);
+        });
+    }
+
+
 
     return (
         <div className="class__list__block">
-            <img  src="Images/Student/head.png"/>
+            <img  src="../Images/Student/head.png"/>
             { scheduledTest && 
                 <List component="nav" aria-label="secondary mailbox folder" >
                 
@@ -94,11 +117,7 @@ function Class() {
                     
                 
             </List>
-            }
-       
-                
-            
-            
+            }        
         </div>
     )
 }

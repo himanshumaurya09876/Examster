@@ -62,6 +62,8 @@ module.exports = function(passport){
         let userGroup = "Student";
         let userPrototype =  Object.getPrototypeOf(userObject);
 
+        console.log("serialize user");
+        
         if (userPrototype === Student.prototype) {
             userGroup = "Student";
         } else if (userPrototype === Teacher.prototype) {
@@ -74,7 +76,6 @@ module.exports = function(passport){
 
 
       passport.deserializeUser(function (sessionConstructor, done) {
-        console.log("des" ,sessionConstructor );
         if (sessionConstructor.userGroup == 'Student') {
           Student.findOne({
               _id: sessionConstructor.userId

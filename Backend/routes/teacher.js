@@ -10,7 +10,6 @@ router.post("/CreateClass", function(req,res){
     
     const email = req.body.email;
     const newClass = new Class(Classdata);
-    console.log(email);
     newClass.save()
     .then((data)=>{
         Teacher.findOneAndUpdate({email : email} , {$push : {classes : data._id}} , 
@@ -19,7 +18,6 @@ router.post("/CreateClass", function(req,res){
                 console.log(err);
                 res.status(500).send("error in adding class in teacher ");
             }else{
-                console.log(data);
                 res.status(200).send("insert ok");
             }
         }); 

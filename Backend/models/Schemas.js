@@ -19,8 +19,11 @@ const StudentSchema = new mongoose.Schema({
     collegeID : String,
     enrolledClasses : [
         {
-            subjectCode : String,
-            subjectName : String, 
+            classBranch : String,
+            classSection : String,
+            classSubjectCode : String,
+            classSubjectName : String,
+            classId:String,
         }
     ],
 }) ;
