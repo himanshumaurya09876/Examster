@@ -1,13 +1,13 @@
-.classtest{
-    width: 70%;
-    margin: 20px auto;
+.classtestTeacher{
+    width: 100%;
+    margin: 10px auto;
     border: 1px solid lightgray;
     background-color: #F0EBF8;
     border-radius: 10px;
 }
-.classtest__header{
+.classtest__headerTeacher{
     width: 60%;
-    margin: 10px auto;
+    margin: 20px auto;
     border: 1px solid lightgray;
     background-color: white;
     padding: 20px;
@@ -45,4 +45,14 @@
 .addQuestion{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-left: 20%;
 }
+
+.addQueText{
+    font-size: 1.2rem;
+    padding-top: 15px;
+    margin-right: 1%;
+}
+

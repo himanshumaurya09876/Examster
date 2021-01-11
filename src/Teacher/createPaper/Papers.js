@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
       marginTop: theme.spacing(1.4),
-      fontSize: "16px",
-      width:'250px'
+      fontSize: "1rem",
+      width:'150px'
       
     },
   }));
@@ -44,8 +44,8 @@ function Papers() {
 
     const date = new Date();
     return (
-        <div className="classtest">
-            <div className="classtest__header">
+        <div className="classtestTeacher">
+            <div className="classtest__headerTeacher">
                 <div className="classtest__headerLeft">
                     <div className="classtest__headerSubjectName">
                         <TextField
@@ -92,13 +92,13 @@ function Papers() {
             </div>
             <div className="classtest__body">
                  <Type1 />
+                 <Type2 />
                  <Type3 />
                  <Type4 />
-                 <Type2 />
             </div>
 
             <div className="addQuestion">
-                <div>Add Question</div>
+                <div className="addQueText"><h3>Add Question</h3></div>
                 <div>
                     <FormControl required className={classes.formControl}>
                             <InputLabel id="demo-simple-select-required-label">Question Type</InputLabel>

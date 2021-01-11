@@ -8,7 +8,7 @@ function Type2() {
         setOption(event.target.value);
     }
     return (
-        <div className="type1">
+        <div className="type1Teacher">
             <div className="type1__question">
                 <h2>What is your name ? </h2>
             </div>

@@ -21,7 +21,7 @@ export default function Type3() {
   };
 
   return (
-    <div className="type3" >
+    <div className="type3Teacher" >
       <div className="type1__question">
           <h2>What is your name ? </h2>
       </div>

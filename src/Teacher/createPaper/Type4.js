@@ -13,7 +13,7 @@ function Type4() {
         
     }
     return (
-        <div className="type4">
+        <div className="type4Teacher">
              <div className="type1__question">
                 <h2>What is your name ? </h2>
             </div>
