@@ -15,8 +15,8 @@ import Student from './Student/Student';
 function App() {
   return (
     <div className="App" >
-        {/* <Teacher /> */}
-        <Router>
+        <Teacher />
+        {/* <Router>
           <Route path='/home' component={Home}></Route>
           <Route path='/login' component={Login}></Route>
           <Route path='/signUp' component={SignUp}></Route>
@@ -24,7 +24,7 @@ function App() {
 
           <Route path="/teacher/dashboard" component={TeacherDashboard}></Route>
           <Route path='/teacher/classList' component={TeacherEnrolledClass}></Route>
-        </Router>
+        </Router> */}
     </div>
   );
 }

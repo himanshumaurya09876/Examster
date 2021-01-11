@@ -1,4 +1,4 @@
-import React ,{useState}from 'react';
+import React ,{useState, useEffect} from 'react';
 import CList from './CList';
 import Header from '../General/Header';
 import Footer from '../General/Footer';
@@ -7,21 +7,6 @@ import './ClassList.css';
 import Axios from '../../Axios';
 
 const qs = require('querystring')
-
-const enrolledClasses =[
-    {
-        classBranch : "CO",
-        classSection : "A1",
-    },
-    {
-        classBranch : "CO",
-        classSection : "A2",
-    },
-    {
-        classBranch : "CO",
-        classSection : "A3",
-    }
-]
 
 function TeacherClass(props) {
     const [newClass, setNewClass] = useState(false);
@@ -33,6 +18,36 @@ function TeacherClass(props) {
         email :props.location.state.email,
     })
 
+    const [enrolledClasses,setEnrolledClasses]=useState([]);
+
+    useEffect(() => {
+        loadClassList();
+      }, []);
+
+    const loadClassList = async(event)=>{
+        await Axios.get('/Teacher/getClassList/'+classFormData.email,
+        {
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+             "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+            }
+        })
+        .then(data=>{
+            console.log("ClassList" ,data.data);
+            setEnrolledClasses([]);
+            (data.data).forEach(function(entry){
+                const aClass={
+                    classBranch:entry.classBranch,
+                    classSection:entry.classSection
+                }
+                setEnrolledClasses((prevData) => {
+                    return [...prevData, aClass];
+                })
+            });
+    });
+    }
+
     function changed(event){
         const {name,value}=event.target;
 
@@ -43,14 +58,10 @@ function TeacherClass(props) {
             });
         })
     }
- 
-    console.log(classFormData);
 
 
     const submitted = async(event)=>{
         event.preventDefault();
-       
-        console.log(classFormData);
 
         if( classFormData.classBranch ==="" ||  classFormData.classSection=== ""||  classFormData.classSubjectCode === "" || classFormData.classSubjectName === ""){
             alert("Fill all the fields");
@@ -66,6 +77,7 @@ function TeacherClass(props) {
             })
             .then(data=>{
                 console.log("CreateClass" ,data);
+                loadClassList();
         });
         }
     }

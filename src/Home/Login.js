@@ -45,7 +45,6 @@ function Login() {
 
     const onSubmit = async(event)=>{
         event.preventDefault();
-        console.log(user);
      
         if( user.firstName ==="" ||  user.password=== ""||  user.userType === ""){
             alert("Fill all the fields");
@@ -60,8 +59,6 @@ function Login() {
                 }
             })
             .then(data=>{
-                console.log("login" ,user.email);
-
                 setUserLogin(true);
         });
         }
