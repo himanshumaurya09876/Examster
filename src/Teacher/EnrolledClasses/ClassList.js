@@ -25,27 +25,18 @@ function TeacherClass(props) {
       }, []);
 
     const loadClassList = async(event)=>{
-        await Axios.get('/Teacher/getClassList/'+classFormData.email,
+        await Axios.get('/Teacher/getClassList/'+classFormData.email,{withCredentials: true},
         {
             headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-             "Access-Control-Allow-Origin": "*",
+            //  "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
             }
         })
         .then(data=>{
             console.log("ClassList" ,data.data);
-            setEnrolledClasses([]);
-            (data.data).forEach(function(entry){
-                const aClass={
-                    classBranch:entry.classBranch,
-                    classSection:entry.classSection
-                }
-                setEnrolledClasses((prevData) => {
-                    return [...prevData, aClass];
-                })
+            setEnrolledClasses(data.data);
             });
-    });
     }
 
     function changed(event){
@@ -78,22 +69,21 @@ function TeacherClass(props) {
             .then(data=>{
                 console.log("CreateClass" ,data);
                 loadClassList();
+                setNewClass(false);
         });
         }
     }
    
     return (
         <div>
-        <Header />
         <div className="classList__body">
 
             {
                 <CList
                     enrolledClasses ={enrolledClasses}
+                    email = {props.location.state.email}
                     />
             }
-                
-
            <div style={{
                             width : "fit-content",
                             margin:"20px auto"
@@ -163,7 +153,6 @@ function TeacherClass(props) {
                 </div>
             }
         </div>
-        <Footer />
         </div>
     )
 }

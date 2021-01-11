@@ -1,5 +1,6 @@
 import { Button, Checkbox, Divider, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core'
 import React from 'react'
+import { Redirect , Link} from 'react-router-dom/cjs/react-router-dom.min';
 import './CList.css'
  function listItemStyle(){
      return {
@@ -29,12 +30,18 @@ function CList(props) {
                                 >
                                 <ListItemText primary={Aclass.classBranch + " - "+Aclass.classSection} />
                                 <ListItemSecondaryAction>
-                                <Button
-                                    style={{
-                                        width:"100px" , 
-                                        backgroundColor:"lightSkyBlue"
-                                    }}
-                                >Open</Button>
+                                <Link to={{
+                                    pathname: "/teacher/class",
+                                    state: { email: props.email , 
+                                            classId : Aclass.classId }
+                                }}>
+                                    <Button
+                                        style={{
+                                            width:"100px" , 
+                                            backgroundColor:"lightSkyBlue"
+                                        }}
+                                    >Open</Button>
+                                </Link>
                                 </ListItemSecondaryAction>
                             </ListItem>
                         </div>

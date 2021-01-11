@@ -1,8 +1,10 @@
-import React ,{useState}from 'react';
+import React ,{useState , useEffect}from 'react';
 import TList from './TList';
 import { Button, TextField, makeStyles } from '@material-ui/core';
 
 import './TestList.css';
+import axios from '../../Axios';
+const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -36,21 +38,75 @@ const testList =[
     }
 ]
 
-function TestList() {
+function TestList(props) {
     const classes=useStyles();
-    const date=new Date();
+    const defaultAssignTest ={
+        name : "",
+        code : "",
+        time : "",
+        duration :"",
+        questionPaperCode : "",
+    };
+    
     const [newTest, setNewTest] = useState(false);
-   
+    const {email , classId}=props.location.state;
+    const [assignTest , setAssignTest] = useState(defaultAssignTest);
+    
+    useEffect(() => {
+        loadClassTestData();
+    }, [])
+
+    const loadClassTestData = async(event)=>{
+        await  axios.get('/Teacher/classData?' +"email="+ email+"&classId="+classId,{withCredentials: true},
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                // "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                       }
+        })
+        .then(data=>{
+            console.log("class data ",data);
+        });
+    }
+
+    function handleChange(event ){
+        const {name , value }=event.target;
+        setAssignTest((prev)=>{
+            return {
+                ...prev,
+                [name] : value,
+            }
+        })
+    }
+    const submit = async(event)=> {
+
+        if(assignTest.duration==="" || assignTest.name==="" || assignTest.code==="" ||
+           assignTest.time==="" || assignTest.questionPaperCode===""){
+               alert("Fill all the fields");
+               return ;
+        }
+        setAssignTest(defaultAssignTest);
+        setNewTest(false);
+        await  axios.post('/Teacher/assignTest' ,qs.stringify(assignTest),{withCredentials: true},
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                // "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                       }
+        })
+        .then(data=>{
+            console.log("class data ",data);
+        });
+    }
     return (
         <div className="testList__body">
-
             {
                 <TList
                     testList ={testList}
                     />
             }
-                
-
            <div style={{
                             width : "fit-content",
                             margin:"20px auto"
@@ -74,10 +130,16 @@ function TestList() {
                     <input 
                         type="text" 
                         placeholder="Test Name"
+                        name="name"
+                        value={assignTest.name}
+                        onChange={handleChange}
                         />
                     <input 
                         type="text" 
                         placeholder="Test Code"
+                        name="code"
+                        value={assignTest.code}
+                        onChange={handleChange}
                         />
                     <form className={classes.container} noValidate>
                         <TextField
@@ -85,6 +147,9 @@ function TestList() {
                             variant="filled"
                             label="Scheduled Date and Time"
                             type="datetime-local"
+                            name="time"
+                            onChange={handleChange}
+                            value={assignTest.time}
                             className={classes.textField}
                             InputLabelProps={{
                             shrink: true,
@@ -94,10 +159,16 @@ function TestList() {
                     <input 
                         type="text" 
                         placeholder="Test Duration"
+                        name="duration"
+                        value={assignTest.duration}
+                        onChange={handleChange}
                         />
                     <input 
                         type="text" 
                         placeholder="Question Paper Code"
+                        name="questionPaperCode"
+                        value={assignTest.questionPaperCode}
+                        onChange={handleChange}
                         />
                     <div style={{
                             width : "fit-content",
@@ -105,12 +176,13 @@ function TestList() {
                         }}>
                         
                         <div className="teacher__assignButton">
-                            <Button style={{
+                            <Button 
+                                style={{
                                         width : "200px",
                                         height:"50px",
                                         backgroundColor:"cyan",
-                                    }}
-                                    
+                                }}
+                                onClick={submit}    
                                 >
                                     Assign
                             </Button>

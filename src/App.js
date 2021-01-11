@@ -15,16 +15,13 @@ import Student from './Student/Student';
 function App() {
   return (
     <div className="App" >
-        <Teacher />
-        {/* <Router>
+        <Router>
           <Route path='/home' component={Home}></Route>
           <Route path='/login' component={Login}></Route>
           <Route path='/signUp' component={SignUp}></Route>
           <Route path='/student' component={Student}></Route>
-
-          <Route path="/teacher/dashboard" component={TeacherDashboard}></Route>
-          <Route path='/teacher/classList' component={TeacherEnrolledClass}></Route>
-        </Router> */}
+          <Route path='/teacher' component={Teacher}></Route>
+        </Router>
     </div>
   );
 }

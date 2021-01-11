@@ -3,9 +3,11 @@ const router = express.Router();
 
 const Teacher=require("../models/Schemas").Teacher;
 const Class = require("../models/Schemas").Class;
+const {ensureAuthenticated ,forwardAuthenticated ,allowCrossDomain } = require('../config/auth.js');
 
-router.post("/CreateClass", function(req,res){
-    
+router.post("/CreateClass",allowCrossDomain, function(req,res){
+    // console.log("create Class  :",req.session);
+
     const Classdata = req.body ;
     
     const email = req.body.email;
@@ -27,7 +29,8 @@ router.post("/CreateClass", function(req,res){
         
 });
 
-router.get("/getClassList/:email", function(req,res){
+router.get("/getClassList/:email",allowCrossDomain, function(req,res){
+    // console.log("teacher get Class list Data :",req.session);
     const email=req.params.email;
     const classList=[];
 
@@ -44,23 +47,22 @@ router.get("/getClassList/:email", function(req,res){
                         } else {
                             if(classData){
                                 const specificData = {
-                                    classID : classData._id,
+                                    classId : classData._id,
                                     classBranch : classData.classBranch,
                                     classSection : classData.classSection,
                                     classSubjectCode : classData.classSubjectCode,
                                     classSubjectName : classData.classSubjectName,
                                 };
                                classList.push(specificData);
+                               if(index === ClassIDs.length-1 ){
+                                   res.send(classList);
+                               }
                             } else {
                                 console.log("ClassData is empty");
                             }
                         }
 
-                        if(index === ClassIDs.length-1){
-                            console.log(classList);
-                            console.log(ClassIDs);
-                            res.send(classList);
-                        }
+                        
                     })
                 })
             } else {
@@ -68,6 +70,26 @@ router.get("/getClassList/:email", function(req,res){
             }
         }
     });
+});
+
+router.get("/classData" ,allowCrossDomain, function(req ,res){
+    // console.log("teacher Class Data :",req.session);
+    const email = req.query.email;
+    const classId = req.query.classId;
+    Class.findById(classId , function(err , data){
+        if(err){
+            res.send("error in finding  class data");
+        }else{
+            res.send(data);
+        }
+    })
+});
+
+
+router.post("/assignTest" ,allowCrossDomain, function(req ,res){
+    // console.log("assign Test :",req.session);
+    console.log(req.body);
+    
 });
 
 module.exports = router;

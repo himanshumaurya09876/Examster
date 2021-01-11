@@ -74,7 +74,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         }
         res.send(data);
     })
-})
+});
 
 
 module.exports = router;
