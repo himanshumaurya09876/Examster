@@ -1,17 +1,31 @@
-import { IconButton, TextField } from '@material-ui/core'
+import { IconButton, TextField ,Input} from '@material-ui/core'
 import { AttachFile } from '@material-ui/icons'
-import React from 'react'
+import React, {useState} from 'react'
 import AddIcon from '@material-ui/icons/Add';
 
 import './Type4.css'
-function Type4() {
+function Type4(props) {
+    const [questionData, setQuestionData] = useState({
+        questionStatement:"",
+        points:"",
+      });
     function addImage(){
 
     }
 
-    function handleChange(){
-        
+    function handleChange(event){
+        event.preventDefault();
+        const {name,value}=event.target;
+    
+        setQuestionData((prevData) => {
+            return {
+                ...prevData,
+                [name]:value
+            }
+        })
+        props.addQuestionData(questionData,props.id);
     }
+
     return (
         <div className="type4Teacher">
              <div className="type1__question">
@@ -20,18 +34,24 @@ function Type4() {
                 label="Question Statement"
                 placeholder="Question Statement"
                 multiline
-                color = 'secondary'
+                name = "questionStatement"
+                value ={questionData.questionStatement}
                 onChange ={handleChange}
+                style={{width:"100%"}}
+                color = 'secondary'
             />
             </div>
             <div className="type1__points">
-            <TextField
+            <Input
                 id="standard-textarea"
                 label="Points"
                 placeholder="Points"
-                multiline
+                type="number"
                 color = 'secondary'
+                name ="points"
+                value={questionData.points}
                 onChange ={handleChange}
+                style={{width:"70px" , marginTop:"10px"}}
             />
             </div>
             <div className="addFileIcon" >   

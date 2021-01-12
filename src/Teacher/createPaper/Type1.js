@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
+import { FormControl, FormControlLabel, FormLabel, Input, Radio, RadioGroup, TextField } from '@material-ui/core';
 import React ,{useState} from 'react';
 import './Type1.css';
 
@@ -47,16 +47,16 @@ function Type1(props) {
             />
             </div>
             <div className="type1__points">
-                    <TextField
+                    <Input
                             id="standard-textarea"
                             label="Points"
                             placeholder="Points"
                             name="points"
+                            type="number"
                             value={questionData.points}
-                            multiline
                             color = 'secondary'
                             onChange ={handleChange}
-                            style={{width:"15%"}}
+                            style={{width:"70px" , marginTop:"10px"}}
                         />
             </div>
             <div className="teachertype1__body">
@@ -72,6 +72,7 @@ function Type1(props) {
                             color = 'secondary'
                             onChange ={handleChange}
                             fullWidth="true"
+                            style={{width:"100%"}}
                         />} />
                         <FormControlLabel value="2" control={<Radio />} label={<TextField
                             id="standard-textarea"

@@ -121,11 +121,11 @@ function Papers(props) {
                     </div>
                 </div>
                 <div className="classtest__headerRemTime">
-                        <TextField
+                        <Input
                             id="standard-textarea"
                             label="Total Time (In Mins)"
                             placeholder="Total Time (In Mins)"
-                            multiline
+                            type="number"
                             name="timeLimit"
                             value={paperData.timeLimit}
                             color = 'secondary'

@@ -2,6 +2,7 @@ import React  ,{useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import './Type3.css';
+import { Input } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,15 +54,16 @@ export default function Type3(props) {
       />
       </div>
       <div className="type3__points">
-      <TextField
+      <Input
             id="standard-textarea"
             label="Points"
             placeholder="Points"
-            multiline
             color = 'secondary'
+            type="number"
             name ="points"
             value={questionData.points}
             onChange ={handleChange}
+            style={{width:"70px" , marginTop:"10px"}}
       />
       </div>
       <form className={classes.root} noValidate autoComplete="off">

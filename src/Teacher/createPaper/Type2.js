@@ -1,9 +1,8 @@
-import { Checkbox, FormControl, FormControlLabel, FormLabel, RadioGroup, TextField } from '@material-ui/core';
+import { Checkbox, FormControl, FormControlLabel, FormLabel, FormGroup, TextField, Input } from '@material-ui/core';
 import React ,{useState} from 'react';
 import './Type1.css';
 
 function Type2(props) {
-    const [option, setOption] = useState("");
     const [questionData, setQuestionData] = useState({
         questionStatement:"",
         points:"",
@@ -13,6 +12,21 @@ function Type2(props) {
         option4:""
     });
 
+    const [answer , setAnswer] = useState([0,0,0,0]);
+
+    function handleAnswerChange(event){
+        const optionSelected= event.target.value;
+        setAnswer((prevAnswers) => {
+            return prevAnswers.map((option,index) => {
+                if(index == optionSelected){
+                    return 1-option;
+                } else {
+                    return option;
+                }
+            })
+        });
+        props.addAnswer(answer , props.id);
+    }
 
     function handleChange(event){
         event.preventDefault();
@@ -26,7 +40,6 @@ function Type2(props) {
         })
         props.addQuestionData(questionData,props.id);
     }
-    console.log(option);
 
     return (
         <div className="type1Teacher">
@@ -44,22 +57,22 @@ function Type2(props) {
             />
             </div>
             <div className="type1__points">
-                    <TextField
+                    <Input
                             id="standard-textarea"
                             label="Points"
                             placeholder="Points"
                             value={questionData.points}
-                            multiline
                             name={"points"}
+                            type="number"
                             color = 'secondary'
                             onChange ={handleChange}
-                            style={{width:"15%"}}
+                            style={{width:"70px" , marginTop:"10px"}}
                         />
             </div>
             <div className="teachertype1__body">
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset">
-                    <RadioGroup aria-label="gender" name="ansOptions" value={option} onChange={handleChange}>
+                    <FormGroup aria-label="gender" name="ansOptions" value={answer} onChange={handleAnswerChange}>
                         <FormControlLabel value="0" control={<Checkbox />} label={<TextField
                             id="standard-textarea"
                             placeholder="Option 1"
@@ -96,7 +109,7 @@ function Type2(props) {
                             color = 'secondary'
                             onChange ={handleChange}
                         />} />
-                    </RadioGroup>
+                    </FormGroup>
                 </FormControl>
                 </div>
                 <div className="type1__marks">
