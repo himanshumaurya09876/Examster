@@ -16,7 +16,10 @@ function Header(props ) {
                     }}><h4>Class</h4></Link>
                 </div>
                 <div className = "home__nav">
-                    <h4>Paper</h4>
+                <Link to={{
+                        pathname: "/teacher/paper",
+                        state: { email: props.email }
+                    }}><h4>Paper</h4></Link>
                 </div>
                 <div className = "home__nav">
                     <h4>Profile</h4>

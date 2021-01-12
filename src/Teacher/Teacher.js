@@ -5,7 +5,7 @@ import ClassList from './EnrolledClasses/ClassList';
 import TestList from "./classTest/TestList";
 import Dashboard from './Dashboard/Dashboard';
 import MarksList from './testMarks/MarksList';
-import PapersList from './questionPapers/PapersList';
+import QuestionPapersList from './questionPapers/PapersList';
 import CreatePaper from './createPaper/Papers';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -17,6 +17,8 @@ function Teacher(props) {
             <Route path="/teacher/dashboard" component={Dashboard}></Route>
             <Route path='/teacher/classList' component={ClassList}></Route>
             <Route path='/teacher/class' component={TestList}></Route>
+            <Route path='/teacher/paper' component={QuestionPapersList}></Route>
+            <Route path='/teacher/createPaper' component={CreatePaper}></Route>
             <Footer />
         </div>
     )

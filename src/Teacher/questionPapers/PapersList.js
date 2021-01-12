@@ -3,6 +3,7 @@ import MList from './PList';
 import {Button} from '@material-ui/core'
 
 import './PapersList.css';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const papersList =[
     {
@@ -19,8 +20,8 @@ const papersList =[
     }
 ]
 
-function PapersList() {
-   
+function PapersList(props) {
+   const email  =  props.location.state.email;
     return (
         <div className="papersList__body">
 
@@ -34,13 +35,18 @@ function PapersList() {
                         width : "fit-content",
                         margin:"20px auto"
                     }}>
-                <Button style={{
-                            width : "200px",
-                            height:"50px",
-                            backgroundColor:"cyan",
-                        }}>
-                        Create Test
-                </Button>
+                <Link to={{
+                        pathname: "/teacher/createPaper",
+                        state: { email: email }
+                    }}>
+                    <Button style={{
+                                width : "200px",
+                                height:"50px",
+                                backgroundColor:"cyan",
+                            }}>
+                            Create Test
+                    </Button>
+                </Link>
             </div>
         </div>
     );

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-function Papers() {
+function Papers(props) {
      
     const [ minutes, setMinutes ] = useState(0);
     const [seconds, setSeconds ] =  useState(0);
