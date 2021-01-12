@@ -10,7 +10,14 @@ function Type2() {
     return (
         <div className="type1Teacher">
             <div className="type1__question">
-                <h2>What is your name ? </h2>
+            <TextField
+                            id="standard-textarea"
+                            label="Question Statement"
+                            placeholder="Question Statement"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />
             </div>
             <div className="type1__points">
                     <TextField
@@ -26,10 +33,34 @@ function Type2() {
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset">
                     <RadioGroup aria-label="gender" name="gender1" value={option} onChange={handleChange}>
-                        <FormControlLabel value="0" control={<Checkbox />} label="Female" />
-                        <FormControlLabel value="1" control={<Checkbox />} label="Male" />
-                        <FormControlLabel value="2" control={<Checkbox />} label="Other" />
-                        <FormControlLabel value="3" control={<Checkbox />} label="Yse" />
+                        <FormControlLabel value="0" control={<Checkbox />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 1"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="1" control={<Checkbox />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 2"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="2" control={<Checkbox />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 3"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="3" control={<Checkbox />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 4"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
                     </RadioGroup>
                 </FormControl>
                 </div>

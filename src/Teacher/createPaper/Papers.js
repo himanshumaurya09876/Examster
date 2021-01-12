@@ -9,17 +9,6 @@ import Type2 from './Type2';
 import Type3 from './Type3';
 import Type4 from './Type4';
 
-
-const props = {
-    subjectName : "",
-    subjectCode : "",
-    testName : "",
-    questionPaper :{
-    },
-    minuteLimit : 0,
-    maximumMarks : 0
-}
-
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -35,11 +24,36 @@ const useStyles = makeStyles((theme) => ({
 
 function Papers() {
      
-    const [ minutes, setMinutes ] = useState(0);
-    const [seconds, setSeconds ] =  useState(0);
-    const classes = useStyles();
-    function handleChange(){
+    const [paperData,setPaperData]=useState({
+        testName : "",
+        questionsList :[],
+        timeLimit : "",
+    })
+    const classes = useStyles()
 
+    function handleChange(event){
+        const {name,value}=event.target;
+
+        setPaperData((prevData) => {
+            if(name === "questionType")
+            {
+                const question={
+                    questionType:value,
+                    questionStatement:"",
+                    points: "",
+                    options:[]
+                }
+                return {
+                    ...prevData,
+                    ["questionsList"]:[...prevData.questionsList,question]
+                }
+            } else {
+                return {
+                    ...prevData,
+                    [name]:value
+                }
+            }
+        })
     }
 
     const date = new Date();
@@ -47,34 +61,15 @@ function Papers() {
         <div className="classtestTeacher">
             <div className="classtest__headerTeacher">
                 <div className="classtest__headerLeft">
-                    <div className="classtest__headerSubjectName">
-                        <TextField
-                            id="standard-textarea"
-                            label="Subject Name and Code"
-                            placeholder="Subject Name and Code"
-                            multiline
-                            color = 'secondary'
-                            onChange ={handleChange}
-                        />
-                    </div>
-                    <br />
                     <div className="classtest__headerTestName">
                         <TextField
                             id="standard-textarea"
                             label="Test Name"
+                            name="testName"
                             placeholder="Test Name"
                             multiline
                             color = 'secondary'
-                            onChange ={handleChange}
-                        />
-                    </div>
-                    <div className="classtest__headerMaxMarks">
-                        <TextField
-                            id="standard-textarea"
-                            label="Maximum Marks"
-                            placeholder="Maximum Marks"
-                            multiline
-                            color = 'secondary'
+                            value={paperData.testName}
                             onChange ={handleChange}
                         />
                     </div>
@@ -85,16 +80,26 @@ function Papers() {
                             label="Total Time (In Mins)"
                             placeholder="Total Time (In Mins)"
                             multiline
+                            name="timeLimit"
+                            value={paperData.timeLimit}
                             color = 'secondary'
                             onChange ={handleChange}
                         />
                 </div>
             </div>
             <div className="classtest__body">
-                 <Type1 />
-                 <Type2 />
-                 <Type3 />
-                 <Type4 />
+                 {paperData.questionsList.map((aQuestion,index) => {
+                     switch(aQuestion.questionType){
+                         case "type1":return <Type1 />;
+                         break;
+                         case "type2":return <Type2 />;
+                         break;
+                         case "type3":return <Type3 />;
+                         break;
+                         case "type4":return <Type4 />;
+                         break;
+                     }
+                 })}
             </div>
 
             <div className="addQuestion">
@@ -109,10 +114,10 @@ function Papers() {
                                 name="questionType"
                                 className={classes.selectEmpty}
                             >
-                            <MenuItem  value={""}>Type 1</MenuItem>
-                            <MenuItem value={""}>Type 2</MenuItem>
-                            <MenuItem  value={""}>Type 3</MenuItem>
-                            <MenuItem value={""}>Type 4</MenuItem>
+                            <MenuItem value={"type1"}>MCQ With Single Correct Option</MenuItem>
+                            <MenuItem value={"type1"}>MCQ With Multiple Correct Option</MenuItem>
+                            <MenuItem value={"type3"}>Subjective With Answer In Form Of Text</MenuItem>
+                            <MenuItem value={"type4"}>Subjective With Answer Inside A File</MenuItem>
                             </Select>
                     </FormControl>
                 </div>

@@ -3,20 +3,44 @@ import React ,{useState} from 'react';
 import './Type1.css';
 
 function Type1() {
-    const [option, setOption] = useState("");
+    const [questionData, setQuestionData] = useState({
+        questionStatement:"",
+        points:"",
+        options:[]
+    });
+
     function handleChange(event){
-        setOption(event.target.value);
+        const {name,value}=event.target;
+
+        setQuestionData((prevData) => {
+            return {
+                ...prevData,
+                [name]:value
+            }
+        })
     }
+
     return (
         <div className="type1Teacher">
             <div className="type1__question">
-                <h2>What is your name ? </h2>
+            <TextField
+                id="standard-textarea"
+                label="Question Statement"
+                placeholder="Question Statement"
+                multiline
+                name="questionStatement"
+                value={questionData.questionStatement}
+                color = 'secondary'
+                onChange ={handleChange}
+            />
             </div>
             <div className="type1__points">
                     <TextField
                             id="standard-textarea"
                             label="Points"
                             placeholder="Points"
+                            name="points"
+                            value={questionData.points}
                             multiline
                             color = 'secondary'
                             onChange ={handleChange}
@@ -26,10 +50,34 @@ function Type1() {
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset">
                     <RadioGroup aria-label="gender" name="gender1" value={option} onChange={handleChange}>
-                        <FormControlLabel value="0" control={<Radio />} label="Female" />
-                        <FormControlLabel value="1" control={<Radio />} label="Male" />
-                        <FormControlLabel value="2" control={<Radio />} label="Other" />
-                        <FormControlLabel value="3" control={<Radio />} label="Yse" />
+                        <FormControlLabel value="0" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 1"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="1" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 2"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="2" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 3"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="3" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 4"
+                            multiline
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
                     </RadioGroup>
                 </FormControl>
                 </div>
