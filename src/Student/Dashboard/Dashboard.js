@@ -6,7 +6,7 @@ import Footer from '../General/Footer';
 import Header from '../General/Header';
 
 
-function Dashboard() {
+function Dashboard(props) {
     var items = [
         {
             img : "../Images/Student/Card1.jpg"
@@ -21,7 +21,6 @@ function Dashboard() {
     const img_style = { height: '50%', width: '50%' , margin : 'auto' };
     return (
         <div>
-            <Header/>
             <div className="dashboard">
                 <div className="dashboard__slider">
                         <Carousel  navButtonsAlwaysVisible="true" animation="slide">
@@ -39,7 +38,6 @@ function Dashboard() {
                         </Carousel>
                 </div>
             </div>
-            <Footer/>
         </div>
     )
 }

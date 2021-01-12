@@ -28,8 +28,7 @@ function Dashboard(props) {
     
     return (
         <div>
-            <Header
-            email ={props.location.state.email} />
+        
         <div className="dashboard">
             <div className="slider">
                     <Carousel  navButtonsAlwaysVisible="true" animation="slide">
@@ -47,7 +46,6 @@ function Dashboard(props) {
                     </Carousel>
             </div>
         </div>
-            <Footer />
         </div>
     )
 }

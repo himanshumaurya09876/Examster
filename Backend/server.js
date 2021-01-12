@@ -40,6 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 // API's
 app.get('/' ,function(req,res){
     res.status(200).send("Hello World");
@@ -51,3 +52,4 @@ app.listen(9000 , function(req ,res){
 
 app.use('/', require('./routes/home.js'));
 app.use('/Teacher',require('./routes/teacher.js'));
+app.use('/Student',require('./routes/Student.js'));

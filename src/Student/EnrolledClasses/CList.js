@@ -1,5 +1,6 @@
 import { Button, Checkbox, Divider, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core'
 import React from 'react'
+import { Link, Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import './CList.css'
  function listItemStyle(){
      return {
@@ -13,8 +14,13 @@ import './CList.css'
 
 function CList(props) {
     const enrolledClasses = props.enrolledClasses;
-
     const listStyle = listItemStyle();
+    // function ClassListClick(id){
+    //     console.log("class pe ja na"+id);
+    //         return <Redirect 
+
+    //         /> 
+    // }
     return (
         <div className="list__block1">
             { enrolledClasses &&
@@ -27,14 +33,21 @@ function CList(props) {
                                 style={listStyle}
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
-                                <ListItemText primary={Aclass.className + " ["+Aclass.classCode+" ] "} />
+                                <ListItemText primary={Aclass.classSubjectName + " ["+Aclass.classSubjectCode+" ] "} />
                                 <ListItemSecondaryAction>
-                                <Button
-                                    style={{
-                                        width:"100px" , 
-                                        backgroundColor:"lightSkyBlue"
-                                    }}
-                                >Open</Button>
+                                <Link to={{
+                                    pathname: "/student/class",
+                                    state: { email: props.email , 
+                                            classId : Aclass.classId }
+                                }}>
+                                    <Button
+                                        style={{
+                                            width:"100px" , 
+                                            backgroundColor:"lightSkyBlue"
+                                        }}
+                                        // onClick={()=>{props.ClassListClick(Aclass._id)}}
+                                    >Open</Button>
+                                </Link>
                                 </ListItemSecondaryAction>
                             </ListItem>
                         </div>

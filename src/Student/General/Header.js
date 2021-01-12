@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-function Header() {
+function Header(props) {
     return (
         <div className="home__header">
             <div className="home__headerLeft">
@@ -11,7 +11,11 @@ function Header() {
             <div className="home__headerRight">
                 
                     <div className = "home__nav">
-                        <Link to="/student/class"> <h4>Class</h4></Link>
+                        <Link to={{
+                            pathname: "/student/EnrolledClasses",
+                            state: { email: props.email }}}>                                 
+                            <h4>Class</h4>
+                            </Link>
                     </div>
                     <div className = "home__nav">
                         <h4>Profile</h4>

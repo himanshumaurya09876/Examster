@@ -50,12 +50,12 @@ function Login() {
             alert("Fill all the fields");
             
         }else{ 
-            await Axios.post('/login' , qs.stringify(user),//{withCredentials: true},
+            await Axios.post('/login' , qs.stringify(user),{withCredentials: true},
             {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                //  "Access-Control-Allow-Origin": "*",
+                // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })
             .then(data=>{
@@ -72,8 +72,12 @@ function Login() {
 
              /> 
         } else {
-            return <Redirect to="/student/dashboard" /> 
-        }   
+            return <Redirect to={{
+                pathname: "/student/dashboard",
+                state: { email: user.email }
+              }}
+
+             />         }   
     }
     return (
         <div>

@@ -9,21 +9,18 @@ function Header(props ) {
                 <i class="fas fa-laptop-code"></i>
             </div>
             <div className="home__headerRight">
-                
-                    <div className = "home__nav">
-                      <Link to={{
-                            pathname: "/teacher/classList",
-                            state: { email: props.email }
-                        }}><h4>Class</h4></Link>
-                    </div>
-                    <div className = "home__nav">
-                        <h4>Paper</h4>
-                    </div>
-                    <div className = "home__nav">
-                        <h4>Profile</h4>
-                    </div>
-                    
-               
+                <div className = "home__nav">
+                    <Link to={{
+                        pathname: "/teacher/classList",
+                        state: { email: props.email }
+                    }}><h4>Class</h4></Link>
+                </div>
+                <div className = "home__nav">
+                    <h4>Paper</h4>
+                </div>
+                <div className = "home__nav">
+                    <h4>Profile</h4>
+                </div>
             </div>
         </div>
     )

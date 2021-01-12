@@ -4,13 +4,12 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 const Schema = require('../models/Schemas');
-const {ensureAuthenticated ,forwardAuthenticated } = require('../config/auth.js');
+const {ensureAuthenticated ,forwardAuthenticated ,allowCrossDomain } = require('../config/auth.js');
 
 router.post('/signUp' , (req ,res)=>{
     const userType = req.body.userType;
     if(userType === 'Student'){
         const studentData= req.body;
-        console.log(studentData);
 
         Schema.Student.findOne({ email: req.body.email }).then(user => {
             if (user) {
@@ -38,7 +37,6 @@ router.post('/signUp' , (req ,res)=>{
     }
     if(userType === 'Teacher'){
         const teacherData= req.body;
-        console.log(teacherData);
 
         Schema.Teacher.findOne({ email: req.body.email }).then(user => {
             if (user) {
@@ -67,21 +65,15 @@ router.post('/signUp' , (req ,res)=>{
 })
 
 // Login
-router.post('/login', (req, res, next) => {
+router.post('/login', allowCrossDomain,(req, res, next) => {
     const userType = req.body.userType;
     if(userType==='Student'){
         passport.authenticate('StudentStrategy', )(req, res, function(){
-           console.log(req.session);
+          //console.log("login ",req.session);
             res.send("Student login successful");
         });
     }else{
         passport.authenticate('TeacherStrategy', )(req, res, function(err ,data){
-          console.log("=========================================================");
-          console.log(req);
-          console.log("=========================================================");
-
-          console.log(req.sessionID);
-
             res.send(data);
         });
     }   
