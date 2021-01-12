@@ -3,7 +3,6 @@ import React ,{useState} from 'react';
 import './Type1.css';
 
 function Type1(props) {
-    let ansOption;
     const [questionData, setQuestionData] = useState({
         questionStatement:"",
         points:"",
@@ -12,7 +11,13 @@ function Type1(props) {
         option3:"",
         option4:""
     });
-
+    const [answer , setAnswer] = useState("");
+    function handleAnswerChange(event){
+        console.log(event.target.value);
+        const answer = event.target.value;
+        setAnswer(answer);
+        props.addAnswer(answer , props.id);
+    }
     function handleChange(event){
         event.preventDefault();
         const {name,value}=event.target;
@@ -57,8 +62,8 @@ function Type1(props) {
             <div className="teachertype1__body">
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset" style={{width:"100%"}}>
-                    <RadioGroup aria-label="gender" style={{width:"100%"}} name="ansOption" value={ansOption} onChange={handleChange}>
-                        <FormControlLabel value="0" control={<Radio />} label={<TextField
+                    <RadioGroup aria-label="gender" style={{width:"100%"}} name="answer" value={answer} onChange={handleAnswerChange}>
+                        <FormControlLabel value="1" control={<Radio />} label={<TextField
                             id="standard-textarea"
                             placeholder="Option 1"
                             multiline
@@ -68,7 +73,7 @@ function Type1(props) {
                             onChange ={handleChange}
                             fullWidth="true"
                         />} />
-                        <FormControlLabel value="1" control={<Radio />} label={<TextField
+                        <FormControlLabel value="2" control={<Radio />} label={<TextField
                             id="standard-textarea"
                             placeholder="Option 2"
                             multiline
@@ -77,7 +82,7 @@ function Type1(props) {
                             color = 'secondary'
                             onChange ={handleChange}
                         />} />
-                        <FormControlLabel value="2" control={<Radio />} label={<TextField
+                        <FormControlLabel value="3" control={<Radio />} label={<TextField
                             id="standard-textarea"
                             placeholder="Option 3"
                             multiline
@@ -86,7 +91,7 @@ function Type1(props) {
                             color = 'secondary'
                             onChange ={handleChange}
                         />} />
-                        <FormControlLabel value="3" control={<Radio />} label={<TextField
+                        <FormControlLabel value="4" control={<Radio />} label={<TextField
                             id="standard-textarea"
                             placeholder="Option 4"
                             multiline

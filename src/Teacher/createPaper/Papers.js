@@ -29,6 +29,7 @@ function Papers(props) {
         testName : "",
         questionsList :[],
         timeLimit : "",
+        answerList : [],
     })
     const classes = useStyles()
 
@@ -53,7 +54,8 @@ function Papers(props) {
                 }
                 return {
                     ...prevData,
-                    questionsList:[...prevData.questionsList,question]
+                    questionsList:[...prevData.questionsList,question] ,
+                    answerList:[...prevData.answerList , -1],
                 }
             } else {
                 return {
@@ -81,6 +83,21 @@ function Papers(props) {
                 })
             }
         })
+    }
+
+    function addAnswer(answer , index){
+        setPaperData((prevData) => {
+            return {
+                ...prevData,
+                answerList:prevData.answerList.map((ans,id) => {
+                    if(id === index){
+                        return answer;
+                    } else {
+                        return ans;
+                    }
+                })
+            }
+        })     
     }
 
     console.log(paperData);
@@ -119,13 +136,13 @@ function Papers(props) {
             <div className="classtest__body">
                  {paperData.questionsList.map((aQuestion,index) => {
                      switch(aQuestion.questionType){
-                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData}/>;
+                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer}/>;
                          break;
-                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} />;
+                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
                          break;
-                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} />;
+                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
                          break;
-                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} />;
+                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
                          break;
                      }
                  })}

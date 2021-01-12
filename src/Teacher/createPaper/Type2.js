@@ -13,6 +13,7 @@ function Type2(props) {
         option4:""
     });
 
+
     function handleChange(event){
         event.preventDefault();
         const {name,value}=event.target;
@@ -25,6 +26,7 @@ function Type2(props) {
         })
         props.addQuestionData(questionData,props.id);
     }
+    console.log(option);
 
     return (
         <div className="type1Teacher">

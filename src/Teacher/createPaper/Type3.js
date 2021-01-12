@@ -12,25 +12,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Type3() {
+export default function Type3(props) {
   const classes = useStyles();
-  const [value, setValue] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [questionData, setQuestionData] = useState({
+    questionStatement:"",
+    points:"",
+  });
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  function handleChange(event){
+    event.preventDefault();
+    const {name,value}=event.target;
 
+    setQuestionData((prevData) => {
+        return {
+            ...prevData,
+            [name]:value
+        }
+    })
+    props.addQuestionData(questionData,props.id);
+  }
+  function handleAnswerChange(event){
+      const answer = event.target.value;
+      setAnswer(answer);
+      props.addAnswer(answer , props.id);
+  }
   return (
     <div className="type3Teacher" >
       <div className="type1__question">
       <TextField
-                            id="standard-textarea"
-                            label="Question Statement"
-                            placeholder="Question Statement"
-                            multiline
-                            color = 'secondary'
-                            onChange ={handleChange}
-                        />
+          id="standard-textarea"
+          label="Question Statement"
+          placeholder="Question Statement"
+          multiline
+          color = 'secondary'
+          name = "questionStatement"
+          value ={questionData.questionStatement}
+          onChange ={handleChange}
+          style={{width:"100%"}}
+      />
       </div>
       <div className="type3__points">
       <TextField
@@ -39,6 +59,8 @@ export default function Type3() {
             placeholder="Points"
             multiline
             color = 'secondary'
+            name ="points"
+            value={questionData.points}
             onChange ={handleChange}
       />
       </div>
@@ -49,7 +71,9 @@ export default function Type3() {
           placeholder="Answer"
           multiline
           color = 'secondary'
-          onChange ={handleChange}
+          name ="answer"
+          value={answer}
+          onChange ={handleAnswerChange}
         />
       </form>
     </div>

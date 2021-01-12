@@ -12,7 +12,8 @@ import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 function Teacher(props) {
     return (
         <div>
-            
+            <Header
+                email ={props.location.state.email} />             
             <Route path="/teacher/dashboard" component={Dashboard}></Route>
             <Route path='/teacher/classList' component={ClassList}></Route>
             <Route path='/teacher/class' component={TestList}></Route>
