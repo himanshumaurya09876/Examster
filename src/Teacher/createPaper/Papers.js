@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Papers() {
      
+    const [quesAdded,setQuesAdded]=useState("none");
     const [paperData,setPaperData]=useState({
         testName : "",
         questionsList :[],
@@ -34,6 +35,10 @@ function Papers() {
     function handleChange(event){
         const {name,value}=event.target;
 
+        if(value==="none"){
+            return;
+        }
+
         setPaperData((prevData) => {
             if(name === "questionType")
             {
@@ -41,11 +46,14 @@ function Papers() {
                     questionType:value,
                     questionStatement:"",
                     points: "",
-                    options:[]
+                    option1:"",
+                    option2:"",
+                    option3:"",
+                    option4:""
                 }
                 return {
                     ...prevData,
-                    ["questionsList"]:[...prevData.questionsList,question]
+                    questionsList:[...prevData.questionsList,question]
                 }
             } else {
                 return {
@@ -54,7 +62,28 @@ function Papers() {
                 }
             }
         })
+        setQuesAdded("none");
     }
+
+    function addQuestionData(data,index){
+        setPaperData((prevData) => {
+            return {
+                ...prevData,
+                questionsList:prevData.questionsList.map((ques,id) => {
+                    if(id === index){
+                        return {
+                            ...data,
+                            questionType:ques.questionType,
+                        };
+                    } else {
+                        return ques;
+                    }
+                })
+            }
+        })
+    }
+
+    console.log(paperData);
 
     const date = new Date();
     return (
@@ -90,13 +119,13 @@ function Papers() {
             <div className="classtest__body">
                  {paperData.questionsList.map((aQuestion,index) => {
                      switch(aQuestion.questionType){
-                         case "type1":return <Type1 />;
+                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData}/>;
                          break;
-                         case "type2":return <Type2 />;
+                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} />;
                          break;
-                         case "type3":return <Type3 />;
+                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} />;
                          break;
-                         case "type4":return <Type4 />;
+                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} />;
                          break;
                      }
                  })}
@@ -106,16 +135,17 @@ function Papers() {
                 <div className="addQueText"><h3>Add Question</h3></div>
                 <div>
                     <FormControl required className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-required-label">Question Type</InputLabel>
                             <Select
                                 labelId="demo-simple-select-required-label"
                                 id="demo-simple-select-required"
                                 onChange={handleChange}
                                 name="questionType"
+                                value={quesAdded}
                                 className={classes.selectEmpty}
                             >
+                            <MenuItem value={"none"}><strong>Question Type</strong></MenuItem>
                             <MenuItem value={"type1"}>MCQ With Single Correct Option</MenuItem>
-                            <MenuItem value={"type1"}>MCQ With Multiple Correct Option</MenuItem>
+                            <MenuItem value={"type2"}>MCQ With Multiple Correct Option</MenuItem>
                             <MenuItem value={"type3"}>Subjective With Answer In Form Of Text</MenuItem>
                             <MenuItem value={"type4"}>Subjective With Answer Inside A File</MenuItem>
                             </Select>
