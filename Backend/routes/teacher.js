@@ -30,7 +30,7 @@ router.post("/CreateClass",allowCrossDomain, function(req,res){
 });
 
 router.get("/getClassList/:email",allowCrossDomain, function(req,res){
-    // console.log("teacher get Class list Data :",req.session);
+    console.log("teacher get Class list Data :",req.session);
     const email=req.params.email;
     const classList=[];
 
@@ -90,6 +90,11 @@ router.post("/assignTest" ,allowCrossDomain, function(req ,res){
     // console.log("assign Test :",req.session);
     console.log(req.body);
     
+});
+
+router.post("/createPaper",allowCrossDomain,function(req,res){
+    console.log(req.body);
+    res.send("paper created");
 });
 
 module.exports = router;

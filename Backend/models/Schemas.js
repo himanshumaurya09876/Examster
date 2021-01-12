@@ -98,7 +98,7 @@ module.exports = {
     Student :  new mongoose.model('Student' ,StudentSchema),
     Test    : TestSchema,
     Class  : new mongoose.model("Class" ,ClassSchema ),
-    QuestionPaper : QuestionPaperSchema,
+    QuestionPaper : new mongoose.model("QuestionPaper",QuestionPaperSchema),
     Type1         : Type1,
     Type3         : Type3,
     Type4         : Type4,

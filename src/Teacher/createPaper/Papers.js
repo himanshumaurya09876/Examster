@@ -8,6 +8,9 @@ import Type1 from './Type1';
 import Type2 from './Type2';
 import Type3 from './Type3';
 import Type4 from './Type4';
+import Axios from '../../Axios';
+
+const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,9 +29,10 @@ function Papers(props) {
      
     const [quesAdded,setQuesAdded]=useState("none");
     const [paperData,setPaperData]=useState({
+        testCode:"",
         testName : "",
-        questionsList :[],
         timeLimit : "",
+        questionsList :[],
         answerList : [],
     })
     const classes = useStyles()
@@ -100,6 +104,28 @@ function Papers(props) {
         })     
     }
 
+    const onSubmit = async(event)=>{
+        event.preventDefault();
+
+        var fd = new FormData();
+        fd.append("testCode", paperData.testCode);
+        fd.append("testName", paperData.testName);
+        fd.append("questionsList", paperData.questionsList);
+        fd.append("answerList", paperData.answerList);
+    
+            await Axios.post('/Teacher/createPaper' , fd, //{withCredentials: false},
+            {
+                headers: {
+                    'Content-Type': 'application/form-data',
+                     "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                }
+            })
+            .then(data=>{
+                console.log(data);
+        });
+    }
+
     console.log(paperData);
 
     const date = new Date();
@@ -107,6 +133,17 @@ function Papers(props) {
         <div className="classtestTeacher">
             <div className="classtest__headerTeacher">
                 <div className="classtest__headerLeft">
+                    <div className="classtest__headerTestName">
+                        <TextField
+                            id="standard-textarea"
+                            label="Test Code"
+                            name="testCode"
+                            placeholder="Test Code"
+                            color = 'secondary'
+                            value={paperData.testCode}
+                            onChange ={handleChange}
+                        />
+                    </div>
                     <div className="classtest__headerTestName">
                         <TextField
                             id="standard-textarea"
@@ -118,7 +155,7 @@ function Papers(props) {
                             value={paperData.testName}
                             onChange ={handleChange}
                         />
-                    </div>
+                </div>
                 </div>
                 <div className="classtest__headerRemTime">
                         <Input
@@ -184,6 +221,7 @@ function Papers(props) {
                             color:"purple",
                             fontWeight:"500",
                         }}   
+                        onClick={onSubmit}
                     >
                     Submit
                 </Button>
