@@ -10,9 +10,14 @@
     font-weight: 100;
 }
 
+.teachertype1__body{
+    width:100%;
+}
+
 .type1__optionsBlock{
     display: flex;
     flex-direction: row;
+    width:70%;
 }
 
 .type1__points{

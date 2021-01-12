@@ -15,7 +15,14 @@ function Type4() {
     return (
         <div className="type4Teacher">
              <div className="type1__question">
-                <h2>What is your name ? </h2>
+             <TextField
+                id="standard-textarea"
+                label="Question Statement"
+                placeholder="Question Statement"
+                multiline
+                color = 'secondary'
+                onChange ={handleChange}
+            />
             </div>
             <div className="type1__points">
             <TextField

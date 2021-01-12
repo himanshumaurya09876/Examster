@@ -9,17 +9,6 @@ import Type2 from './Type2';
 import Type3 from './Type3';
 import Type4 from './Type4';
 
-
-const props = {
-    subjectName : "",
-    subjectCode : "",
-    testName : "",
-    questionPaper :{
-    },
-    minuteLimit : 0,
-    maximumMarks : 0
-}
-
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -35,46 +24,81 @@ const useStyles = makeStyles((theme) => ({
 
 function Papers(props) {
      
-    const [ minutes, setMinutes ] = useState(0);
-    const [seconds, setSeconds ] =  useState(0);
-    const classes = useStyles();
-    function handleChange(){
+    const [quesAdded,setQuesAdded]=useState("none");
+    const [paperData,setPaperData]=useState({
+        testName : "",
+        questionsList :[],
+        timeLimit : "",
+    })
+    const classes = useStyles()
 
+    function handleChange(event){
+        const {name,value}=event.target;
+
+        if(value==="none"){
+            return;
+        }
+
+        setPaperData((prevData) => {
+            if(name === "questionType")
+            {
+                const question={
+                    questionType:value,
+                    questionStatement:"",
+                    points: "",
+                    option1:"",
+                    option2:"",
+                    option3:"",
+                    option4:""
+                }
+                return {
+                    ...prevData,
+                    questionsList:[...prevData.questionsList,question]
+                }
+            } else {
+                return {
+                    ...prevData,
+                    [name]:value
+                }
+            }
+        })
+        setQuesAdded("none");
     }
+
+    function addQuestionData(data,index){
+        setPaperData((prevData) => {
+            return {
+                ...prevData,
+                questionsList:prevData.questionsList.map((ques,id) => {
+                    if(id === index){
+                        return {
+                            ...data,
+                            questionType:ques.questionType,
+                        };
+                    } else {
+                        return ques;
+                    }
+                })
+            }
+        })
+    }
+
+    console.log(paperData);
 
     const date = new Date();
     return (
         <div className="classtestTeacher">
             <div className="classtest__headerTeacher">
                 <div className="classtest__headerLeft">
-                    <div className="classtest__headerSubjectName">
-                        <TextField
-                            id="standard-textarea"
-                            label="Subject Name and Code"
-                            placeholder="Subject Name and Code"
-                            multiline
-                            color = 'secondary'
-                            onChange ={handleChange}
-                        />
-                    </div>
-                    <br />
                     <div className="classtest__headerTestName">
                         <TextField
                             id="standard-textarea"
                             label="Test Name"
+                            name="testName"
                             placeholder="Test Name"
                             multiline
                             color = 'secondary'
-                            onChange ={handleChange}
-                        />
-                    </div>
-                    <div className="classtest__headerMaxMarks">
-                        <TextField
-                            id="standard-textarea"
-                            label="Maximum Marks"
-                            placeholder="Maximum Marks"
-                            multiline
-                            color = 'secondary'
+                            value={paperData.testName}
                             onChange ={handleChange}
                         />
                     </div>
@@ -85,34 +109,45 @@ function Papers(props) {
                             label="Total Time (In Mins)"
                             placeholder="Total Time (In Mins)"
                             multiline
+                            name="timeLimit"
+                            value={paperData.timeLimit}
                             color = 'secondary'
                             onChange ={handleChange}
                         />
                 </div>
             </div>
             <div className="classtest__body">
-                 <Type1 />
-                 <Type2 />
-                 <Type3 />
-                 <Type4 />
+                 {paperData.questionsList.map((aQuestion,index) => {
+                     switch(aQuestion.questionType){
+                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData}/>;
+                         break;
+                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} />;
+                         break;
+                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} />;
+                         break;
+                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} />;
+                         break;
+                     }
+                 })}
             </div>
 
             <div className="addQuestion">
                 <div className="addQueText"><h3>Add Question</h3></div>
                 <div>
                     <FormControl required className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-required-label">Question Type</InputLabel>
                             <Select
                                 labelId="demo-simple-select-required-label"
                                 id="demo-simple-select-required"
                                 onChange={handleChange}
                                 name="questionType"
+                                value={quesAdded}
                                 className={classes.selectEmpty}
                             >
-                            <MenuItem  value={""}>Type 1</MenuItem>
-                            <MenuItem value={""}>Type 2</MenuItem>
-                            <MenuItem  value={""}>Type 3</MenuItem>
-                            <MenuItem value={""}>Type 4</MenuItem>
+                            <MenuItem value={"none"}><strong>Question Type</strong></MenuItem>
+                            <MenuItem value={"type1"}>MCQ With Single Correct Option</MenuItem>
+                            <MenuItem value={"type2"}>MCQ With Multiple Correct Option</MenuItem>
+                            <MenuItem value={"type3"}>Subjective With Answer In Form Of Text</MenuItem>
+                            <MenuItem value={"type4"}>Subjective With Answer Inside A File</MenuItem>
                             </Select>
                     </FormControl>
                 </div>
