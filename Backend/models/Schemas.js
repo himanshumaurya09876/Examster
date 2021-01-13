@@ -53,7 +53,7 @@ const ClassSchema = new mongoose.Schema({
     classSubjectCode : String,
     classSubjectName : String, 
     scheduledTest : [TestSchema],
-    OldTests :[ TestSchema],
+    oldTests :[ TestSchema],
 });
 
 const QuestionPaperSchema = new mongoose.Schema({

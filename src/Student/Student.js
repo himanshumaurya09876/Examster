@@ -18,6 +18,7 @@ function Student(props) {
           <Route path='/student/dashboard' component={Dashboard}></Route>
           <Route path='/student/EnrolledClasses' component={EnrolledClass}></Route>
           <Route path='/student/class' component={Class}></Route>
+          <Route path='/student/attemptTest' component={ClassTest}></Route>
           <Footer />
         </div>
     )

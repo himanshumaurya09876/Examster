@@ -17,8 +17,8 @@ const props = {
     maximumMarks : 30,
 }
 
-function ClassTest() {
-     
+function ClassTest(props) {
+     console.log(props);
     const [ minutes, setMinutes ] = useState(props.minuteLimit);
     const [seconds, setSeconds ] =  useState(10);
     
