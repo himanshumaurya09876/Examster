@@ -64,7 +64,6 @@ router.get("/getClassList/:email",allowCrossDomain, function(req,res){
 });
 
 router.get("/classData" ,allowCrossDomain, function(req ,res){
-    //console.log("ClassData :",req.session);
 
     const email = req.query.email;
     const classId = req.query.classId;

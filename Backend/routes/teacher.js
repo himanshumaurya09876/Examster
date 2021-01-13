@@ -88,7 +88,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
 
 router.post("/assignTest" ,allowCrossDomain, function(req ,res){
     // console.log("assign Test :",req.session);
-    console.log(req.body);
+    console.log(req);
     
 });
 

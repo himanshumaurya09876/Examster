@@ -14,6 +14,8 @@ mongoose.connect(db_url , {useNewUrlParser:true ,useUnifiedTopology: true,useCre
 
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
 // app.use(express.cookieParser());
 app.use(cors());
 

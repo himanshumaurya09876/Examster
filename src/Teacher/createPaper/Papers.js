@@ -10,6 +10,7 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from '../../Axios';
 
+const fetch = require('node-fetch');
 const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
@@ -47,15 +48,6 @@ function Papers(props) {
         setPaperData((prevData) => {
             if(name === "questionType")
             {
-                const question={
-                    questionType:value,
-                    questionStatement:"",
-                    points: "",
-                    option1:"",
-                    option2:"",
-                    option3:"",
-                    option4:""
-                }
                 return {
                     ...prevData,
                     questionsList:[...prevData.questionsList,question] ,
@@ -107,23 +99,15 @@ function Papers(props) {
     const onSubmit = async(event)=>{
         event.preventDefault();
 
-        var fd = new FormData();
-        fd.append("testCode", paperData.testCode);
-        fd.append("testName", paperData.testName);
-        fd.append("questionsList", paperData.questionsList);
-        fd.append("answerList", paperData.answerList);
-    
-            await Axios.post('/Teacher/createPaper' , fd, //{withCredentials: false},
-            {
-                headers: {
-                    'Content-Type': 'application/form-data',
-                     "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-                }
-            })
-            .then(data=>{
-                console.log(data);
-        });
+        await Axios.post('/Teacher/createPaper' , JSON.stringify(paperData), //{withCredentials: false},
+        {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(data=>{
+            console.log(data);
+         });
     }
 
     console.log(paperData);
