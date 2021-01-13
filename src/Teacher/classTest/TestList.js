@@ -23,20 +23,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const testList =[
-    {
-        testName : "ClassTest-1",
-        testCode : "CT1-CO326",
-    },
-    {
-        testName : "ClassTest-2",
-        testCode : "CT2-CO326",
-    },
-    {
-        testName : "SurpriseTest-1",
-        testCode : "ST1-CO326",
-    }
-]
+// const testList =[
+//     {
+//         testName : "ClassTest-1",
+//         testCode : "CT1-CO326",
+//     },
+//     {
+//         testName : "ClassTest-2",
+//         testCode : "CT2-CO326",
+//     },
+//     {
+//         testName : "SurpriseTest-1",
+//         testCode : "ST1-CO326",
+//     }
+// ]
 
 function TestList(props) {
     const classes=useStyles();
@@ -44,13 +44,15 @@ function TestList(props) {
         name : "",
         code : "",
         time : "",
-        duration :"",
         questionPaperCode : "",
     };
     
     const [newTest, setNewTest] = useState(false);
     const {email , classId}=props.location.state;
     const [assignTest , setAssignTest] = useState(defaultAssignTest);
+
+    const [scheduledTest,setScheduledTest]=useState([]);
+    const [completedTest,setCompletedTest]=useState([]);
     
     useEffect(() => {
         loadClassTestData();
@@ -81,14 +83,14 @@ function TestList(props) {
     }
     const submit = async(event)=> {
 
-        if(assignTest.duration==="" || assignTest.name==="" || assignTest.code==="" ||
+        if(assignTest.name==="" || assignTest.code==="" ||
            assignTest.time==="" || assignTest.questionPaperCode===""){
                alert("Fill all the fields");
                return ;
         }
         setAssignTest(defaultAssignTest);
         setNewTest(false);
-        await  axios.post('/Teacher/assignTest' ,qs.stringify(assignTest),{withCredentials: true},
+        await  axios.post('/Teacher/assignTest?' +"email="+ email+"&classId="+classId ,qs.stringify(assignTest),{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -156,13 +158,6 @@ function TestList(props) {
                             }}
                         />
                     </form>
-                    <input 
-                        type="text" 
-                        placeholder="Test Duration"
-                        name="duration"
-                        value={assignTest.duration}
-                        onChange={handleChange}
-                        />
                     <input 
                         type="text" 
                         placeholder="Question Paper Code"

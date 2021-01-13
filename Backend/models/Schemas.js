@@ -7,7 +7,7 @@ const TeacherSchema = new mongoose.Schema({
     password :String,
     collegeID : String,
     classes : [ String ],
-    questionPaperCodes :[ String],
+    questionPaperIDs :[ String],
 }) ;
 
 
@@ -34,7 +34,6 @@ const TestSchema = new mongoose.Schema({
     
     date : String,
     startTime : String,
-    timeLimit : Number,
 
     questionPaperCode : String,
     studentResponse : [
@@ -55,14 +54,16 @@ const ClassSchema = new mongoose.Schema({
     classSection : String,
     classSubjectCode : String,
     classSubjectName : String, 
-    scheduledTest : TestSchema,
+    scheduledTest : [TestSchema],
     OldTests :[ TestSchema],
 });
 
 const QuestionPaperSchema = new mongoose.Schema({
-    code : String ,
-    maximumMarks : Number,
-    questions : [Object],
+    paperCode : String,
+    paperName : String,
+    timeLimit : Number,
+    questionsList :[Object],
+    answerList : [Object],
 });
 
 const Type1 = new mongoose.Schema({
@@ -96,7 +97,7 @@ const Type4 = new mongoose.Schema({
 module.exports = {
     Teacher : new mongoose.model('Teacher' ,TeacherSchema),
     Student :  new mongoose.model('Student' ,StudentSchema),
-    Test    : TestSchema,
+    Test    : new mongoose.model('Test' ,TestSchema),
     Class  : new mongoose.model("Class" ,ClassSchema ),
     QuestionPaper : new mongoose.model("QuestionPaper",QuestionPaperSchema),
     Type1         : Type1,

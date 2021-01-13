@@ -30,11 +30,12 @@ function Papers(props) {
      
     const [quesAdded,setQuesAdded]=useState("none");
     const [paperData,setPaperData]=useState({
-        testCode:"",
-        testName : "",
+        paperCode:"",
+        paperName : "",
         timeLimit : "",
         questionsList :[],
         answerList : [],
+        email:props.location.state.email
     })
     const classes = useStyles()
 
@@ -48,6 +49,15 @@ function Papers(props) {
         setPaperData((prevData) => {
             if(name === "questionType")
             {
+                const question={
+                    questionType:value,
+                    questionStatement:"",
+                    points: "",
+                    option1:"",
+                    option2:"",
+                    option3:"",
+                    option4:""
+                }
                 return {
                     ...prevData,
                     questionsList:[...prevData.questionsList,question] ,
@@ -117,26 +127,26 @@ function Papers(props) {
         <div className="classtestTeacher">
             <div className="classtest__headerTeacher">
                 <div className="classtest__headerLeft">
-                    <div className="classtest__headerTestName">
+                    <div className="classtest__headerpaperName">
                         <TextField
                             id="standard-textarea"
                             label="Test Code"
-                            name="testCode"
+                            name="paperCode"
                             placeholder="Test Code"
                             color = 'secondary'
-                            value={paperData.testCode}
+                            value={paperData.paperCode}
                             onChange ={handleChange}
                         />
                     </div>
-                    <div className="classtest__headerTestName">
+                    <div className="classtest__headerpaperName">
                         <TextField
                             id="standard-textarea"
                             label="Test Name"
-                            name="testName"
+                            name="paperName"
                             placeholder="Test Name"
                             multiline
                             color = 'secondary'
-                            value={paperData.testName}
+                            value={paperData.paperName}
                             onChange ={handleChange}
                         />
                 </div>
