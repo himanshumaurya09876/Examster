@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function Papers(props) {
-     
     const [quesAdded,setQuesAdded]=useState("none");
     const [paperData,setPaperData]=useState({
         paperCode:"",
@@ -35,7 +34,8 @@ function Papers(props) {
         timeLimit : "",
         questionsList :[],
         answerList : [],
-        email:props.location.state.email
+        email:props.location.state.email,
+        maximumMarks: 0
     })
     const classes = useStyles()
 
@@ -74,19 +74,24 @@ function Papers(props) {
     }
 
     function addQuestionData(data,index){
+        
+        let maxMarks=0;
         setPaperData((prevData) => {
             return {
                 ...prevData,
                 questionsList:prevData.questionsList.map((ques,id) => {
                     if(id === index){
+                        maxMarks=maxMarks+Number(data.points);
                         return {
                             ...data,
                             questionType:ques.questionType,
                         };
                     } else {
+                        maxMarks=maxMarks+Number(ques.points);
                         return ques;
                     }
-                })
+                }),
+                maximumMarks:maxMarks
             }
         })
     }
@@ -108,6 +113,8 @@ function Papers(props) {
 
     const onSubmit = async(event)=>{
         event.preventDefault();
+
+
 
         await Axios.post('/Teacher/createPaper' , JSON.stringify(paperData), //{withCredentials: false},
         {
@@ -149,7 +156,10 @@ function Papers(props) {
                             value={paperData.paperName}
                             onChange ={handleChange}
                         />
-                </div>
+                    </div>
+                    <div className="classtest__headerpaperName">
+                        <p>Maximum Marks: {paperData.maximumMarks}</p>
+                    </div>
                 </div>
                 <div className="classtest__headerRemTime">
                         <Input

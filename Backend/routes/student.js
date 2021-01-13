@@ -151,5 +151,9 @@ router.get("/startTest" ,allowCrossDomain, function(req ,res){
     });
 });
 
+router.get("/attempTest",allowCrossDomain,function(req,res){
+    
+})
+
 
 module.exports = router;

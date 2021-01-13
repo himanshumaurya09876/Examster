@@ -7,7 +7,7 @@ import './Type4.css'
 function Type4(props) {
     const [questionData, setQuestionData] = useState({
         questionStatement:"",
-        points:"",
+        points:0,
       });
     function addImage(){
 

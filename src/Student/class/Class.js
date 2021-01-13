@@ -76,7 +76,9 @@ function Class(props) {
                             pathname: "/student/attemptTest",
                             state: { email: props.email , 
                                      classId : classData._id,
-                                     testData : test
+                                     testData : test,
+                                     classSubjectName: classData.classSubjectName,
+                                     classSubjectCode: classData.classSubjectCode
                                      }}}>                                 
                                 <Button
                                     style={{

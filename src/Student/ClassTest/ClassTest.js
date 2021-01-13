@@ -5,7 +5,7 @@ import Type1 from './Type1';
 import Type2 from './Type2';
 import Type3 from './Type3';
 import Type4 from './Type4';
-
+import Axios from "../../Axios.js";
 
 // const testData = {
 //     subjectName : "",
@@ -18,16 +18,16 @@ import Type4 from './Type4';
 // }
 
 function ClassTest(props) {
+
+    console.log(props.location.state);
      
-    const [minutes, setMinutes ] = useState(props.minuteLimit);
-    const [seconds, setSeconds ] =  useState(0);
+    const [minutes, setMinutes ] = useState(0);
+    const [seconds, setSeconds ] =  useState(10);
     const [testData,setTestData] = useState({
-        subjectName : "",
-        subjectCode : "",
-        testName : "",
-        questionsList :{
-        },
-        minuteLimit : 0,
+        subjectName : props.location.state.classSubjectName,
+        subjectCode : props.location.state.classSubjectCode,
+        testName : props.location.state.testData.testName,
+        questionsList :[],
         maximumMarks : 0,
     });
 
@@ -53,11 +53,11 @@ function ClassTest(props) {
     });
 
     useEffect(() => {
-        loadData();
+        loadTestData();
     }, [])
 
-    const loadClassData = async(event)=>{
-        await  Axios.get('/Student/....' ,{withCredentials: true},
+    const loadTestData = async(event)=>{
+        await  Axios.get('/Student/attempTest' ,{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -77,7 +77,7 @@ function ClassTest(props) {
     }
 
     function addAnswer(answer , index){
-        setAnswers(() => {
+        setAnswers((prevData) => {
             return {
                 answerList:prevData.answerList.map((ans,id) => {
                     if(id === index){
@@ -93,7 +93,7 @@ function ClassTest(props) {
     const onSubmit = async(event)=>{
         event.preventDefault();
 
-        await Axios.post('/Student/....' , JSON.stringify(answers), //{withCredentials: false},
+        await Axios.post('/Student/attempTest' , JSON.stringify(answers), //{withCredentials: false},
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -127,13 +127,13 @@ function ClassTest(props) {
             <div className="classtest__body">
                 {testData.questionsList.map((aQuestion,index) => {
                      switch(aQuestion.questionType){
-                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer}/>;
+                         case "type1":return <Type1 key={index} id={index} addAnswer={addAnswer}/>;
                          break;
-                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         case "type2":return <Type2 key={index} id={index} addAnswer={addAnswer} />;
                          break;
-                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         case "type3":return <Type3 key={index} id={index} addAnswer={addAnswer} />;
                          break;
-                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         case "type4":return <Type4 key={index} id={index} addAnswer={addAnswer} />;
                          break;
                      }
                 })}

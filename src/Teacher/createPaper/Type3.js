@@ -18,7 +18,7 @@ export default function Type3(props) {
   const [answer, setAnswer] = useState('');
   const [questionData, setQuestionData] = useState({
     questionStatement:"",
-    points:"",
+    points:0,
   });
 
   function handleChange(event){

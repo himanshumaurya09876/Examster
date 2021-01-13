@@ -5,7 +5,7 @@ import './Type1.css';
 function Type1(props) {
     const [questionData, setQuestionData] = useState({
         questionStatement:"",
-        points:"",
+        points:0,
         option1:"",
         option2:"",
         option3:"",
