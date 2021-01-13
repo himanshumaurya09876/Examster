@@ -83,6 +83,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         if(err){
             res.send("error in finding  class data");
         }else{
+            console.log(data);
             res.send(data);
         }
     })

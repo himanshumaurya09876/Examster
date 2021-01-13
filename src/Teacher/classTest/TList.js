@@ -27,7 +27,7 @@ function TList(props) {
                                 Disable
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
-                                <ListItemText primary={Atest.testName + " ["+Atest.testCode+"]"} />
+                                <ListItemText primary={Atest.testName + " ["+Atest.testCode+"] "+Atest.date + "  " + Atest.startTime} />
                                 <ListItemSecondaryAction>
                                 <Button
                                     style={{

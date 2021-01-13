@@ -43,8 +43,6 @@ const TestSchema = new mongoose.Schema({
             marks : Number
         }
     ]
-    
-
 });
 
 const ClassSchema = new mongoose.Schema({

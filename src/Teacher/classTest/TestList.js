@@ -23,26 +23,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// const testList =[
-//     {
-//         testName : "ClassTest-1",
-//         testCode : "CT1-CO326",
-//     },
-//     {
-//         testName : "ClassTest-2",
-//         testCode : "CT2-CO326",
-//     },
-//     {
-//         testName : "SurpriseTest-1",
-//         testCode : "ST1-CO326",
-//     }
-// ]
-
 function TestList(props) {
     const classes=useStyles();
     const defaultAssignTest ={
-        name : "",
-        code : "",
+        testName : "",
+        testCode : "",
         time : "",
         questionPaperCode : "",
     };
@@ -68,7 +53,9 @@ function TestList(props) {
                        }
         })
         .then(data=>{
-            console.log("class data ",data);
+            console.log(data);
+            setScheduledTest(data.data.scheduledTest);
+            setCompletedTest(data.data.completedTest);
         });
     }
 
@@ -83,14 +70,26 @@ function TestList(props) {
     }
     const submit = async(event)=> {
 
-        if(assignTest.name==="" || assignTest.code==="" ||
+        if(assignTest.testName==="" || assignTest.testCode==="" ||
            assignTest.time==="" || assignTest.questionPaperCode===""){
                alert("Fill all the fields");
                return ;
         }
         setAssignTest(defaultAssignTest);
         setNewTest(false);
-        await  axios.post('/Teacher/assignTest?' +"email="+ email+"&classId="+classId ,qs.stringify(assignTest),{withCredentials: true},
+
+        const newTestFormat={
+            testCode : assignTest.testCode ,
+            testName : assignTest.testName  ,
+            
+            date : assignTest.time.substring(0,10),
+            startTime : assignTest.time.substring(12),
+
+            questionPaperCode : assignTest.questionPaperCode,
+            studentResponse : []
+        }
+
+        await  axios.post('/Teacher/assignTest?' +"email="+ email+"&classId="+classId ,qs.stringify(newTestFormat),{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -100,13 +99,21 @@ function TestList(props) {
         })
         .then(data=>{
             console.log("class data ",data);
+            loadClassTestData();
         });
     }
     return (
         <div className="testList__body">
+            <h2>Scheduled Test List</h2>
             {
                 <TList
-                    testList ={testList}
+                    testList ={scheduledTest}
+                    />
+            }
+            <h2>Completed Test List</h2>
+            {
+                <TList
+                    testList ={completedTest}
                     />
             }
            <div style={{
@@ -132,15 +139,15 @@ function TestList(props) {
                     <input 
                         type="text" 
                         placeholder="Test Name"
-                        name="name"
-                        value={assignTest.name}
+                        name="testName"
+                        value={assignTest.testName}
                         onChange={handleChange}
                         />
                     <input 
                         type="text" 
                         placeholder="Test Code"
-                        name="code"
-                        value={assignTest.code}
+                        name="testCode"
+                        value={assignTest.testCode}
                         onChange={handleChange}
                         />
                     <form className={classes.container} noValidate>
