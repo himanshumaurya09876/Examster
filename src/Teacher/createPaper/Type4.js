@@ -1,6 +1,6 @@
 import { IconButton, TextField ,Input} from '@material-ui/core'
 import { AttachFile } from '@material-ui/icons'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import AddIcon from '@material-ui/icons/Add';
 
 import './Type4.css'
@@ -25,6 +25,10 @@ function Type4(props) {
         })
         props.addQuestionData(questionData,props.id);
     }
+
+    useEffect(() => {
+        props.addQuestionData(questionData,props.id);
+      }, [questionData]);
 
     return (
         <div className="type4Teacher">

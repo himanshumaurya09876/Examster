@@ -1,5 +1,5 @@
 import { FormControl, FormControlLabel, FormLabel, Input, Radio, RadioGroup, TextField } from '@material-ui/core';
-import React ,{useState} from 'react';
+import React ,{useEffect, useState} from 'react';
 import './Type1.css';
 
 function Type1(props) {
@@ -30,6 +30,14 @@ function Type1(props) {
         })
         props.addQuestionData(questionData,props.id);
     }
+
+    useEffect(() => {
+        props.addQuestionData(questionData,props.id);
+      }, [questionData]);
+    
+      useEffect(() => {
+        props.addAnswer(answer , props.id);
+      }, [answer]);
 
     return (
         <div className="type1Teacher">

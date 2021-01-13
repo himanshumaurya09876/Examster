@@ -3,6 +3,9 @@ const router = express.Router();
 
 const Teacher=require("../models/Schemas").Teacher;
 const Class = require("../models/Schemas").Class;
+const Test = require("../models/Schemas").Test;
+const QuestionPaper = require("../models/Schemas").QuestionPaper;
+
 const {ensureAuthenticated ,forwardAuthenticated ,allowCrossDomain } = require('../config/auth.js');
 
 router.post("/CreateClass",allowCrossDomain, function(req,res){
@@ -88,15 +91,45 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
 
 router.post("/assignTest" ,allowCrossDomain, function(req ,res){
     // console.log("assign Test :",req.session);
-    console.log(req);
-    
+    // console.log(req.body);
+
+    const classId=req.query.classId;
+    // const email=req.query.email;
+
+    // console.log(classId);
+    // console.log(email);
+
+    Class.findOneAndUpdate({_id : classId} , {$push : {scheduledTest : req.body}} , 
+        function(err,data){
+            if(err){
+                console.log(err);
+                res.status(500).send("error in Scheduling test in teacher ");
+            }else{
+                res.status(200).send("insert ok");
+            }
+        }); 
 });
 
 router.post("/createPaper",allowCrossDomain,function(req,res){
-    console.log(req.body);
-    res.send("paper created");
 
-    
+    const newQuestionPaper=new QuestionPaper(req.body);
+    const email=req.body.email;
+
+    newQuestionPaper.save()
+    .then((data)=>{
+        Teacher.findOneAndUpdate({email : email} , {$push : {questionPaperIDs : data._id}} , 
+        function(err,data){
+            if(err){
+                console.log(err);
+                res.status(500).send("error in adding question paper in teacher ");
+            }else{
+                res.status(200).send("insert ok");
+            }
+        }); 
+    });
+
+    console.log(newQuestionPaper);
+
 });
 
 module.exports = router;

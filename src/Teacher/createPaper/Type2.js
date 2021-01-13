@@ -1,5 +1,5 @@
 import { Checkbox, FormControl, FormControlLabel, FormLabel, FormGroup, TextField, Input } from '@material-ui/core';
-import React ,{useState} from 'react';
+import React ,{useEffect, useState} from 'react';
 import './Type1.css';
 
 function Type2(props) {
@@ -40,6 +40,14 @@ function Type2(props) {
         })
         props.addQuestionData(questionData,props.id);
     }
+
+    useEffect(() => {
+        props.addQuestionData(questionData,props.id);
+      }, [questionData]);
+    
+      useEffect(() => {
+        props.addAnswer(answer , props.id);
+      }, [answer]);
 
     return (
         <div className="type1Teacher">

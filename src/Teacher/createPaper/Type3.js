@@ -1,4 +1,4 @@
-import React  ,{useState}from 'react';
+import React  ,{useEffect, useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import './Type3.css';
@@ -31,13 +31,21 @@ export default function Type3(props) {
             [name]:value
         }
     })
-    props.addQuestionData(questionData,props.id);
   }
+
   function handleAnswerChange(event){
       const answer = event.target.value;
       setAnswer(answer);
-      props.addAnswer(answer , props.id);
   }
+
+  useEffect(() => {
+    props.addQuestionData(questionData,props.id);
+  }, [questionData]);
+
+  useEffect(() => {
+    props.addAnswer(answer , props.id);
+  }, [answer]);
+
   return (
     <div className="type3Teacher" >
       <div className="type1__question">
