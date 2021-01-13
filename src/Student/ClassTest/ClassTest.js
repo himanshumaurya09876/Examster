@@ -17,7 +17,7 @@ import Type4 from './Type4';
 //     maximumMarks : 0,
 // }
 
-function ClassTest() {
+function ClassTest(props) {
      
     const [minutes, setMinutes ] = useState(props.minuteLimit);
     const [seconds, setSeconds ] =  useState(0);

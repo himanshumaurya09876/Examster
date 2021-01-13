@@ -35,7 +35,7 @@ router.post("/JoinClass",allowCrossDomain, function(req,res){
                             classSubjectName : cdata.classSubjectName,
                             classId: classId,
                         }
-                        if(("filter",data.enrolledClasses.filter(e=>e.classId+""== classId+"")).length>0){
+                        if(("filter",data.enrolledClasses.filter(e=>e.classId+""=== classId+"")).length>0){
                             res.status(201).send("already joined this class");
                         }else{
                             cdata.students.push(studentId);
@@ -72,7 +72,37 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         if(err){
             res.send("error in finding  class data");
         }
-        res.send(data);
+        const dataToSend = {
+            ...data._doc
+        };
+        const newTest = []
+        dataToSend.scheduledTest.forEach((test )=>{
+            newTest.push(   
+                {
+                    testCode : test.testCode ,
+                    testName : test.testName ,
+                    date : test.date,
+                    startTime : test.startTime,
+                    questionPaperCode : test.questionPaperCode,
+                }
+            );
+        });
+        dataToSend.scheduledTest = newTest;
+
+        const oldTests = []
+        dataToSend.oldTests.forEach((test )=>{
+            newTest.push(   
+                {
+                    testCode : test.testCode ,
+                    testName : test.testName ,
+                    date : test.date,
+                    startTime : test.startTime,
+                    questionPaperCode : test.questionPaperCode,
+                }
+            );
+        });
+        dataToSend.oldTests = oldTests;
+        res.send(dataToSend);
     })
 });
 
@@ -98,6 +128,7 @@ router.get("/startTest" ,allowCrossDomain, function(req ,res){
             if(!data){
                 res.send("no class found");
             }
+            console.log("class",data)
             dataToSend.testCode = data.testCode;
             dataToSend.testName = data.testName;
             
