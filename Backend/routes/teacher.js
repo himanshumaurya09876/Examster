@@ -95,6 +95,8 @@ router.post("/assignTest" ,allowCrossDomain, function(req ,res){
 router.post("/createPaper",allowCrossDomain,function(req,res){
     console.log(req.body);
     res.send("paper created");
+
+    
 });
 
 module.exports = router;

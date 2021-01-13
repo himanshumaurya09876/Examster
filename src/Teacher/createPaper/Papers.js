@@ -48,6 +48,15 @@ function Papers(props) {
         setPaperData((prevData) => {
             if(name === "questionType")
             {
+                const question={
+                    questionType:value,
+                    questionStatement:"",
+                    points: "",
+                    option1:"",
+                    option2:"",
+                    option3:"",
+                    option4:""
+                }
                 return {
                     ...prevData,
                     questionsList:[...prevData.questionsList,question] ,
