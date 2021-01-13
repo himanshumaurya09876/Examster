@@ -98,6 +98,7 @@ router.get("/startTest" ,allowCrossDomain, function(req ,res){
             if(!data){
                 res.send("no class found");
             }
+            console.log("class",data)
             dataToSend.testCode = data.testCode;
             dataToSend.testName = data.testName;
             

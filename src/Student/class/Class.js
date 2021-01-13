@@ -57,7 +57,7 @@ function Class(props) {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 // "Access-Control-Allow-Origin": "*",
                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-                       }
+            }
         })
         .then(data=>{
             console.log("class data ",data);
