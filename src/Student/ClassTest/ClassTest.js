@@ -7,20 +7,31 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 
 
-const props = {
-    subjectName : "Machine Learning",
-    subjectCode : "CO326",
-    testName : "Surprise test 2",
-    questionPaper :{
-    },
-    minuteLimit : 0,
-    maximumMarks : 30,
-}
+// const testData = {
+//     subjectName : "",
+//     subjectCode : "",
+//     testName : "",
+//     questionPaper :{
+//     },
+//     minuteLimit : 0,
+//     maximumMarks : 0,
+// }
 
 function ClassTest() {
      
-    const [ minutes, setMinutes ] = useState(props.minuteLimit);
-    const [seconds, setSeconds ] =  useState(10);
+    const [minutes, setMinutes ] = useState(props.minuteLimit);
+    const [seconds, setSeconds ] =  useState(0);
+    const [testData,setTestData] = useState({
+        subjectName : "",
+        subjectCode : "",
+        testName : "",
+        questionsList :{
+        },
+        minuteLimit : 0,
+        maximumMarks : 0,
+    });
+
+    const [answers,setAnswers]=useState([]);
     
     useEffect(()=>{
     let myInterval = setInterval(() => {
@@ -41,23 +52,72 @@ function ClassTest() {
           };
     });
 
-    function submit(){
+    useEffect(() => {
+        loadData();
+    }, [])
 
+    const loadClassData = async(event)=>{
+        await  Axios.get('/Student/....' ,{withCredentials: true},
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                // "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+            }
+        })
+        .then(data=>{
+            console.log("testData ",data);
+            setTestData();
+            setAnswers(() => {
+                const defaultAns=[];
+                testData.questionsList.forEach(() => defaultAns.push("null"));
+                return defaultAns;
+            })
+        });
     }
+
+    function addAnswer(answer , index){
+        setAnswers(() => {
+            return {
+                answerList:prevData.answerList.map((ans,id) => {
+                    if(id === index){
+                        return answer;
+                    } else {
+                        return ans;
+                    }
+                })
+            }
+        })     
+    }
+
+    const onSubmit = async(event)=>{
+        event.preventDefault();
+
+        await Axios.post('/Student/....' , JSON.stringify(answers), //{withCredentials: false},
+        {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(data=>{
+            console.log(data);
+         });
+    }
+
     const date = new Date();
     return (
         <div className="classtest">
             <div className="classtest__header">
                 <div className="classtest__headerLeft">
                     <div className="classtest__headerSubjectName">
-                        <p>{props.subjectName + " ["+props.subjectCode +"]"}</p>
+                        <p>{testData.subjectName + " ["+testData.subjectCode +"]"}</p>
                     </div>
                     <br />
                     <div className="classtest__headerTestName">
-                        <p>{props.testName}</p>
+                        <p>{testData.testName}</p>
                     </div>
                     <div className="classtest__headerMaxMarks">
-                        <p>{"Maximum Marks : "+props.maximumMarks}</p>
+                        <p>{"Maximum Marks : "+testData.maximumMarks}</p>
                     </div>
                 </div>
                 <div className="classtest__headerRemTime">
@@ -65,10 +125,18 @@ function ClassTest() {
                 </div>
             </div>
             <div className="classtest__body">
-                 <Type1 />
-                 <Type3 />
-                 <Type4 />
-                 <Type2 />
+                {testData.questionsList.map((aQuestion,index) => {
+                     switch(aQuestion.questionType){
+                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer}/>;
+                         break;
+                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         break;
+                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         break;
+                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         break;
+                     }
+                })}
             </div>
             <div style={{
                             width : "fit-content",
@@ -85,7 +153,7 @@ function ClassTest() {
                             fontWeight:"500",
                         }}
                         onClick={()=>{
-                                submit();
+                                onSubmit();
                             }}   
                     >
                     Submit

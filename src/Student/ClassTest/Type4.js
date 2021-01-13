@@ -1,20 +1,62 @@
-import { IconButton } from '@material-ui/core'
+import { IconButton, TextField ,Input} from '@material-ui/core'
 import { AttachFile } from '@material-ui/icons'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import AddIcon from '@material-ui/icons/Add';
 
 import './Type4.css'
-function Type4() {
+function Type4(props) {
+    const [questionData, setQuestionData] = useState({
+        questionStatement:"",
+        points:"",
+      });
     function addImage(){
 
     }
+
+    function handleChange(event){
+        event.preventDefault();
+        const {name,value}=event.target;
+    
+        setQuestionData((prevData) => {
+            return {
+                ...prevData,
+                [name]:value
+            }
+        })
+        props.addQuestionData(questionData,props.id);
+    }
+
+    useEffect(() => {
+        props.addQuestionData(questionData,props.id);
+      }, [questionData]);
+
     return (
-        <div className="type4">
+        <div className="type4Teacher">
              <div className="type1__question">
-                <h2>What is your name ? </h2>
+             <TextField
+                id="standard-textarea"
+                label="Question Statement"
+                placeholder="Question Statement"
+                multiline
+                name = "questionStatement"
+                value ={questionData.questionStatement}
+                onChange ={handleChange}
+                style={{width:"100%"}}
+                color = 'secondary'
+            />
             </div>
             <div className="type1__points">
-                <h6>{"*Points : 2"}</h6>
+            <Input
+                id="standard-textarea"
+                label="Points"
+                placeholder="Points"
+                type="number"
+                color = 'secondary'
+                name ="points"
+                value={questionData.points}
+                onChange ={handleChange}
+                style={{width:"70px" , marginTop:"10px"}}
+            />
             </div>
             <div className="addFileIcon" >   
                 <label htmlFor="file-upload" className="custom-file-upload"> 

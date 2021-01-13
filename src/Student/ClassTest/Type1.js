@@ -1,28 +1,114 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
-import React ,{useState} from 'react';
+import { FormControl, FormControlLabel, FormLabel, Input, Radio, RadioGroup, TextField } from '@material-ui/core';
+import React ,{useEffect, useState} from 'react';
 import './Type1.css';
 
-function Type1() {
-    const [option, setOption] = useState("");
-    function handleChange(event){
-        setOption(event.target.value);
+function Type1(props) {
+    const [questionData, setQuestionData] = useState({
+        questionStatement:"",
+        points:"",
+        option1:"",
+        option2:"",
+        option3:"",
+        option4:""
+    });
+    const [answer , setAnswer] = useState("");
+    function handleAnswerChange(event){
+        console.log(event.target.value);
+        const answer = event.target.value;
+        setAnswer(answer);
+        props.addAnswer(answer , props.id);
     }
+    function handleChange(event){
+        event.preventDefault();
+        const {name,value}=event.target;
+
+        setQuestionData((prevData) => {
+            return {
+                ...prevData,
+                [name]:value
+            }
+        })
+        props.addQuestionData(questionData,props.id);
+    }
+
+    useEffect(() => {
+        props.addQuestionData(questionData,props.id);
+      }, [questionData]);
+    
+      useEffect(() => {
+        props.addAnswer(answer , props.id);
+      }, [answer]);
+
     return (
-        <div className="type1">
+        <div className="type1Teacher">
             <div className="type1__question">
-                <h2>What is your name ? </h2>
+            <TextField
+                id="standard-textarea"
+                label="Question Statement"
+                placeholder="Question Statement"
+                multiline
+                name="questionStatement"
+                value={questionData.questionStatement}
+                color = 'secondary'
+                onChange ={handleChange}
+                style={{width:"100%"}}
+            />
             </div>
             <div className="type1__points">
-                <h6>{"*Points : 2"}</h6>
+                    <Input
+                            id="standard-textarea"
+                            label="Points"
+                            placeholder="Points"
+                            name="points"
+                            type="number"
+                            value={questionData.points}
+                            color = 'secondary'
+                            onChange ={handleChange}
+                            style={{width:"70px" , marginTop:"10px"}}
+                        />
             </div>
-            <div className="type1__body">
+            <div className="teachertype1__body">
                 <div className="type1__optionsBlock">
-                <FormControl component="fieldset">
-                    <RadioGroup aria-label="gender" name="gender1" value={option} onChange={handleChange}>
-                        <FormControlLabel value="0" control={<Radio />} label="Female" />
-                        <FormControlLabel value="1" control={<Radio />} label="Male" />
-                        <FormControlLabel value="2" control={<Radio />} label="Other" />
-                        <FormControlLabel value="3" control={<Radio />} label="Yse" />
+                <FormControl component="fieldset" style={{width:"100%"}}>
+                    <RadioGroup aria-label="gender" style={{width:"100%"}} name="answer" value={answer} onChange={handleAnswerChange}>
+                        <FormControlLabel value="1" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 1"
+                            multiline
+                            name="option1"
+                            value={questionData.option1}
+                            color = 'secondary'
+                            onChange ={handleChange}
+                            fullWidth="true"
+                            style={{width:"100%"}}
+                        />} />
+                        <FormControlLabel value="2" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 2"
+                            multiline
+                            name="option2"
+                            value={questionData.option2}
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="3" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 3"
+                            multiline
+                            name="option3"
+                            value={questionData.option3}
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
+                        <FormControlLabel value="4" control={<Radio />} label={<TextField
+                            id="standard-textarea"
+                            placeholder="Option 4"
+                            multiline
+                            name="option4"
+                            value={questionData.option4}
+                            color = 'secondary'
+                            onChange ={handleChange}
+                        />} />
                     </RadioGroup>
                 </FormControl>
                 </div>
