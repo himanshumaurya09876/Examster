@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Student=require("../models/Schemas").Student;
 const Class = require("../models/Schemas").Class;
+const QuestionPaper = require("../models/Schemas").QuestionPaper;
 const {ensureAuthenticated ,forwardAuthenticated ,allowCrossDomain } = require('../config/auth.js');
 
 router.post("/JoinClass",allowCrossDomain, function(req,res){
@@ -73,6 +74,50 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         }
         res.send(data);
     })
+});
+
+router.get("/startTest" ,allowCrossDomain, function(req ,res){
+
+    const email = req.query.email;
+    const classId = req.query.classId;
+    const dataToSend = {
+        testCode : "",
+        testName : "",
+
+        startTime : String,
+        timeLimit : Number,
+
+        maximumMarks : Number,
+        questions : [],
+        
+    }
+    Class.findById(classId , function(err , data){
+        if(err){
+            res.send("error in finding  class data");
+        }else{
+            if(!data){
+                res.send("no class found");
+            }
+            dataToSend.testCode = data.testCode;
+            dataToSend.testName = data.testName;
+            
+            dataToSend.date = data.date;
+            dataToSend.startTime = data.startTime;
+            dataToSend.timeLimit = data.timeLimit;
+            
+            QuestionPaper.findOne({code : data.questionPaperCode} , function(err ,Paperdata){
+                if(err){
+                    res.send("No Question  paper found or not assigned any paper");
+                }
+                if(!data){
+                    res.send("no question paper for req test");
+                }
+                dataToSend.maximumMarks = Paperdata.maximumMarks;
+                dataToSend.questions=Paperdata.questions;
+                res.status(200).send(dataToSend);
+            });
+        }
+    });
 });
 
 
