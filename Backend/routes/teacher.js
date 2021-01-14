@@ -96,7 +96,24 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         if(err){
             res.send("error in finding  class data");
         }else{
-            res.send(data);
+            let newTest =[];
+            let oldTest =[];
+            console.log(data.students);
+             data.scheduledTest.forEach(element => {
+                 console.log(element);
+                if(element.studentResponse.length === data.students.length ){
+                    oldTest.push(element);
+                }else{
+                    newTest.push(element);
+                }
+            });
+            data.scheduledTest = newTest;
+            data.oldTests = [ ...oldTest , ...data.oldTests];
+            console.log("old test",oldTest);
+            console.log("now new data is printing",data);
+            data.save();
+            setTimeout(()=>{res.send(data);} , 100);
+            
         }
     })
 });
@@ -144,5 +161,44 @@ router.post("/createPaper",allowCrossDomain,function(req,res){
     console.log(newQuestionPaper);
 
 });
+
+router.get("/paperList",allowCrossDomain,function(req,res){
+    const email=req.query.email;
+    let paperList=[];
+
+    Teacher.findOne({email:email},function(err,data){
+        if(err){
+            console.log(err);
+        } else {
+            if(data){
+                const paperIDs=data.questionPaperIDs;
+                paperIDs.forEach(function(id,index){
+                    QuestionPaper.findById(id,function(err,paperData){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            if(paperData){
+                                const specificData = {
+                                    paperName:paperData.paperName,
+                                    paperCode:paperData.paperCode
+                                };
+                                paperList.push(specificData);
+                               if(index === paperIDs.length-1 ){
+                                   res.send(paperList);
+                               }
+                            } else {
+                                console.log("PpaerData is empty");
+                            }
+                        }
+
+
+                    })
+                })
+            } else {
+                console.log("paper ka questionList data nhi hai");
+            }
+        }
+    });
+})
 
 module.exports = router;

@@ -55,7 +55,7 @@ function TestList(props) {
         .then(data=>{
             console.log(data);
             setScheduledTest(data.data.scheduledTest);
-            setCompletedTest(data.data.completedTest);
+            setCompletedTest(data.data.oldTests);
         });
     }
 

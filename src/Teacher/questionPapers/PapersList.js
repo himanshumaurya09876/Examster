@@ -31,7 +31,7 @@ function PapersList(props) {
     }, [])
 
     const loadPaperList = async(event)=>{
-        await Axios.get('/Teacher/paperList?'+"email="+email,{withCredentials: true},
+        await Axios.get('/Teacher/paperList?'+"email="+email,//{withCredentials: true},
         {
             headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
