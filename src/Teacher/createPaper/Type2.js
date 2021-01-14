@@ -1,6 +1,8 @@
-import { Checkbox, FormControl, FormControlLabel, FormLabel, FormGroup, TextField, Input } from '@material-ui/core';
+import { Checkbox, FormControl, FormControlLabel, FormLabel, FormGroup, TextField, Input, Button } from '@material-ui/core';
 import React ,{useEffect, useState} from 'react';
 import './Type1.css';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+
 
 function Type2(props) {
     const [questionData, setQuestionData] = useState({
@@ -41,6 +43,10 @@ function Type2(props) {
         props.addQuestionData(questionData,props.id);
     }
 
+    function crossClicked(){
+        props.deleteQuestion(props.id);
+    }
+
     useEffect(() => {
         props.addQuestionData(questionData,props.id);
       }, [questionData]);
@@ -51,6 +57,7 @@ function Type2(props) {
 
     return (
         <div className="type1Teacher">
+        <div className="mainBody">
             <div className="type1__question">
             <TextField
                 id="standard-textarea"
@@ -125,6 +132,16 @@ function Type2(props) {
                 </div>
             </div>
             
+        </div>
+        <div className="crossBtn">
+            <Button
+            onClick={crossClicked}
+            >
+                <CancelOutlinedIcon
+                    style={{fontSize:40, color:"red"}}
+                />
+            </Button>
+        </div>
         </div>
     )
 }

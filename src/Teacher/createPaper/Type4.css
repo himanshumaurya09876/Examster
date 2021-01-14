@@ -1,12 +1,22 @@
 .type4Teacher{
     margin: 20px auto;
-    width: 60%;
-    padding: 25px;
-    padding-left: 25px;
-    padding-bottom: 10px;
+    width: 70%;
+    display:flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.mainBody4{
     background-color: white;
     border: 1px solid lightgray;
+    padding: 25px;
+    padding-left: 25px;
+    padding-bottom: 15px;
     border-radius: 10px;
+    font-weight: 100;
+    
+    width:95%;
+    margin-right:0.5%;
 }
 
 .addFileIcon{

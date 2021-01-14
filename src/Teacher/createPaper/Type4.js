@@ -1,7 +1,8 @@
-import { IconButton, TextField ,Input} from '@material-ui/core'
+import { IconButton, TextField ,Input, Button} from '@material-ui/core'
 import { AttachFile } from '@material-ui/icons'
 import React, {useEffect, useState} from 'react'
 import AddIcon from '@material-ui/icons/Add';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 import './Type4.css'
 function Type4(props) {
@@ -26,45 +27,60 @@ function Type4(props) {
         props.addQuestionData(questionData,props.id);
     }
 
+    function crossClicked(){
+        props.deleteQuestion(props.id);
+    }
+
     useEffect(() => {
         props.addQuestionData(questionData,props.id);
       }, [questionData]);
 
     return (
         <div className="type4Teacher">
-             <div className="type1__question">
-             <TextField
-                id="standard-textarea"
-                label="Question Statement"
-                placeholder="Question Statement"
-                multiline
-                name = "questionStatement"
-                value ={questionData.questionStatement}
-                onChange ={handleChange}
-                style={{width:"100%"}}
-                color = 'secondary'
-            />
+            <div className="mainBody4">
+                <div className="type1__question">
+                <TextField
+                    id="standard-textarea"
+                    label="Question Statement"
+                    placeholder="Question Statement"
+                    multiline
+                    name = "questionStatement"
+                    value ={questionData.questionStatement}
+                    onChange ={handleChange}
+                    style={{width:"100%"}}
+                    color = 'secondary'
+                />
+                </div>
+                <div className="type1__points">
+                <Input
+                    id="standard-textarea"
+                    label="Points"
+                    placeholder="Points"
+                    type="number"
+                    color = 'secondary'
+                    name ="points"
+                    value={questionData.points}
+                    onChange ={handleChange}
+                    style={{width:"70px" , marginTop:"10px"}}
+                />
+                </div>
+                <div className="addFileIcon" >   
+                    <label htmlFor="file-upload" className="custom-file-upload"> 
+                    </label>
+                    <input id="file-upload"  type="file" onChange={addImage}/>
+                </div> 
             </div>
-            <div className="type1__points">
-            <Input
-                id="standard-textarea"
-                label="Points"
-                placeholder="Points"
-                type="number"
-                color = 'secondary'
-                name ="points"
-                value={questionData.points}
-                onChange ={handleChange}
-                style={{width:"70px" , marginTop:"10px"}}
-            />
+            <div className="crossBtn">
+                <Button
+                onClick={crossClicked}
+                >
+                    <CancelOutlinedIcon
+                        style={{fontSize:40, color:"red"}}
+                    />
+                </Button>
             </div>
-            <div className="addFileIcon" >   
-                <label htmlFor="file-upload" className="custom-file-upload"> 
-                </label>
-                <input id="file-upload"  type="file" onChange={addImage}/>
-            </div> 
         </div>
-    )
+    );
 }
 
 export default Type4
