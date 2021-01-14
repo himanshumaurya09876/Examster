@@ -9,6 +9,7 @@ import Type2 from './Type2';
 import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from '../../Axios';
+import { Redirect } from 'react-router-dom';
 
 const fetch = require('node-fetch');
 const qs = require('querystring')
@@ -39,6 +40,7 @@ function Papers(props) {
         maximumMarks: 0
     })
     const classes = useStyles()
+    const [isSubmitted,setIsSubmitted]=useState(false);
 
     function handleChange(event){
         const {name,value}=event.target;
@@ -115,8 +117,6 @@ function Papers(props) {
     const onSubmit = async(event)=>{
         event.preventDefault();
 
-
-
         await Axios.post('/Teacher/createPaper' , JSON.stringify(paperData), //{withCredentials: false},
         {
             headers: {
@@ -125,7 +125,17 @@ function Papers(props) {
         })
         .then(data=>{
             console.log(data);
+            setIsSubmitted(true);
          });
+    }
+
+    if(isSubmitted){
+        return <Redirect to={{
+            pathname: "/teacher/paper",
+            state: { email: props.location.state.email }
+          }}
+
+         />
     }
 
     console.log(paperData);

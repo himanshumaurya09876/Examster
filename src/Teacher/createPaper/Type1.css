@@ -1,4 +1,9 @@
 .type1Teacher{
+    display:flex;
+    flex-direction: row;
+}
+
+.mainBody{
     margin: 20px auto;
     width: 60%;
     padding: 25px;

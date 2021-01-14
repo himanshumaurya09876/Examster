@@ -1,6 +1,7 @@
-import { FormControl, FormControlLabel, FormLabel, Input, Radio, RadioGroup, TextField } from '@material-ui/core';
+import { Button, FormControl, FormControlLabel, FormLabel, Input, Radio, RadioGroup, TextField } from '@material-ui/core';
 import React ,{useEffect, useState} from 'react';
 import './Type1.css';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 function Type1(props) {
     const [questionData, setQuestionData] = useState({
@@ -41,6 +42,7 @@ function Type1(props) {
 
     return (
         <div className="type1Teacher">
+        <div className="mainBody">
             <div className="type1__question">
             <TextField
                 id="standard-textarea"
@@ -117,6 +119,10 @@ function Type1(props) {
                 </div>
             </div>
             
+        </div>
+        <div className="crossBtn">
+                <CancelIcon />
+        </div>
         </div>
     )
 }

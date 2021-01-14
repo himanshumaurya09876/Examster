@@ -1,33 +1,56 @@
-import React from 'react';
-import MList from './PList';
+import React, { useEffect, useState } from 'react';
+import PList from './PList';
 import {Button} from '@material-ui/core'
+import Axios from '../../Axios';
 
 import './PapersList.css';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-const papersList =[
-    {
-        paperName : "ClassTest-1",
-        paperCode : "CT1-CO326",
-    },
-    {
-        paperName : "SurpriseTest-1",
-        paperCode : "ST1-CO326",
-    },
-    {
-        paperName : "ClassTest-2",
-        paperCode : "CT2-CO326",
-    }
-]
+// const papersList =[
+//     {
+//         paperName : "ClassTest-1",
+//         paperCode : "CT1-CO326",
+//     },
+//     {
+//         paperName : "SurpriseTest-1",
+//         paperCode : "ST1-CO326",
+//     },
+//     {
+//         paperName : "ClassTest-2",
+//         paperCode : "CT2-CO326",
+//     }
+// ]
 
 function PapersList(props) {
-   const email  =  props.location.state.email;
+    const email  =  props.location.state.email;
+
+    const [paperList,setPaperList]=useState([]);
+
+    useEffect(() => {
+        loadPaperList();
+    }, [])
+
+    const loadPaperList = async(event)=>{
+        await Axios.get('/Teacher/paperList?'+"email="+email,{withCredentials: true},
+        {
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            //  "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+            }
+        })
+        .then(data=>{
+            console.log("PaperList" ,data.data);
+            setPaperList(data.data);
+            });
+    }
+
     return (
         <div className="papersList__body">
 
             {
-                <MList
-                    papersList ={papersList}
+                <PList
+                    papersList ={paperList}
                     />
             }
 
