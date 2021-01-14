@@ -106,54 +106,84 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
     })
 });
 
-router.get("/startTest" ,allowCrossDomain, function(req ,res){
-
-    const email = req.query.email;
-    const classId = req.query.classId;
-    const dataToSend = {
-        testCode : "",
-        testName : "",
-
-        startTime : String,
-        timeLimit : Number,
-
-        maximumMarks : Number,
-        questions : [],
-        
-    }
-    Class.findById(classId , function(err , data){
-        if(err){
-            res.send("error in finding  class data");
-        }else{
-            if(!data){
-                res.send("no class found");
-            }
-            console.log("class",data)
-            dataToSend.testCode = data.testCode;
-            dataToSend.testName = data.testName;
-            
-            dataToSend.date = data.date;
-            dataToSend.startTime = data.startTime;
-            dataToSend.timeLimit = data.timeLimit;
-            
-            QuestionPaper.findOne({code : data.questionPaperCode} , function(err ,Paperdata){
-                if(err){
-                    res.send("No Question  paper found or not assigned any paper");
-                }
-                if(!data){
-                    res.send("no question paper for req test");
-                }
-                dataToSend.maximumMarks = Paperdata.maximumMarks;
-                dataToSend.questions=Paperdata.questions;
-                res.status(200).send(dataToSend);
-            });
-        }
-    });
-});
-
 router.get("/attempTest",allowCrossDomain,function(req,res){
+    const questionPaperCode = req.query.questionPaperCode;
     
+    QuestionPaper.findOne({paperCode : questionPaperCode} , function(err ,data){
+        if(err){
+            res.send("No Question  paper found or not assigned any paper");
+        }
+        if(!data){
+            res.send("no question paper for req test");
+        }
+        res.status(200).send({
+            maximumMarks : data.maximumMarks,
+            questionsList:  data.questionsList,
+            timeLimit : data.timeLimit
+        });
+    });
 })
 
+router.post("/attempTest",allowCrossDomain,function(req,res){
+    const {studentEmail , classId , testCode,testName ,questionPaperCode ,
+        response} = req.body;
 
+    QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
+        if(err || !Paperdata){
+            res.send("question paper not found");
+        }
+                
+        Class.findById(classId , function(err ,data){
+            data.scheduledTest = data.scheduledTest.map((aTest , outerIndex)=>{
+
+                if(aTest.testCode== testCode && aTest.testName==testName){
+
+                    const actualAnswer = Paperdata.answerList;
+                    const marksScored = 0 ;
+                    response.forEach((studentAnswer , index)=>{
+                        if(studentAnswer.toString() === actualAnswer[index].toString() ){
+                            marksScored = marksScored +Number(Paperdata.questionsList[index].points);
+                        }
+                        if(index === response.length-1){
+                            aTest.studentResponse.push(
+                                { studentEmail : studentEmail,
+                                   response : response,
+                                    marks : Number(marksScored)
+                                }
+                            )
+                            return aTest;
+                          
+                        }
+                    })
+                }else{
+                            return aTest;
+                }
+                if(outerIndex === data.scheduledTest.length-1 ){
+                    console.log("data changed in response " ,data);
+                    console.log(data.scheduledTest);
+                    data.save(function(err , data){
+                       if(err){
+                        console.log(err)
+                       }
+                        console.log(data);
+                    });
+                }
+            });
+        });          
+    })       
+});
 module.exports = router;
+
+
+
+  // return{
+                            //     ...element,
+                            //     studentResponse : [
+                            //             ...element.studentResponse ,
+                            //         { studentEmail : studentEmail,
+                            //             response : response,
+                            //             marks : Number(marksScored)
+                            //         }
+                            //     ]
+                            
+                            // }

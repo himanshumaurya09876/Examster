@@ -38,8 +38,8 @@ const TestSchema = new mongoose.Schema({
     questionPaperCode : String,
     studentResponse : [
         {
-            studentId : String,
-            response :[Object],
+            studentEmail : String,
+            response :[],
             marks : Number
         }
     ]
@@ -62,6 +62,7 @@ const QuestionPaperSchema = new mongoose.Schema({
     timeLimit : Number,
     questionsList :[Object],
     answerList : [Object],
+    maximumMarks:Number
 });
 
 const Type1 = new mongoose.Schema({

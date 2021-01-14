@@ -19,20 +19,24 @@ import Axios from "../../Axios.js";
 
 function ClassTest(props) {
 
-    console.log(props.location.state);
      
     const [minutes, setMinutes ] = useState(0);
     const [seconds, setSeconds ] =  useState(10);
     const [testData,setTestData] = useState({
         subjectName : props.location.state.classSubjectName,
         subjectCode : props.location.state.classSubjectCode,
+
         testName : props.location.state.testData.testName,
+       
+        questionPaperCode : props.location.state.testData.questionPaperCode,
         questionsList :[],
         maximumMarks : 0,
     });
 
+
     const [answers,setAnswers]=useState([]);
-    
+    console.log(answers);
+
     useEffect(()=>{
     let myInterval = setInterval(() => {
             if (seconds > 0) {
@@ -57,7 +61,7 @@ function ClassTest(props) {
     }, [])
 
     const loadTestData = async(event)=>{
-        await  Axios.get('/Student/attempTest' ,{withCredentials: true},
+        await  Axios.get('/Student/attempTest?questionPaperCode='+testData.questionPaperCode ,{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,34 +70,48 @@ function ClassTest(props) {
             }
         })
         .then(data=>{
-            console.log("testData ",data);
-            setTestData();
-            setAnswers(() => {
-                const defaultAns=[];
-                testData.questionsList.forEach(() => defaultAns.push("null"));
-                return defaultAns;
-            })
+            data = data.data;
+            setAnswers([]);
+            data.questionsList.forEach(element => {
+                setAnswers(prev=>[...prev , -2]);
+            });
+            setTestData((prev)=>{
+                return{
+                    ...prev,
+                    maximumMarks : data.maximumMarks,
+                    questionsList:  data.questionsList,
+                }
+            });
+            setMinutes(data.timeLimit);
+           
         });
     }
 
     function addAnswer(answer , index){
         setAnswers((prevData) => {
-            return {
-                answerList:prevData.answerList.map((ans,id) => {
+            return (
+                    prevData.map((ans,id) => {
                     if(id === index){
                         return answer;
                     } else {
                         return ans;
                     }
                 })
-            }
+            )
         })     
     }
 
     const onSubmit = async(event)=>{
-        event.preventDefault();
-
-        await Axios.post('/Student/attempTest' , JSON.stringify(answers), //{withCredentials: false},
+       // event.preventDefault();
+        const dataToSend={
+            studentEmail :props.location.state.email,
+            classId : props.location.state.classId,
+            testCode : props.location.state.testData.testCode,
+            testName  :  props.location.state.testData.testName,
+            questionPaperCode :props.location.state.testData.questionPaperCode, 
+            response : answers,
+        }
+        await Axios.post('/Student/attempTest' , JSON.stringify(dataToSend), //{withCredentials: false},
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +122,6 @@ function ClassTest(props) {
          });
     }
 
-    const date = new Date();
     return (
         <div className="classtest">
             <div className="classtest__header">
@@ -127,13 +144,13 @@ function ClassTest(props) {
             <div className="classtest__body">
                 {testData.questionsList.map((aQuestion,index) => {
                      switch(aQuestion.questionType){
-                         case "type1":return <Type1 key={index} id={index} addAnswer={addAnswer}/>;
+                         case "type1":return <Type1 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer}/>;
                          break;
-                         case "type2":return <Type2 key={index} id={index} addAnswer={addAnswer} />;
+                         case "type2":return <Type2 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
                          break;
-                         case "type3":return <Type3 key={index} id={index} addAnswer={addAnswer} />;
+                         case "type3":return <Type3 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
                          break;
-                         case "type4":return <Type4 key={index} id={index} addAnswer={addAnswer} />;
+                         case "type4":return <Type4 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
                          break;
                      }
                 })}

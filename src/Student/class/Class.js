@@ -74,7 +74,7 @@ function Class(props) {
                         <ListItemSecondaryAction>
                         <Link to={{
                             pathname: "/student/attemptTest",
-                            state: { email: props.email , 
+                            state: { email: email , 
                                      classId : classData._id,
                                      testData : test,
                                      classSubjectName: classData.classSubjectName,

@@ -16,31 +16,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Type3(props) {
   const classes = useStyles();
   const [answer, setAnswer] = useState('');
-  const [questionData, setQuestionData] = useState({
-    questionStatement:"",
-    points:"",
-  });
-
-  function handleChange(event){
-    event.preventDefault();
-    const {name,value}=event.target;
-
-    setQuestionData((prevData) => {
-        return {
-            ...prevData,
-            [name]:value
-        }
-    })
-  }
-
+  
   function handleAnswerChange(event){
-      const answer = event.target.value;
-      setAnswer(answer);
+    console.log(event.target.value);
+    const answer = event.target.value;
+    setAnswer(answer);
+    props.addAnswer(answer , props.id); 
   }
-
-  useEffect(() => {
-    props.addQuestionData(questionData,props.id);
-  }, [questionData]);
 
   useEffect(() => {
     props.addAnswer(answer , props.id);
@@ -48,32 +30,13 @@ export default function Type3(props) {
 
   return (
     <div className="type3Teacher" >
-      <div className="type1__question">
-      <TextField
-          id="standard-textarea"
-          label="Question Statement"
-          placeholder="Question Statement"
-          multiline
-          color = 'secondary'
-          name = "questionStatement"
-          value ={questionData.questionStatement}
-          onChange ={handleChange}
-          style={{width:"100%"}}
-      />
-      </div>
-      <div className="type3__points">
-      <Input
-            id="standard-textarea"
-            label="Points"
-            placeholder="Points"
-            color = 'secondary'
-            type="number"
-            name ="points"
-            value={questionData.points}
-            onChange ={handleChange}
-            style={{width:"70px" , marginTop:"10px"}}
-      />
-      </div>
+       <div className="type1__question">
+            <h2>{props.questionData.questionStatement}</h2>
+        </div>
+        <div className="type1__points">
+            <p>*Points :{Number(props.questionData.points)}</p>
+        </div>
+      
       <form className={classes.root} noValidate autoComplete="off">
       <TextField
           id="standard-textarea"

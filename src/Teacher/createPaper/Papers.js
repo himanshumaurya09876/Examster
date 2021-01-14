@@ -34,6 +34,7 @@ function Papers(props) {
         timeLimit : "",
         questionsList :[],
         answerList : [],
+        studentResponse:[],
         email:props.location.state.email,
         maximumMarks: 0
     })
