@@ -114,6 +114,21 @@ function Papers(props) {
         })     
     }
 
+    function deleteQuestion(index){
+        setPaperData((prevData) => {
+            return {
+                ...prevData,
+                questionsList : prevData.questionsList.filter((que,id) => {
+                    return id !== index;
+                }),
+                answerList : prevData.answerList.filter((ans,id) => {
+                    return id !== index;
+                })
+            }
+        })    
+    }
+
+
     const onSubmit = async(event)=>{
         event.preventDefault();
 
@@ -188,13 +203,13 @@ function Papers(props) {
             <div className="classtest__body">
                  {paperData.questionsList.map((aQuestion,index) => {
                      switch(aQuestion.questionType){
-                         case "type1":return <Type1 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer}/>;
+                         case "type1":return <Type1 key={index} id={index} deleteQuestion={deleteQuestion} addQuestionData={addQuestionData} addAnswer={addAnswer}/>;
                          break;
-                         case "type2":return <Type2 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         case "type2":return <Type2 key={index} id={index} deleteQuestion={deleteQuestion} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
                          break;
-                         case "type3":return <Type3 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         case "type3":return <Type3 key={index} id={index} deleteQuestion={deleteQuestion} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
                          break;
-                         case "type4":return <Type4 key={index} id={index} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
+                         case "type4":return <Type4 key={index} id={index} deleteQuestion={deleteQuestion} addQuestionData={addQuestionData} addAnswer={addAnswer} />;
                          break;
                      }
                  })}

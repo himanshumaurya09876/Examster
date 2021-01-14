@@ -2,7 +2,8 @@ import React  ,{useEffect, useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import './Type3.css';
-import { Input } from '@material-ui/core';
+import { Button, Input } from '@material-ui/core';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,10 @@ export default function Type3(props) {
       setAnswer(answer);
   }
 
+  function crossClicked(){
+    props.deleteQuestion(props.id);
+  }
+
   useEffect(() => {
     props.addQuestionData(questionData,props.id);
   }, [questionData]);
@@ -47,7 +52,8 @@ export default function Type3(props) {
   }, [answer]);
 
   return (
-    <div className="type3Teacher" >
+    <div className="type3Teacher">
+    <div className="mainBody3" >
       <div className="type1__question">
       <TextField
           id="standard-textarea"
@@ -86,6 +92,16 @@ export default function Type3(props) {
           onChange ={handleAnswerChange}
         />
       </form>
+    </div>
+    <div className="crossBtn">
+            <Button
+            onClick={crossClicked}
+            >
+                <CancelOutlinedIcon
+                    style={{fontSize:40, color:"red"}}
+                />
+            </Button>
+        </div>
     </div>
   );
 }
