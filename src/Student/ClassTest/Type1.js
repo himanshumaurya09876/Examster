@@ -16,14 +16,14 @@ function Type1(props) {
       }, [answer]);
 
     return (
-        <div className="type1Teacher">
+        <div className="type1">
             <div className="type1__question">
-            <h2>{props.questionData.questionStatement}</h2>
+                <h2>{props.questionData.questionStatement}</h2>
             </div>
             <div className="type1__points">
                 <p>*Points :{props.questionData.points}</p>
             </div>
-            <div className="teachertype1__body">
+            <div className="type1__body">
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset" style={{width:"100%"}}>
                     <RadioGroup aria-label="gender" style={{width:"100%"}} name="answer" value={answer} onChange={handleAnswerChange}>

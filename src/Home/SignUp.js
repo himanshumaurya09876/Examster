@@ -87,7 +87,7 @@ function SignUp() {
                 state: { email: user.email }
               }}
 
-             />         }   
+             />}   
     }
 
     return (

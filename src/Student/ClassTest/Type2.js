@@ -25,14 +25,14 @@ function Type2(props) {
     }, [answer]);
 
     return (
-        <div className="type1Teacher">
+        <div className="type1">
             <div className="type1__question">
                 <h2>{props.questionData.questionStatement}</h2>
             </div>
             <div className="type1__points">
                 <p>*Points :{props.questionData.points}</p>
             </div>
-            <div className="teachertype1__body">
+            <div className="type1__body">
                 <div className="type1__optionsBlock">
                 <FormControl component="fieldset">
                     <FormGroup aria-label="gender" name="ansOptions" value={answer} onChange={handleAnswerChange}>

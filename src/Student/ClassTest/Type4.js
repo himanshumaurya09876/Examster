@@ -11,7 +11,7 @@ function Type4(props) {
     }
 
     return (
-        <div className="type4Teacher">
+        <div className="type4">
             <div className="type1__question">
                 <h2>{props.questionData.questionStatement}</h2>
             </div>

@@ -29,7 +29,7 @@ export default function Type3(props) {
   }, [answer]);
 
   return (
-    <div className="type3Teacher" >
+    <div className="type3" >
        <div className="type1__question">
             <h2>{props.questionData.questionStatement}</h2>
         </div>

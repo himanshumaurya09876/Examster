@@ -49,7 +49,6 @@ function Class(props) {
         .then(data=>{
             setClassData(data.data);
             console.log("class data ",data);
-            console.log(classData);
 
         });
     }
@@ -62,7 +61,7 @@ function Class(props) {
             { classData.scheduledTest && 
                 <List component="nav" aria-label="secondary mailbox folder" >
 
-                <h2>Scheduled Tests</h2>
+                <h2>Scheduled Tests / Running Test</h2>
 
                 {classData.scheduledTest.map((test) => {
                  
@@ -110,7 +109,7 @@ function Class(props) {
                                 style={listStyle}
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
-                                <ListItemText primary={test.testName + " : ( "+test.date +" -- "+ test.time+" ) "} />
+                                <ListItemText primary={test.testName + " : ( "+test.date +" -- "+ test.startTime+" ) "} />
                                 <ListItemSecondaryAction
                                     style={{
                                         fontSize:"20px",
@@ -118,7 +117,7 @@ function Class(props) {
                                         paddingRight:"4%"
                                     }}
                                 >
-                                {test.marksObtained +" /"+test.maximumMarks}
+                                {test.marksObtained }
                                 </ListItemSecondaryAction>
                             </ListItem>
                         </div>

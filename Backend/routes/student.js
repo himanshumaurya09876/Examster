@@ -75,22 +75,41 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         const dataToSend = {
             ...data._doc
         };
-        const newTest = []
+        const newTest = [];
+        const oldTests = [];
+
         dataToSend.scheduledTest.forEach((test )=>{
-            newTest.push(   
-                {
-                    testCode : test.testCode ,
-                    testName : test.testName ,
-                    date : test.date,
-                    startTime : test.startTime,
-                    questionPaperCode : test.questionPaperCode,
-                }
-            );
+            let cur = null;
+            if(test.studentResponse.findIndex(function(t){ cur =t; if(t.studentEmail == email)return 1;}) >=0 ){
+               console.log("Asdf");
+                oldTests.push(   
+                    {
+                        testCode : test.testCode ,
+                        testName : test.testName ,
+                        date : test.date,
+                        startTime : test.startTime,
+                        questionPaperCode : test.questionPaperCode,
+                        marksObtained : cur.marks,
+                    }
+                );
+            }else{
+                newTest.push(   
+                    {
+                        testCode : test.testCode ,
+                        testName : test.testName ,
+                        date : test.date,
+                        startTime : test.startTime,
+                        questionPaperCode : test.questionPaperCode,
+                    }
+                );
+            }
+            
         });
         dataToSend.scheduledTest = newTest;
 
-        const oldTests = []
         dataToSend.oldTests.forEach((test )=>{
+            let cur= null; 
+            test.studentResponse.forEach(function(t){ cur =t; })
             newTest.push(   
                 {
                     testCode : test.testCode ,
@@ -98,11 +117,15 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
                     date : test.date,
                     startTime : test.startTime,
                     questionPaperCode : test.questionPaperCode,
+                    marksObtained : cur.marks,
                 }
             );
         });
         dataToSend.oldTests = oldTests;
-        res.send(dataToSend);
+        setTimeout(() => {
+            res.send(dataToSend);
+        }, 1000);
+      
     })
 });
 
@@ -126,7 +149,7 @@ router.get("/attempTest",allowCrossDomain,function(req,res){
 
 router.post("/attempTest",allowCrossDomain,function(req,res){
     const {studentEmail , classId , testCode,testName ,questionPaperCode ,
-        response} = req.body;
+        response , maximumMarks} = req.body;
 
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
@@ -148,15 +171,15 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                             aTest.studentResponse.push(
                                 { studentEmail : studentEmail,
                                    response : response,
-                                    marks : Number(marksScored)
+                                    marks : Number(marksScored)+"/"+maximumMarks
                                 }
                             )
-                            return aTest;
+                        return aTest;
                           
                         }
                     })
                 }else{
-                            return aTest;
+                        return aTest;
                 }
                 if(outerIndex === data.scheduledTest.length-1 ){
                     console.log("data changed in response " ,data);
@@ -170,6 +193,11 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                 }
             });
         });          
-    })       
+    });
+    setTimeout(() => {
+        res.send("inserted");  
+    }, 2000);
+
 });
+
 module.exports = router;

@@ -1,4 +1,4 @@
-.type1Teacher{
+.type1{
     margin: 20px auto;
     width: 60%;
     padding: 25px;
@@ -10,7 +10,7 @@
     font-weight: 100;
 }
 
-.teachertype1__body{
+.type1__body{
     width:100%;
 }
 
@@ -22,6 +22,6 @@
 
 .type1__points{
     text-align: right;
-    font-size: 25px;
+    font-size: 1.2rem;
     color: red;
 }

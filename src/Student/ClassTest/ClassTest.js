@@ -6,6 +6,7 @@ import Type2 from './Type2';
 import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from "../../Axios.js";
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 // const testData = {
 //     subjectName : "",
@@ -32,8 +33,7 @@ function ClassTest(props) {
         questionsList :[],
         maximumMarks : 0,
     });
-
-
+    const [closeTest , setCloseTest] = useState(false);
     const [answers,setAnswers]=useState([]);
     console.log(answers);
 
@@ -103,7 +103,10 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
-       // event.preventDefault();
+
+        if(minutes>0 || seconds >0){
+            const r = window.confirm("Do you really want to submit"); if(r == true){  } else{ return ;}
+        }
         const dataToSend={
             studentEmail :props.location.state.email,
             classId : props.location.state.classId,
@@ -111,7 +114,9 @@ function ClassTest(props) {
             testName  :  props.location.state.testData.testName,
             questionPaperCode :props.location.state.testData.questionPaperCode, 
             response : answers,
+            maximumMarks : testData.maximumMarks,
         }
+        
         await Axios.post('/Student/attempTest' , JSON.stringify(dataToSend), //{withCredentials: false},
         {
             headers: {
@@ -119,8 +124,17 @@ function ClassTest(props) {
             }
         })
         .then(data=>{
-            console.log(data);
+            setCloseTest(true);
          });
+    }
+    if(closeTest){
+        console.log("asdfa");
+        return <Redirect to={{
+            pathname: "/student/class",
+            state: { 
+                email:props.location.state.email,
+                classId :props.location.state.classId }
+          }}/> 
     }
 
     return (

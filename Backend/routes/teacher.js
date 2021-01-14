@@ -68,12 +68,7 @@ router.get("/getClassList/:email",allowCrossDomain, function(req,res){
                                     classSubjectCode : classData.classSubjectCode,
                                     classSubjectName : classData.classSubjectName,
                                 };
-                               if(index === ClassIDs.length-1 ){
-                                   classList.push(specificData);
-                                   res.send(classList);
-                               }else{
                                 classList.push(specificData);
-                               }
                             } else {
                                 console.log("ClassData is empty");
                             }
@@ -87,6 +82,10 @@ router.get("/getClassList/:email",allowCrossDomain, function(req,res){
             }
         }
     });
+    setTimeout(() => {
+        res.send(classList);  
+    }, 1000);
+
 });
 
 router.get("/classData" ,allowCrossDomain, function(req ,res){
@@ -145,44 +144,5 @@ router.post("/createPaper",allowCrossDomain,function(req,res){
     console.log(newQuestionPaper);
 
 });
-
-router.get("/paperList",allowCrossDomain,function(req,res){
-    const email=req.query.email;
-    let paperList=[];
-
-    Teacher.findOne({email:email},function(err,data){
-        if(err){
-            console.log(err);
-        } else {
-            if(data){
-                const paperIDs=data.questionPaperIDs;
-                paperIDs.forEach(function(id,index){
-                    QuestionPaper.findById(id,function(err,paperData){
-                        if(err){
-                            console.log(err);
-                        } else {
-                            if(paperData){
-                                const specificData = {
-                                    paperName:paperData.paperName,
-                                    paperCode:paperData.paperCode
-                                };
-                                paperList.push(specificData);
-                               if(index === paperIDs.length-1 ){
-                                   res.send(paperList);
-                               }
-                            } else {
-                                console.log("PpaerData is empty");
-                            }
-                        }
-
-                        
-                    })
-                })
-            } else {
-                console.log("paper ka questionList data nhi hai");
-            }
-        }
-    });
-})
 
 module.exports = router;
