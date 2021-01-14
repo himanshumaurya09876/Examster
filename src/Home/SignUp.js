@@ -5,6 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Axios from '../Axios';
 import './SignUp.css';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,7 @@ const defaultUser= {
 
 function SignUp() {
     const [user, setUser] = useState({...defaultUser})
+    const[userLoginSuccess , setUserLogin] = useState(false);
 
 
     const classes = useStyles();
@@ -58,9 +60,32 @@ function SignUp() {
             'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-        .then(data=>{console.log(data);});
+        .then(data=>{
+            if(data.status===201){
+                alert("Student Already Exists");
+            }else if (data.status === 202){
+                alert("Teacher Already Exists");
+            }else{
+                setUserLogin(true);
+            }
+        });
     }
+ if(userLoginSuccess){
+        if(user.userType === "Teacher"){
+            return <Redirect to={{
+                pathname: "/teacher/dashboard",
+                state: { email: user.email }
+              }}
 
+             /> 
+        } else {
+            return <Redirect to={{
+                pathname: "/student/dashboard",
+                state: { email: user.email }
+              }}
+
+             />         }   
+    }
 
     return (
         <div className="signUp">

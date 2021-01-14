@@ -12,28 +12,40 @@ router.post("/CreateClass",allowCrossDomain, function(req,res){
     // console.log("create Class  :",req.session);
 
     const Classdata = req.body ;
-    
-    const email = req.body.email;
-    const newClass = new Class(Classdata);
-    newClass.save()
-    .then((data)=>{
-        Teacher.findOneAndUpdate({email : email} , {$push : {classes : data._id}} , 
-        function(err,data){
-            if(err){
-                console.log(err);
-                res.status(500).send("error in adding class in teacher ");
+    const findData = {
+        classBranch:Classdata.classBranch,
+        classSection:Classdata.classSection,
+        classSubjectCode:Classdata.classSubjectCode,
+    }
+    Class.findOne(findData ,function(err ,data){
+        if(err){
+            res.send("error");
+        }else{
+            if(data){
+                res.status(201).send("class already created");
             }else{
-                res.status(200).send("insert ok");
+                const email = req.body.email;
+                const newClass = new Class(Classdata);
+                newClass.save()
+                .then((data)=>{
+                    Teacher.findOneAndUpdate({email : email} , {$push : {classes : data._id}} , 
+                    function(err,data){
+                        if(err){
+                            console.log(err);
+                            res.status(500).send("error in adding class in teacher ");
+                        }else{
+                            res.status(200).send("insert ok");
+                        }
+                    }); 
+                });
             }
-        }); 
-    });
-    
-
+        }
+      
         
+    })        
 });
 
 router.get("/getClassList/:email",allowCrossDomain, function(req,res){
-    console.log("teacher get Class list Data :",req.session);
     const email=req.params.email;
     const classList=[];
 
@@ -56,9 +68,11 @@ router.get("/getClassList/:email",allowCrossDomain, function(req,res){
                                     classSubjectCode : classData.classSubjectCode,
                                     classSubjectName : classData.classSubjectName,
                                 };
-                               classList.push(specificData);
                                if(index === ClassIDs.length-1 ){
+                                   classList.push(specificData);
                                    res.send(classList);
+                               }else{
+                                classList.push(specificData);
                                }
                             } else {
                                 console.log("ClassData is empty");
@@ -83,7 +97,6 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         if(err){
             res.send("error in finding  class data");
         }else{
-            console.log(data);
             res.send(data);
         }
     })

@@ -13,7 +13,7 @@ router.post('/signUp' , (req ,res)=>{
 
         Schema.Student.findOne({ email: req.body.email }).then(user => {
             if (user) {
-                res.send({ msg: 'Student already exists' })
+                res.status(201).send({ msg: 'Student already exists' })
             } else {
                const newStudent = new Schema.Student(studentData);
       
@@ -40,7 +40,7 @@ router.post('/signUp' , (req ,res)=>{
 
         Schema.Teacher.findOne({ email: req.body.email }).then(user => {
             if (user) {
-                res.send({ msg: 'Teacher already exists' })
+                res.status(202).send({ msg: 'Teacher already exists' })
             } else {
                const newTeacher = new Schema.Teacher(teacherData);
       
@@ -60,21 +60,28 @@ router.post('/signUp' , (req ,res)=>{
                 });
               });
             }
-          });
+        });
     }
 })
 
 // Login
 router.post('/login', allowCrossDomain,(req, res, next) => {
+
     const userType = req.body.userType;
     if(userType==='Student'){
-        passport.authenticate('StudentStrategy', )(req, res, function(){
-          //console.log("login ",req.session);
+        passport.authenticate('StudentStrategy', )(req, res, function(err ,data){
+          if(err){
+            console.log(err);
+            res.status(201).send(err);
+          }
             res.send("Student login successful");
         });
     }else{
         passport.authenticate('TeacherStrategy', )(req, res, function(err ,data){
-            res.send(data);
+          if(err){
+            res.status(201).send(err);
+          } 
+          res.send(data);
         });
     }   
 });

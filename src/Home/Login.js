@@ -60,7 +60,10 @@ function Login() {
             })
             .then(data=>{
                 setUserLogin(true);
-        });
+        })
+        .catch(err => {
+            alert("Invalid Email or Password");
+        })
         }
     }
     if(userLoginSuccess){

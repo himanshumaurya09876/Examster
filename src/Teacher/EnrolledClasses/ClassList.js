@@ -67,8 +67,12 @@ function TeacherClass(props) {
                 }
             })
             .then(data=>{
-                console.log("CreateClass" ,data);
-                loadClassList();
+                if(data.status===201){
+                    alert("Class Already Create")
+                }else{
+                    loadClassList();
+                   
+                }
                 setNewClass(false);
         });
         }

@@ -61,8 +61,6 @@ module.exports = function(passport){
         // userObject could be a Model1 or a Model2... or Model3, Model4, etc.
         let userGroup = "Student";
         let userPrototype =  Object.getPrototypeOf(userObject);
-
-        console.log("serialize user");
         
         if (userPrototype === Student.prototype) {
             userGroup = "Student";
