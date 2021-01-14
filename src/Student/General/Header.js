@@ -6,7 +6,10 @@ function Header(props) {
     return (
         <div className="home__header">
             <div className="home__headerLeft">
-                <i className="fas fa-laptop-code"></i>
+            <Link to={{
+                        pathname: "/student/dashboard",
+                        state: { email: props.email }
+                    }}><i class="fas fa-laptop-code"></i></Link>
             </div>
             <div className="home__headerRight">
                 

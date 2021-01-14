@@ -134,12 +134,12 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
         }
                 
         Class.findById(classId , function(err ,data){
-            data.scheduledTest = data.scheduledTest.map((aTest , outerIndex)=>{
+            data.scheduledTest.map((aTest , outerIndex)=>{
 
                 if(aTest.testCode== testCode && aTest.testName==testName){
 
-                    const actualAnswer = Paperdata.answerList;
-                    const marksScored = 0 ;
+                    let actualAnswer = Paperdata.answerList;
+                    let marksScored = 0 ;
                     response.forEach((studentAnswer , index)=>{
                         if(studentAnswer.toString() === actualAnswer[index].toString() ){
                             marksScored = marksScored +Number(Paperdata.questionsList[index].points);
@@ -173,17 +173,3 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
     })       
 });
 module.exports = router;
-
-
-
-  // return{
-                            //     ...element,
-                            //     studentResponse : [
-                            //             ...element.studentResponse ,
-                            //         { studentEmail : studentEmail,
-                            //             response : response,
-                            //             marks : Number(marksScored)
-                            //         }
-                            //     ]
-                            
-                            // }

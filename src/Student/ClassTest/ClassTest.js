@@ -45,6 +45,7 @@ function ClassTest(props) {
             if (seconds === 0) {
                 if (minutes === 0) {
                     clearInterval(myInterval)
+                    onSubmit();
                 } else {
                     setMinutes(minutes - 1);
                     setSeconds(59);

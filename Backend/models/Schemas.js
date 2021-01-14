@@ -36,13 +36,7 @@ const TestSchema = new mongoose.Schema({
     startTime : String,
 
     questionPaperCode : String,
-    studentResponse : [
-        {
-            studentEmail : String,
-            response :[],
-            marks : Number
-        }
-    ]
+    studentResponse : [Object]
 });
 
 const ClassSchema = new mongoose.Schema({
@@ -103,3 +97,10 @@ module.exports = {
     Type3         : Type3,
     Type4         : Type4,
 };
+
+
+// {
+//     studentEmail : String,
+//     response :[],
+//     marks : Number
+// }

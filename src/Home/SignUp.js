@@ -5,7 +5,8 @@ import Header from './Header';
 import Footer from './Footer';
 import Axios from '../Axios';
 import './SignUp.css';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { Redirect } from 'react-router-dom';
+
 const qs = require('querystring')
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +70,9 @@ function SignUp() {
                 setUserLogin(true);
             }
         });
+
     }
+
  if(userLoginSuccess){
         if(user.userType === "Teacher"){
             return <Redirect to={{

@@ -146,4 +146,43 @@ router.post("/createPaper",allowCrossDomain,function(req,res){
 
 });
 
+router.get("/paperList",allowCrossDomain,function(req,res){
+    const email=req.query.email;
+    let paperList=[];
+
+    Teacher.findOne({email:email},function(err,data){
+        if(err){
+            console.log(err);
+        } else {
+            if(data){
+                const paperIDs=data.questionPaperIDs;
+                paperIDs.forEach(function(id,index){
+                    QuestionPaper.findById(id,function(err,paperData){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            if(paperData){
+                                const specificData = {
+                                    paperName:paperData.paperName,
+                                    paperCode:paperData.paperCode
+                                };
+                                paperList.push(specificData);
+                               if(index === paperIDs.length-1 ){
+                                   res.send(paperList);
+                               }
+                            } else {
+                                console.log("PpaerData is empty");
+                            }
+                        }
+
+                        
+                    })
+                })
+            } else {
+                console.log("paper ka questionList data nhi hai");
+            }
+        }
+    });
+})
+
 module.exports = router;

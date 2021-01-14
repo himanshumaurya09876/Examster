@@ -62,6 +62,8 @@ function Class(props) {
             { classData.scheduledTest && 
                 <List component="nav" aria-label="secondary mailbox folder" >
 
+                <h2>Scheduled Tests</h2>
+
                 {classData.scheduledTest.map((test) => {
                  
                  return (
@@ -96,7 +98,8 @@ function Class(props) {
         </List>      
           
     } 
-             
+            <h2>Completed Tests</h2> 
+            
             {classData.oldTests &&
             <List component="nav" aria-label="secondary mailbox folder" >
                 {
