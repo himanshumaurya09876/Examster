@@ -9,11 +9,12 @@ import EnrolledClass from './EnrolledClasses/ClassList';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 function Student(props) {
     const [joinClass, setJoinClass] = useState(false);
-   
+    const user = props.location.state.user;
+    
     return (
         <div>
           <Header
-              email = {props.location.state.email}
+              user = {user}
           />
           <Route path='/student/dashboard' component={Dashboard}></Route>
           <Route path='/student/EnrolledClasses' component={EnrolledClass}></Route>

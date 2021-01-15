@@ -74,14 +74,15 @@ router.post('/login', allowCrossDomain,(req, res, next) => {
             console.log(err);
             res.status(201).send(err);
           }
-            res.send("Student login successful");
+          console.log(req.user);
+            res.send(req.user);
         });
     }else{
         passport.authenticate('TeacherStrategy', )(req, res, function(err ,data){
           if(err){
             res.status(201).send(err);
           } 
-          res.send(data);
+          res.send(req.user);
         });
     }   
 });

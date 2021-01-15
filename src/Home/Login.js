@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 const defaultUser= {
     email : null ,
     password : null,
-    userType : null
+    userType : null,
+    name : "",
+    collegeId : "",
 };
 
 function Login() {
@@ -59,28 +61,41 @@ function Login() {
                 }
             })
             .then(data=>{
+                data =data.data;
+                setUser(prev => {return {...prev , name : data.firstName+" "+data.lastName , collegeId : data.collegeID};})
                 setUserLogin(true);
+                console.log("teacher login ",data);
         })
         .catch(err => {
+            console.log(err);
             alert("Invalid Email or Password");
         })
         }
     }
     if(userLoginSuccess){
+        console.log(user);
         if(user.userType === "Teacher"){
             return <Redirect to={{
                 pathname: "/teacher/dashboard",
-                state: { email: user.email }
+                state: {   user: {  email: user.email,
+                                    name :user.name ,
+                                    collegeId : user.collegeId 
+                                }
+                        }
               }}
 
              /> 
         } else {
             return <Redirect to={{
                 pathname: "/student/dashboard",
-                state: { email: user.email }
+                state: {   user: {  email: user.email,
+                                    name :user.name ,
+                                    collegeId : user.collegeId 
+                                }
+                        }
               }}
 
-             />         }   
+             />}   
     }
     return (
         <div>

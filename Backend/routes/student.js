@@ -110,7 +110,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         dataToSend.oldTests.forEach((test )=>{
             let cur= null; 
             test.studentResponse.forEach(function(t){ cur =t; })
-            newTest.push(   
+            oldTests.push(   
                 {
                     testCode : test.testCode ,
                     testName : test.testName ,

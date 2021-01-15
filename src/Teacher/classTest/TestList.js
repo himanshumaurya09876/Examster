@@ -33,7 +33,7 @@ function TestList(props) {
     };
     
     const [newTest, setNewTest] = useState(false);
-    const {email , classId}=props.location.state;
+    const {user , classId}=props.location.state;
     const [assignTest , setAssignTest] = useState(defaultAssignTest);
 
     const [scheduledTest,setScheduledTest]=useState([]);
@@ -44,7 +44,7 @@ function TestList(props) {
     }, [])
 
     const loadClassTestData = async(event)=>{
-        await  axios.get('/Teacher/classData?' +"email="+ email+"&classId="+classId,{withCredentials: true},
+        await  axios.get('/Teacher/classData?' +"email="+ user.email+"&classId="+classId,{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -55,7 +55,7 @@ function TestList(props) {
         .then(data=>{
             console.log(data);
             setScheduledTest(data.data.scheduledTest);
-            setCompletedTest(data.data.completedTest);
+            setCompletedTest(data.data.oldTests);
         });
     }
 
@@ -89,7 +89,7 @@ function TestList(props) {
             studentResponse : []
         }
 
-        await  axios.post('/Teacher/assignTest?' +"email="+ email+"&classId="+classId ,qs.stringify(newTestFormat),{withCredentials: true},
+        await  axios.post('/Teacher/assignTest?' +"email="+ user.email+"&classId="+classId ,qs.stringify(newTestFormat),{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

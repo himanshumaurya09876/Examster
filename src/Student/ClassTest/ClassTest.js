@@ -20,7 +20,7 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ClassTest(props) {
 
-     
+    const user = props.location.state.user;
     const [minutes, setMinutes ] = useState(0);
     const [seconds, setSeconds ] =  useState(10);
     const [testData,setTestData] = useState({
@@ -108,7 +108,7 @@ function ClassTest(props) {
             const r = window.confirm("Do you really want to submit"); if(r == true){  } else{ return ;}
         }
         const dataToSend={
-            studentEmail :props.location.state.email,
+            studentEmail :user.email,
             classId : props.location.state.classId,
             testCode : props.location.state.testData.testCode,
             testName  :  props.location.state.testData.testName,
@@ -128,11 +128,10 @@ function ClassTest(props) {
          });
     }
     if(closeTest){
-        console.log("asdfa");
         return <Redirect to={{
             pathname: "/student/class",
             state: { 
-                email:props.location.state.email,
+                user:user,
                 classId :props.location.state.classId }
           }}/> 
     }

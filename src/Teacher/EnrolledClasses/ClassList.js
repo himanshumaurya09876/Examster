@@ -9,13 +9,14 @@ import Axios from '../../Axios';
 const qs = require('querystring')
 
 function TeacherClass(props) {
+    const user = props.location.state.user;
     const [newClass, setNewClass] = useState(false);
     const [classFormData,setClassFormData]=useState({
         classBranch:"",
         classSection:"",
         classSubjectName:"",
         classSubjectCode:"",
-        email :props.location.state.email,
+        email : user.email,
     })
 
     const [enrolledClasses,setEnrolledClasses]=useState([]);
@@ -85,7 +86,7 @@ function TeacherClass(props) {
             {
                 <CList
                     enrolledClasses ={enrolledClasses}
-                    email = {props.location.state.email}
+                    user = {user}
                     />
             }
            <div style={{
