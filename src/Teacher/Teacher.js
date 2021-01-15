@@ -10,10 +10,14 @@ import CreatePaper from './createPaper/Papers';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Teacher(props) {
+    const user = props.location.state.user;
+    console.log("teacher",user);
+
     return (
         <div>
             <Header
-                email ={props.location.state.email} />             
+                user = {user}
+            />            
             <Route path="/teacher/dashboard" component={Dashboard}></Route>
             <Route path='/teacher/classList' component={ClassList}></Route>
             <Route path='/teacher/class' component={TestList}></Route>

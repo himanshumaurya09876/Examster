@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Papers(props) {
     const [quesAdded,setQuesAdded]=useState("none");
+    const user = props.location.state.user;
     const [paperData,setPaperData]=useState({
         paperCode:"",
         paperName : "",
@@ -36,7 +37,7 @@ function Papers(props) {
         questionsList :[],
         answerList : [],
         studentResponse:[],
-        email:props.location.state.email,
+        email:user.email,
         maximumMarks: 0
     })
     const classes = useStyles()
@@ -147,13 +148,12 @@ function Papers(props) {
     if(isSubmitted){
         return <Redirect to={{
             pathname: "/teacher/paper",
-            state: { email: props.location.state.email }
+            state: { user: user }
           }}
 
          />
     }
 
-    console.log(paperData);
 
     const date = new Date();
     return (

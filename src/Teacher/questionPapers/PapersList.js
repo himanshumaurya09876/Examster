@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 // ]
 
 function PapersList(props) {
-    const email  =  props.location.state.email;
+    const user  =  props.location.state.user;
 
     const [paperList,setPaperList]=useState([]);
 
@@ -31,7 +31,7 @@ function PapersList(props) {
     }, [])
 
     const loadPaperList = async(event)=>{
-        await Axios.get('/Teacher/paperList?'+"email="+email,//{withCredentials: true},
+        await Axios.get('/Teacher/paperList?'+"email="+user.email,//{withCredentials: true},
         {
             headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -60,7 +60,7 @@ function PapersList(props) {
                     }}>
                 <Link to={{
                         pathname: "/teacher/createPaper",
-                        state: { email: email }
+                        state: { user: user }
                     }}>
                     <Button style={{
                                 width : "200px",

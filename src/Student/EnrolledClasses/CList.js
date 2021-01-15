@@ -14,6 +14,7 @@ import './CList.css'
 
 function CList(props) {
     const enrolledClasses = props.enrolledClasses;
+    const user = props.user;
     const listStyle = listItemStyle();
     // function ClassListClick(id){
     //     console.log("class pe ja na"+id);
@@ -35,11 +36,14 @@ function CList(props) {
                                 >
                                 <ListItemText primary={Aclass.classSubjectName + " ["+Aclass.classSubjectCode+" ] "} />
                                 <ListItemSecondaryAction>
-                                <Link to={{
-                                    pathname: "/student/class",
-                                    state: { email: props.email , 
-                                            classId : Aclass.classId }
-                                }}>
+                                <Link 
+                                    to={{
+                                        pathname: "/student/class",
+                                        state: { user: user , 
+                                                classId : Aclass.classId }
+                                    }}
+                                    replace
+                                >
                                     <Button
                                         style={{
                                             width:"100px" , 

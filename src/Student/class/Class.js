@@ -28,7 +28,7 @@ function Class(props) {
         startTime: ""
     });
     const listStyle = listItemStyle();
-    const {email , classId} = props.location.state;
+    const {user , classId} = props.location.state;
 
     function startTest(id){
 
@@ -38,7 +38,7 @@ function Class(props) {
         loadClassData();
     }, [])
     const loadClassData = async(event)=>{
-        await  Axios.get('/Student/classData?' +"email="+ email+"&classId="+classId,{withCredentials: true},
+        await  Axios.get('/Student/classData?' +"email="+ user.email+"&classId="+classId,{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -52,12 +52,17 @@ function Class(props) {
 
         });
     }
-    console.log(classData);
 
 
     return (
         <div className="class__list__block">
             <img  src="../Images/Student/head.png"/>
+            <div>
+                    <h2>{user.name}</h2>
+                    <h3>{user.collegeId}</h3>
+                    <h3>{classData.classBranch +" "+classData.classSection}</h3>
+                    <h3>{classData.classSubjectName +" "+classData.classSubjectCodes}</h3>
+                </div>
             { classData.scheduledTest && 
                 <List component="nav" aria-label="secondary mailbox folder" >
 
@@ -74,13 +79,15 @@ function Class(props) {
                         <ListItemText primary={test.testName + " : ( "+test.date+" -- "+ test.startTime+" ) "} />
                         <ListItemSecondaryAction>
                         <Link to={{
-                            pathname: "/student/attemptTest",
-                            state: { email: email , 
-                                     classId : classData._id,
-                                     testData : test,
-                                     classSubjectName: classData.classSubjectName,
-                                     classSubjectCode: classData.classSubjectCode
-                                     }}}>                                 
+                                pathname: "/student/attemptTest",
+                                
+                                state: { user: user , 
+                                        classId : classData._id,
+                                        testData : test,
+                                        classSubjectName: classData.classSubjectName,
+                                        classSubjectCode: classData.classSubjectCode
+                                        }}}
+                                replace >                                 
                                 <Button
                                     style={{
                                         width:"100px" , 

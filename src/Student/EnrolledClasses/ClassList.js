@@ -2,30 +2,17 @@ import React ,{useState , useEffect}from 'react';
 import CList from './CList';
 import { Button } from '@material-ui/core';
 import './ClassList.css';
-import Header from '../General/Header';
-import Footer from '../General/Footer';
 import Axios from '../../Axios';
 
 const qs = require('querystring')
 
-
-// const enrolledClasses =[
-//     {
-//         className : "Machine Learning",
-//         classCode : "CO326",
-//     },
-//     {
-//         className : "Computer Graphics",
-//         classCode : "CO305",
-//     },
-// ]
-
 function ClassList(props) {
+    const user = props.location.state.user;
     const defaultFormData={
         classBranch : "",
         classSection : "",
         classSubjectCode : "",
-        email : props.location.state.email,
+        email : props.location.state.user.email,
     };
     const [joinClass, setJoinClass] = useState(false);
     const [enrolledClasses , setEnrolledClasses] = useState([
@@ -95,10 +82,13 @@ function ClassList(props) {
             
         <div>
             <div className="classList__body">
-                <img  src={"../Images/Student/head.png"}/>
+                <div>
+                    <h1>{user.name}</h1>
+                    <h3>{user.collegeId}</h3>
+                </div>
                 {
                     <CList
-                        email = {props.location.state.email}
+                        user = {user}
                         enrolledClasses ={enrolledClasses}
                         />
                 }

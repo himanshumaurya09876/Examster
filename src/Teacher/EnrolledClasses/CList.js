@@ -14,7 +14,7 @@ import './CList.css'
 
 function CList(props) {
     const enrolledClasses = props.enrolledClasses;
-
+    const user =  props.user;
     const listStyle = listItemStyle();
     return (
         <div className="list__block1">
@@ -32,7 +32,7 @@ function CList(props) {
                                 <ListItemSecondaryAction>
                                 <Link to={{
                                     pathname: "/teacher/class",
-                                    state: { email: props.email , 
+                                    state: { user: user , 
                                             classId : Aclass.classId }
                                 }}>
                                     <Button
