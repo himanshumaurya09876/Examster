@@ -36,7 +36,7 @@ function Type4(props) {
       }, [questionData]);
 
     return (
-        <div className="type4Teacher">
+        <div className="Teacher_type4">
             <div className="mainBody4">
                 <div className="type1__question">
                 <TextField

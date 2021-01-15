@@ -61,7 +61,7 @@ function PapersList(props) {
                 <Link to={{
                         pathname: "/teacher/createPaper",
                         state: { user: user }
-                    }}>
+                    }} replace>
                     <Button style={{
                                 width : "200px",
                                 height:"50px",

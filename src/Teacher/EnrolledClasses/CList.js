@@ -28,13 +28,13 @@ function CList(props) {
                                 Disable
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
-                                <ListItemText primary={Aclass.classBranch + " - "+Aclass.classSection} />
+                                <ListItemText primary={Aclass.classBranch + " - "+Aclass.classSection + " " + Aclass.classSubjectName + " - "+Aclass.classSubjectCode} />
                                 <ListItemSecondaryAction>
                                 <Link to={{
                                     pathname: "/teacher/class",
                                     state: { user: user , 
-                                            classId : Aclass.classId }
-                                }}>
+                                            currentClass: Aclass }
+                                }} replace>
                                     <Button
                                         style={{
                                             width:"100px" , 

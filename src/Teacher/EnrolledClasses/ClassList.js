@@ -82,7 +82,10 @@ function TeacherClass(props) {
     return (
         <div>
         <div className="classList__body">
-
+            <div>
+                <h1>{user.name}</h1>
+                <h3>{user.collegeId}</h3>
+            </div>
             {
                 <CList
                     enrolledClasses ={enrolledClasses}

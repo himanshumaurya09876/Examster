@@ -33,7 +33,7 @@ function TestList(props) {
     };
     
     const [newTest, setNewTest] = useState(false);
-    const {user , classId}=props.location.state;
+    const {user , currentClass}=props.location.state;
     const [assignTest , setAssignTest] = useState(defaultAssignTest);
 
     const [scheduledTest,setScheduledTest]=useState([]);
@@ -44,7 +44,7 @@ function TestList(props) {
     }, [])
 
     const loadClassTestData = async(event)=>{
-        await  axios.get('/Teacher/classData?' +"email="+ user.email+"&classId="+classId,{withCredentials: true},
+        await  axios.get('/Teacher/classData?' +"email="+ user.email+"&classId="+currentClass.classId,{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -89,7 +89,7 @@ function TestList(props) {
             studentResponse : []
         }
 
-        await  axios.post('/Teacher/assignTest?' +"email="+ user.email+"&classId="+classId ,qs.stringify(newTestFormat),{withCredentials: true},
+        await  axios.post('/Teacher/assignTest?' +"email="+ user.email+"&classId="+currentClass.classId ,qs.stringify(newTestFormat),{withCredentials: true},
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -108,6 +108,12 @@ function TestList(props) {
     }
     return (
         <div className="testList__body">
+            <div>
+                    <h2>{user.name}</h2>
+                    <h3>{user.collegeId}</h3>
+                    <h3>{currentClass.classBranch +" "+currentClass.classSection}</h3>
+                    <h3>{currentClass.classSubjectName +" "+currentClass.classSubjectCodes}</h3>
+                </div>
             <h2>Scheduled Test List</h2>
             {
                 <TList

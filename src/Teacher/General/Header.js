@@ -10,20 +10,21 @@ function Header(props ) {
                 <Link to={{
                         pathname: "/teacher/dashboard",
                         state: { user: user }
-                    }}><i class="fas fa-laptop-code"></i></Link>
+                    }} style={{color:"white", marginRight : "2%"}} replace><i class="fas fa-laptop-code"></i></Link>
+                    <h3>Hey! {user.name}</h3>
             </div>
             <div className="home__headerRight">
                 <div className = "home__nav">
                     <Link to={{
                         pathname: "/teacher/classList",
                         state: {  user: user }
-                    }}><h4>Class</h4></Link>
+                    }} style={{color:"white"}} replace><h4>Class</h4></Link>
                 </div>
                 <div className = "home__nav">
                 <Link to={{
                         pathname: "/teacher/paper",
                         state: {  user: user }
-                    }}><h4>Paper</h4></Link>
+                    }} style={{color:"white"}} replace><h4>Paper</h4></Link>
                 </div>
                 <div className = "home__nav">
                     <h4>Profile</h4>

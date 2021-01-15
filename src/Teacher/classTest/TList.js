@@ -32,9 +32,10 @@ function TList(props) {
                                 <Button
                                     style={{
                                         width:"100px" , 
-                                        backgroundColor:"lightSkyBlue"
+                                        backgroundColor:"red",
+                                        color:"white"
                                     }}
-                                >Open</Button>
+                                >Delete</Button>
                                 </ListItemSecondaryAction>
                             </ListItem>
                         </div>

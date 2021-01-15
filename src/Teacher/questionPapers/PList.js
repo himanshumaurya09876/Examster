@@ -34,7 +34,7 @@ function PList(props) {
                                         width:"100px" , 
                                         backgroundColor:"lightSkyBlue"
                                     }}
-                                >Open</Button>
+                                >Update</Button>
                                 </ListItemSecondaryAction>
                             </ListItem>
                         </div>
