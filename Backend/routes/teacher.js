@@ -88,6 +88,46 @@ router.get("/getClassList/:email",allowCrossDomain, function(req,res){
 
 });
 
+
+router.get("/paperList",allowCrossDomain,function(req,res){
+    const email=req.query.email;
+    let paperList=[];
+
+    Teacher.findOne({email:email},function(err,data){
+        if(err){
+            console.log(err);
+        } else {
+            if(data){
+                const paperIDs=data.questionPaperIDs;
+                paperIDs.forEach(function(id,index){
+                    QuestionPaper.findById(id,function(err,paperData){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            if(paperData){
+                                const specificData = {
+                                    paperName:paperData.paperName,
+                                    paperCode:paperData.paperCode
+                                };
+                                paperList.push(specificData);
+                               if(index === paperIDs.length-1 ){
+                                   res.send(paperList);
+                               }
+                            } else {
+                                console.log("PpaerData is empty");
+                            }
+                        }
+
+
+                    })
+                })
+            } else {
+                console.log("paper ka questionList data nhi hai");
+            }
+        }
+    });
+})
+
 router.get("/classData" ,allowCrossDomain, function(req ,res){
     // console.log("teacher Class Data :",req.session);
     const email = req.query.email;
@@ -112,6 +152,12 @@ router.post("/assignTest" ,allowCrossDomain, function(req ,res){
     // console.log(classId);
     // console.log(email);
 
+    QuestionPaper.findOne({paperCode:req.body.questionPaperCode},function(err,found){
+        if(err || !found){
+            res.status(201).send("Question paper doesnot exist");
+        }
+    })
+
     Class.findOneAndUpdate({_id : classId} , {$push : {scheduledTest : req.body}} , 
         function(err,data){
             if(err){
@@ -127,6 +173,12 @@ router.post("/createPaper",allowCrossDomain,function(req,res){
 
     const newQuestionPaper=new QuestionPaper(req.body);
     const email=req.body.email;
+
+    QuestionPaper.findOne({paperCode:newQuestionPaper.paperCode},function(err,found){
+        if(err || found){
+            res.status(201).send("paper code already exist");
+        }
+    })
 
     newQuestionPaper.save()
     .then((data)=>{

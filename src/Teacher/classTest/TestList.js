@@ -99,7 +99,11 @@ function TestList(props) {
         })
         .then(data=>{
             console.log("class data ",data);
-            loadClassTestData();
+            if(data.status === 201){
+                alert("Question paper doesnot exist. Please enter a valid Question Paper Code");
+            } else {
+                loadClassTestData();
+            }
         });
     }
     return (

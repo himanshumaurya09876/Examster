@@ -132,16 +132,26 @@ function Papers(props) {
     const onSubmit = async(event)=>{
         event.preventDefault();
 
-        await Axios.post('/Teacher/createPaper' , JSON.stringify(paperData), //{withCredentials: false},
-        {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(data=>{
-            console.log(data);
-            setIsSubmitted(true);
-         });
+        if(paperData.paperCode === "" || paperData.paperName === "" || paperData.timeLimit === ""){
+            alert("Please fill all the fields.....");
+        } else if(paperData.questionsList.length === 0){
+            alert("Please add some questions.....");
+        } else {
+            await Axios.post('/Teacher/createPaper' , JSON.stringify(paperData), //{withCredentials: false},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(data=>{
+                console.log(data);
+                if(data.status === 201){
+                    alert("Oh No! This Paper Code already exist. Please enter another Paper Code")
+                } else {
+                    setIsSubmitted(true);
+                }
+            });
+        }
     }
 
     if(isSubmitted){
@@ -163,9 +173,9 @@ function Papers(props) {
                     <div className="classtest__headerpaperName">
                         <TextField
                             id="standard-textarea"
-                            label="Test Code"
+                            label="Paper Code"
                             name="paperCode"
-                            placeholder="Test Code"
+                            placeholder="Paper Code"
                             color = 'secondary'
                             value={paperData.paperCode}
                             onChange ={handleChange}
@@ -174,9 +184,9 @@ function Papers(props) {
                     <div className="classtest__headerpaperName">
                         <TextField
                             id="standard-textarea"
-                            label="Test Name"
+                            label="Paper Name"
                             name="paperName"
-                            placeholder="Test Name"
+                            placeholder="Paper Name"
                             multiline
                             color = 'secondary'
                             value={paperData.paperName}

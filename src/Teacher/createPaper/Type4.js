@@ -57,6 +57,7 @@ function Type4(props) {
                     label="Points"
                     placeholder="Points"
                     type="number"
+                    inputProps={{min:0}}
                     color = 'secondary'
                     name ="points"
                     value={questionData.points}

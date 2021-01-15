@@ -67,6 +67,7 @@ function Type1(props) {
                             placeholder="Points"
                             name="points"
                             type="number"
+                            inputProps={{min:0}}
                             value={Number(questionData.points)}
                             color = 'secondary'
                             onChange ={handleChange}

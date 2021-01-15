@@ -73,6 +73,7 @@ export default function Type3(props) {
             label="Points"
             placeholder="Points"
             color = 'secondary'
+            inputProps={{min:0}}
             type="number"
             name ="points"
             value={questionData.points}

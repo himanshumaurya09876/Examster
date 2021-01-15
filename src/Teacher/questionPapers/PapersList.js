@@ -51,7 +51,7 @@ function PapersList(props) {
             {
                 <PList
                     papersList ={paperList}
-                    />
+                />
             }
 
             <div style={{
