@@ -152,6 +152,7 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
         response , maximumMarks} = req.body;
 
         console.log(req.body);
+
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
             res.send("question paper not found");
@@ -175,11 +176,13 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                                     marks : Number(marksScored)+"/"+maximumMarks
                                 }
                             )
+                        // console.log("aTest",aTest);
                         return aTest;
                           
                         }
                     })
                 }else{
+                    // console.log("aTest",aTest);
                         return aTest;
                 }
                 if(outerIndex === data.scheduledTest.length-1 ){
@@ -187,18 +190,15 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                     console.log(data.scheduledTest);
                     data.save(function(err , data){
                        if(err){
-                        console.log(err)
+                        console.log(err);
                        }
-                        console.log(data);
+                        console.log("data from class on submission",data);
                     });
                 }
             });
         });          
     });
-    setTimeout(() => {
-        res.send("inserted");  
-    }, 2000);
-
+    res.send("inserted");  
 });
 
 module.exports = router;

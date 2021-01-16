@@ -144,7 +144,7 @@ function ClassTest(props) {
     }
 
     return (
-        <FullScreen scrollBar  handle={handle}>
+        // <FullScreen scrollBar  handle={handle}>
             <div className="classtest">
                 <div className="classtest__header">
                     <div className="classtest__headerLeft">
@@ -200,7 +200,7 @@ function ClassTest(props) {
                 </div>
             </div>
 
-        </FullScreen>
+        // </FullScreen>
 
     )
 }
