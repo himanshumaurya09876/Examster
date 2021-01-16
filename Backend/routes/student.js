@@ -106,7 +106,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
             
         });
         dataToSend.scheduledTest = newTest;
-
+        console.log("oldTest Array",dataToSend.oldTests);
         dataToSend.oldTests.forEach((test )=>{
             let cur= null; 
             test.studentResponse.forEach(function(t){ cur =t; })
@@ -151,12 +151,8 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
     const {studentEmail , classId , testCode,testName ,questionPaperCode ,
         response , maximumMarks} = req.body;
 
-<<<<<<< HEAD
         console.log(req.body);
-
-=======
         console.log("enter"+req.body);
->>>>>>> 067f8b3ac9cded08fa92b27751868e35a6258baa
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
             res.send("question paper not found");
