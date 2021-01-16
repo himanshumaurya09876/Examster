@@ -130,7 +130,7 @@ function ClassTest(props) {
 
     setTimeout(()=>{
         if(handle.active===false){
-            //onSubmit();
+            onSubmit();
         }
     },10000);
 

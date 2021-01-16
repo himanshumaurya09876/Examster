@@ -151,7 +151,7 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
     const {studentEmail , classId , testCode,testName ,questionPaperCode ,
         response , maximumMarks} = req.body;
 
-        console.log(req.body);
+        console.log("enter"+req.body);
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
             res.send("question paper not found");
@@ -159,7 +159,7 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                 
         Class.findById(classId , function(err ,data){
             data.scheduledTest.map((aTest , outerIndex)=>{
-
+                console.log("atest :",aTest);
                 if(aTest.testCode== testCode && aTest.testName==testName){
 
                     let actualAnswer = Paperdata.answerList;
@@ -182,22 +182,24 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                 }else{
                         return aTest;
                 }
-                if(outerIndex === data.scheduledTest.length-1 ){
-                    console.log("data changed in response " ,data);
-                    console.log(data.scheduledTest);
-                    data.save(function(err , data){
-                       if(err){
-                        console.log(err)
-                       }
-                        console.log(data);
-                    });
-                }
+
             });
+            setTimeout(()=>{
+                console.log("data changed in response " ,data);
+                console.log(data.scheduledTest);
+                data.save(function(err , data){
+                   if(err){
+                    console.log(err)
+                   }else{
+                    console.log("return",data);
+                   }
+                });
+            },5000);
         });          
     });
     setTimeout(() => {
         res.send("inserted");  
-    }, 2000);
+    }, 5000);
 
 });
 
