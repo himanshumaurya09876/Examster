@@ -151,8 +151,12 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
     const {studentEmail , classId , testCode,testName ,questionPaperCode ,
         response , maximumMarks} = req.body;
 
+<<<<<<< HEAD
         console.log(req.body);
 
+=======
+        console.log("enter"+req.body);
+>>>>>>> 067f8b3ac9cded08fa92b27751868e35a6258baa
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
             res.send("question paper not found");
@@ -160,7 +164,7 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                 
         Class.findById(classId , function(err ,data){
             data.scheduledTest.map((aTest , outerIndex)=>{
-
+                console.log("atest :",aTest);
                 if(aTest.testCode== testCode && aTest.testName==testName){
 
                     let actualAnswer = Paperdata.answerList;
@@ -185,20 +189,23 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                     // console.log("aTest",aTest);
                         return aTest;
                 }
-                if(outerIndex === data.scheduledTest.length-1 ){
-                    console.log("data changed in response " ,data);
-                    console.log(data.scheduledTest);
-                    data.save(function(err , data){
-                       if(err){
-                        console.log(err);
-                       }
-                        console.log("data from class on submission",data);
-                    });
-                }
             });
+            setTimeout(()=>{
+                console.log("data changed in response " ,data);
+                console.log(data.scheduledTest);
+                data.save(function(err , data){
+                   if(err){
+                    console.log(err)
+                   }else{
+                    console.log("return",data);
+                   }
+                });
+            },5000);
         });          
     });
-    res.send("inserted");  
+    setTimeout(() => {
+        res.send("inserted");  
+    }, 5000);
 });
 
 module.exports = router;
