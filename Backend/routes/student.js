@@ -81,7 +81,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         dataToSend.scheduledTest.forEach((test )=>{
             let cur = null;
             if(test.studentResponse.findIndex(function(t){ cur =t; if(t.studentEmail == email)return 1;}) >=0 ){
-               console.log("Asdf");
+               //console.log("Asdf");
                 oldTests.push(   
                     {
                         testCode : test.testCode ,
@@ -160,7 +160,6 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                 
         Class.findById(classId , function(err ,data){
             data.scheduledTest.map((aTest , outerIndex)=>{
-                console.log("atest :",aTest);
                 if(aTest.testCode== testCode && aTest.testName==testName){
 
                     let actualAnswer = Paperdata.answerList;
@@ -187,13 +186,10 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                 }
             });
             setTimeout(()=>{
-                console.log("data changed in response " ,data);
-                console.log(data.scheduledTest);
                 data.save(function(err , data){
                    if(err){
                     console.log(err)
                    }else{
-                    console.log("return",data);
                    }
                 });
             },5000);

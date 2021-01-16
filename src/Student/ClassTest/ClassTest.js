@@ -13,7 +13,7 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 function ClassTest(props) {
     const user = props.location.state.user;
     const [minutes, setMinutes ] = useState(0);
-    const [seconds, setSeconds ] =  useState(10);
+    const [seconds, setSeconds ] =  useState(5);
     const [testData,setTestData] = useState({
         subjectName : props.location.state.classSubjectName,
         subjectCode : props.location.state.classSubjectCode,
@@ -26,31 +26,22 @@ function ClassTest(props) {
     });
     const [closeTest , setCloseTest] = useState(false);
     const [answers,setAnswers]=useState([]);
-    // const handle = useFullScreenHandle();
     const screenfull = require('screenfull');
-
-
     useEffect(() => {
         screenfull.request();
     }, [])
     
-    // useEffect(() => {
-    //     if (screenfull.isEnabled) {
-    //         screenfull.on('change', () => {
-    //             console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
-    //             // if(screenfull.isFullscreen === false && closeTest===false){
-    //             //     console.log("out of fullscreen mode so submitted");
-    //             //     onSubmit();
-    //             // }  
-
-    //         });
-    //     }
-    // }, [screenfull])
-
-    screenfull.off('change');
-
-
-
+    useEffect( async(e) => {
+        if (screenfull.isEnabled) {
+            screenfull.on('change', (e) => {
+                console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
+                if(screenfull.isFullscreen === false){
+                    setMinutes(0);
+                    setSeconds(0);
+                }  
+            });
+        }
+    }, [screenfull])
         
     useEffect(()=>{
     let myInterval = setInterval(() => {
@@ -121,6 +112,7 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
+<<<<<<< HEAD
         if(((minutes>0 || seconds >0 ))  )  {
             const r = window.confirm("Do you really want to submit  "); if(r == true){  } else{ return ;}
         }
@@ -138,11 +130,31 @@ function ClassTest(props) {
         {
             headers: {
                 'Content-Type': 'application/json',
+=======
+       setTimeout(async()=>{
+            const dataToSend={
+                studentEmail :user.email,
+                classId : props.location.state.classId,
+                testCode : props.location.state.testData.testCode,
+                testName  :  props.location.state.testData.testName,
+                questionPaperCode :props.location.state.testData.questionPaperCode, 
+                response : answers,
+                maximumMarks : testData.maximumMarks,
+>>>>>>> cf0e67feeae5cf18826b7591999143a2d12011c5
             }
-        })
-        .then(data=>{
-            setCloseTest(true);            
-         });
+            console.log("in data to send ",dataToSend);
+            await Axios.post('/Student/attempTest' , JSON.stringify(dataToSend), //{withCredentials: false},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(data=>{
+                console.log(data);
+                setCloseTest(true);            
+            });
+       },1000); 
+        
     }
    
 
