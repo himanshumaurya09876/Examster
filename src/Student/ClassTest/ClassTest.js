@@ -7,7 +7,7 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from "../../Axios.js";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+// import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 
 function ClassTest(props) {
@@ -26,10 +26,23 @@ function ClassTest(props) {
     });
     const [closeTest , setCloseTest] = useState(false);
     const [answers,setAnswers]=useState([]);
-    const handle = useFullScreenHandle();
+    // const handle = useFullScreenHandle();
+    const screenfull = require('screenfull');
+    useEffect(() => {
+        screenfull.request();
 
-
-    
+    }, [])
+    useEffect(() => {
+        if (screenfull.isEnabled) {
+            screenfull.on('change', () => {
+                console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
+                if(screenfull.isFullscreen === false){
+                    onSubmit();
+                }  
+            });
+        }
+    }, [screenfull])
+        
     useEffect(()=>{
     let myInterval = setInterval(() => {
             if (seconds > 0) {
@@ -68,7 +81,7 @@ function ClassTest(props) {
 
             data = data.data;
             setAnswers([]);
-            handle.enter();
+            // handle.enter();
             data.questionsList.forEach(element => {
                 setAnswers(prev=>[...prev , -2]);
             });
@@ -99,9 +112,10 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
-
-        if((minutes>0 || seconds >0) && handle.active === true )  {
-            const r = window.confirm("Do you really want to submit"); if(r == true){  } else{ return ;}
+        if(screenfull.isFullscreen===false){
+            alert("test submitted, as you escaped full screen mode");
+        }else if(((minutes>0 || seconds >0 ))  )  {
+            const r = window.confirm("Do you really want to submit  "); if(r == true){  } else{ return ;}
         }
         const dataToSend={
             studentEmail :user.email,
@@ -120,19 +134,10 @@ function ClassTest(props) {
             }
         })
         .then(data=>{
-            setTimeout(()=>{
-                setCloseTest(true);
-                console.log("submitted "+data);
-            },2000);
-            
+            setCloseTest(true);            
          });
     }
-
-    setTimeout(()=>{
-        if(handle.active===false){
-            onSubmit();
-        }
-    },10000);
+   
 
     if(closeTest){
         return <Redirect to={{
@@ -144,7 +149,7 @@ function ClassTest(props) {
     }
 
     return (
-        <FullScreen scrollBar  handle={handle}>
+        // <FullScreen scrollBar  handle={handle}>
             <div className="classtest">
                 <div className="classtest__header">
                     <div className="classtest__headerLeft">
@@ -192,16 +197,13 @@ function ClassTest(props) {
                                 fontWeight:"500",
                             }}
                             onClick={()=>{
-                                    onSubmit();
+                                onSubmit();
                                 }}   
                         >
                         Submit
                     </Button>
                 </div>
             </div>
-
-        </FullScreen>
-
     )
 }
 
