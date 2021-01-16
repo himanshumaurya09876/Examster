@@ -64,13 +64,10 @@ function Class(props) {
         })
         .then(data=>{
             setClassData(data.data);
-            console.log("class data ",data);
-
         });
     }
 
      const today =getTime();
-     console.log(today);
     return (
         <div className="class__list__block">
             <img  src="../Images/Student/head.png"/>
@@ -86,7 +83,6 @@ function Class(props) {
                 <h2>Scheduled Tests / Running Test</h2>
 
                 {classData.scheduledTest.map((test) => {
-                    console.log(test.date+"T"+test.startTime);
                  return (
 
                         <ListItem

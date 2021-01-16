@@ -49,7 +49,7 @@ app.get('/' ,function(req,res){
 });
 
 app.listen(9000 , function(req ,res){
-    console.log("server running at 9000");
+    console.log("Server is running at post 9000...");
 });
 
 app.use('/', require('./routes/home.js'));

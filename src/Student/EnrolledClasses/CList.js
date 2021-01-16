@@ -16,12 +16,6 @@ function CList(props) {
     const enrolledClasses = props.enrolledClasses;
     const user = props.user;
     const listStyle = listItemStyle();
-    // function ClassListClick(id){
-    //     console.log("class pe ja na"+id);
-    //         return <Redirect 
-
-    //         /> 
-    // }
     return (
         <div className="list__block1">
             { enrolledClasses &&

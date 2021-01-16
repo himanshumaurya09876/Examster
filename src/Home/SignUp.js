@@ -48,7 +48,6 @@ function SignUp() {
     }
     const onSubmit = async(event)=>{
         event.preventDefault();
-        console.log(user);
      
         if( user.firstName ==="" || user.lastName===""|| user.email === "" ||
         user.password=== ""||  user.userType === ""|| user.collegeID==="" ){
@@ -78,9 +77,9 @@ function SignUp() {
             return <Redirect to={{
                 pathname: "/teacher/dashboard",
                 state: { user: {  email: user.email,
-                                    name :user.name ,
-                                    collegeId : user.collegeId 
-                                }
+                                    name :user.firstName+" "+user.lastName ,
+                                    collegeId : user.collegeID
+                                } 
                        }
               }}
 
@@ -89,8 +88,8 @@ function SignUp() {
             return <Redirect to={{
                 pathname: "/student/dashboard",
                 state: {  user: {  email: user.email,
-                                    name :user.name ,
-                                    collegeId : user.collegeId 
+                                    name :user.firstName+" "+user.lastName ,
+                                    collegeId : user.collegeID
                                 } 
                         }
               }}

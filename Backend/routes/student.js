@@ -81,7 +81,6 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         dataToSend.scheduledTest.forEach((test )=>{
             let cur = null;
             if(test.studentResponse.findIndex(function(t){ cur =t; if(t.studentEmail == email)return 1;}) >=0 ){
-               //console.log("Asdf");
                 oldTests.push(   
                     {
                         testCode : test.testCode ,
@@ -106,7 +105,6 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
             
         });
         dataToSend.scheduledTest = newTest;
-        console.log("oldTest Array",dataToSend.oldTests);
         dataToSend.oldTests.forEach((test )=>{
             let cur= null; 
             test.studentResponse.forEach(function(t){ cur =t; })
@@ -124,7 +122,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         dataToSend.oldTests = oldTests;
         setTimeout(() => {
             res.send(dataToSend);
-        }, 1000);
+        }, 500);
       
     })
 });
@@ -150,9 +148,6 @@ router.get("/attempTest",allowCrossDomain,function(req,res){
 router.post("/attempTest",allowCrossDomain,function(req,res){
     const {studentEmail , classId , testCode,testName ,questionPaperCode ,
         response , maximumMarks} = req.body;
-
-        console.log(req.body);
-        console.log("enter"+req.body);
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
             res.send("question paper not found");
@@ -175,13 +170,11 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                                     marks : Number(marksScored)+"/"+maximumMarks
                                 }
                             )
-                        // console.log("aTest",aTest);
                         return aTest;
                           
                         }
                     })
                 }else{
-                    // console.log("aTest",aTest);
                         return aTest;
                 }
             });
@@ -192,12 +185,12 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
                    }else{
                    }
                 });
-            },5000);
+            },1000);
         });          
     });
     setTimeout(() => {
         res.send("inserted");  
-    }, 5000);
+    }, 1000);
 });
 
 module.exports = router;

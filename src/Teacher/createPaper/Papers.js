@@ -145,7 +145,6 @@ function Papers(props) {
                 }
             })
             .then(data=>{
-                console.log(data);
                 if(data.status === 201){
                     alert("Oh No! This Paper Code already exist. Please enter another Paper Code")
                 } else {

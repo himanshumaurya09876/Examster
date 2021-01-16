@@ -11,7 +11,6 @@ import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Teacher(props) {
     const user = props.location.state.user;
-    console.log("teacher",user);
 
     return (
         <div>

@@ -78,7 +78,7 @@ router.get("/getClassList/:email",allowCrossDomain, function(req,res){
                     })
                 })
             } else {
-                console.log("teacher ka classList data nhi hai");
+                console.log("Teacher's classList is empty");
             }
         }
     });
@@ -114,7 +114,7 @@ router.get("/paperList",allowCrossDomain,function(req,res){
                                    res.send(paperList);
                                }
                             } else {
-                                console.log("PpaerData is empty");
+                                console.log("PaperData is empty");
                             }
                         }
 
@@ -122,7 +122,7 @@ router.get("/paperList",allowCrossDomain,function(req,res){
                     })
                 })
             } else {
-                console.log("paper ka questionList data nhi hai");
+                console.log("Paper's questionList data is not there");
             }
         }
     });
@@ -138,9 +138,7 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
         }else{
             let newTest =[];
             let oldTest =[];
-            console.log(data.students);
              data.scheduledTest.forEach(element => {
-                 console.log(element);
                 if(element.studentResponse.length === data.students.length ){
                     oldTest.push(element);
                 }else{
@@ -149,8 +147,6 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
             });
             data.scheduledTest = newTest;
             data.oldTests = [ ...oldTest , ...data.oldTests];
-            console.log("old test",oldTest);
-            console.log("now new data is printing",data);
             data.save();
             setTimeout(()=>{res.send(data);} , 100);
             
@@ -161,13 +157,8 @@ router.get("/classData" ,allowCrossDomain, function(req ,res){
 
 router.post("/assignTest" ,allowCrossDomain, function(req ,res){
     // console.log("assign Test :",req.session);
-    // console.log(req.body);
 
     const classId=req.query.classId;
-    // const email=req.query.email;
-
-    // console.log(classId);
-    // console.log(email);
 
     QuestionPaper.findOne({paperCode:req.body.questionPaperCode},function(err,found){
         if(err || !found){
@@ -194,63 +185,21 @@ router.post("/createPaper",allowCrossDomain,function(req,res){
     QuestionPaper.findOne({paperCode:newQuestionPaper.paperCode},function(err,found){
         if(err || found){
             res.status(201).send("paper code already exist");
+        } else {
+            newQuestionPaper.save()
+            .then((data)=>{
+                Teacher.findOneAndUpdate({email : email} , {$push : {questionPaperIDs : data._id}} , 
+                function(err,data){
+                    if(err){
+                        console.log(err);
+                        res.status(500).send("error in adding question paper in teacher ");
+                    }else{
+                        res.status(200).send("insert ok");
+                    }
+                }); 
+            });
         }
     })
-
-    newQuestionPaper.save()
-    .then((data)=>{
-        Teacher.findOneAndUpdate({email : email} , {$push : {questionPaperIDs : data._id}} , 
-        function(err,data){
-            if(err){
-                console.log(err);
-                res.status(500).send("error in adding question paper in teacher ");
-            }else{
-                res.status(200).send("insert ok");
-            }
-        }); 
-    });
-
-    console.log(newQuestionPaper);
-
 });
-
-router.get("/paperList",allowCrossDomain,function(req,res){
-    const email=req.query.email;
-    let paperList=[];
-
-    Teacher.findOne({email:email},function(err,data){
-        if(err){
-            console.log(err);
-        } else {
-            if(data){
-                const paperIDs=data.questionPaperIDs;
-                paperIDs.forEach(function(id,index){
-                    QuestionPaper.findById(id,function(err,paperData){
-                        if(err){
-                            console.log(err);
-                        } else {
-                            if(paperData){
-                                const specificData = {
-                                    paperName:paperData.paperName,
-                                    paperCode:paperData.paperCode
-                                };
-                                paperList.push(specificData);
-                               if(index === paperIDs.length-1 ){
-                                   res.send(paperList);
-                               }
-                            } else {
-                                console.log("PpaerData is empty");
-                            }
-                        }
-
-
-                    })
-                })
-            } else {
-                console.log("paper ka questionList data nhi hai");
-            }
-        }
-    });
-})
 
 module.exports = router;

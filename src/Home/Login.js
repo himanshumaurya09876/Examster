@@ -64,16 +64,13 @@ function Login() {
                 data =data.data;
                 setUser(prev => {return {...prev , name : data.firstName+" "+data.lastName , collegeId : data.collegeID};})
                 setUserLogin(true);
-                console.log("teacher login ",data);
         })
         .catch(err => {
-            console.log(err);
             alert("Invalid Email or Password");
         })
         }
     }
     if(userLoginSuccess){
-        console.log(user);
         if(user.userType === "Teacher"){
             return <Redirect to={{
                 pathname: "/teacher/dashboard",

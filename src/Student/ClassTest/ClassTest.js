@@ -13,7 +13,7 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 function ClassTest(props) {
     const user = props.location.state.user;
     const [minutes, setMinutes ] = useState(0);
-    const [seconds, setSeconds ] =  useState(5);
+    const [seconds, setSeconds ] =  useState(3);
     const [testData,setTestData] = useState({
         subjectName : props.location.state.classSubjectName,
         subjectCode : props.location.state.classSubjectCode,
@@ -30,11 +30,10 @@ function ClassTest(props) {
     useEffect(() => {
         screenfull.request();
     }, [])
-    
+
     useEffect( async(e) => {
         if (screenfull.isEnabled) {
             screenfull.on('change', (e) => {
-                console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
                 if(screenfull.isFullscreen === false){
                     setMinutes(0);
                     setSeconds(0);
@@ -93,6 +92,7 @@ function ClassTest(props) {
                 }
             });
             setMinutes(data.timeLimit);
+            setSeconds(0);
         });
 
     }
@@ -112,25 +112,6 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
-<<<<<<< HEAD
-        if(((minutes>0 || seconds >0 ))  )  {
-            const r = window.confirm("Do you really want to submit  "); if(r == true){  } else{ return ;}
-        }
-        const dataToSend={
-            studentEmail :user.email,
-            classId : props.location.state.classId,
-            testCode : props.location.state.testData.testCode,
-            testName  :  props.location.state.testData.testName,
-            questionPaperCode :props.location.state.testData.questionPaperCode, 
-            response : answers,
-            maximumMarks : testData.maximumMarks,
-        }
-        console.log(dataToSend);
-        await Axios.post('/Student/attempTest' , JSON.stringify(dataToSend), //{withCredentials: false},
-        {
-            headers: {
-                'Content-Type': 'application/json',
-=======
        setTimeout(async()=>{
             const dataToSend={
                 studentEmail :user.email,
@@ -140,9 +121,7 @@ function ClassTest(props) {
                 questionPaperCode :props.location.state.testData.questionPaperCode, 
                 response : answers,
                 maximumMarks : testData.maximumMarks,
->>>>>>> cf0e67feeae5cf18826b7591999143a2d12011c5
             }
-            console.log("in data to send ",dataToSend);
             await Axios.post('/Student/attempTest' , JSON.stringify(dataToSend), //{withCredentials: false},
             {
                 headers: {
@@ -150,10 +129,9 @@ function ClassTest(props) {
                 }
             })
             .then(data=>{
-                console.log(data);
                 setCloseTest(true);            
             });
-       },1000); 
+       },100); 
         
     }
    

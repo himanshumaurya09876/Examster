@@ -7,7 +7,6 @@ import Header from '../General/Header';
 
 
 function Dashboard(props) {
-    console.log(props.location.state);
     var items = [
         {
             img : "../Images/Student/Card1.jpg"

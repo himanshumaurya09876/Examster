@@ -1,27 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MList from './MList';
 
 import './MarksList.css';
 
-const marksList =[
-    {
-        studentName : "Vishu bhai 😉",
-        studentRollNo : "2K18/CO/391",
-        studentMarks: "100/100"
-    },
-    {
-        studentName : "Vishu bhai 😉",
-        studentRollNo : "2K18/CO/391",
-        studentMarks: "100/100"
-    },
-    {
-        studentName : "Vishu bhai 😉",
-        studentRollNo : "2K18/CO/391",
-        studentMarks: "100/100"
-    }
-]
-
 function MarksList() {
+
+    const [marksList,setMarksList]=useState([]);
+
+    const loadMarksList = async(event)=>{
+        // await Axios.get('/Teacher/getMarksList/'+classFormData.email,{withCredentials: true},
+        // {
+        //     headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded',
+        //     //  "Access-Control-Allow-Origin": "*",
+        //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        //     }
+        // })
+        // .then(data=>{
+        //     setMarksList(data.data);
+        //     });
+    }
    
     return (
         <div className="marksList__body">

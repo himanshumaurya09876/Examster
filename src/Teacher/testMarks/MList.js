@@ -25,7 +25,6 @@ function MList(props) {
                             <ListItem
                                 style={listStyle}
                                 Disable
-                                // onClick={(event) => handleListItemClick(event, 2)}
                                 >
                                 <ListItemText primary={marks.studentName + " ["+marks.studentRollNo+"]"} />
                                 <ListItemSecondaryAction>

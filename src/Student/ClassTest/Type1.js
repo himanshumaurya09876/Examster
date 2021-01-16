@@ -6,7 +6,6 @@ function Type1(props) {
   
     const [answer , setAnswer] = useState("");
     function handleAnswerChange(event){
-        console.log(event.target.value);
         const answer = event.target.value;
         setAnswer(answer);
         props.addAnswer(answer , props.id);

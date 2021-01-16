@@ -35,7 +35,6 @@ function TeacherClass(props) {
             }
         })
         .then(data=>{
-            console.log("ClassList" ,data.data);
             setEnrolledClasses(data.data);
             });
     }

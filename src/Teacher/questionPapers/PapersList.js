@@ -6,21 +6,6 @@ import Axios from '../../Axios';
 import './PapersList.css';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-// const papersList =[
-//     {
-//         paperName : "ClassTest-1",
-//         paperCode : "CT1-CO326",
-//     },
-//     {
-//         paperName : "SurpriseTest-1",
-//         paperCode : "ST1-CO326",
-//     },
-//     {
-//         paperName : "ClassTest-2",
-//         paperCode : "CT2-CO326",
-//     }
-// ]
-
 function PapersList(props) {
     const user  =  props.location.state.user;
 
@@ -40,7 +25,6 @@ function PapersList(props) {
             }
         })
         .then(data=>{
-            console.log("PaperList" ,data.data);
             setPaperList(data.data);
             });
     }

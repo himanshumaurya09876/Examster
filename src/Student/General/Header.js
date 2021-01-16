@@ -5,7 +5,6 @@ import './Header.css';
 
 function Header(props) {
     const user = props.user;
-    console.log("in header " , user);
     return (
         <div className="home__header">
             <div className="home__headerLeft">
