@@ -5,6 +5,8 @@ import Header from '../General/Header';
 import "./Class.css";
 import Axios from '../../Axios';
 import {Link} from 'react-router-dom';
+
+
 function listItemStyle(){
     return {
         marginTop : "20px",
@@ -14,6 +16,20 @@ function listItemStyle(){
         fontSize:"20px",
 
     }
+}
+function getTime(){
+    var objToday = new Date(),
+	dayOfMonth = today + ( objToday.getDate() < 10) ? '0' + objToday.getDate()  : objToday.getDate() ,
+	months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+	curMonth = (objToday.getMonth()+1<10)? "0"+(objToday.getMonth()+1) : objToday.getMonth()+1  ,
+	curYear = objToday.getFullYear(),
+	curHour = objToday.getHours() > 12 ? objToday.getHours() - 12 : (objToday.getHours() < 10 ? "0" + objToday.getHours() : objToday.getHours()),
+	curMinute = objToday.getMinutes() < 10 ? "0" + objToday.getMinutes() : objToday.getMinutes(),
+	curSeconds = objToday.getSeconds() < 10 ? "0" + objToday.getSeconds() : objToday.getSeconds(),
+	curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
+    var today = curYear+"-"+curMonth+"-"+dayOfMonth+"T"+curHour+":"+curMinute;
+    return today;
+
 }
 
 function Class(props) {
@@ -53,7 +69,8 @@ function Class(props) {
         });
     }
 
-
+     const today =getTime();
+     console.log(today);
     return (
         <div className="class__list__block">
             <img  src="../Images/Student/head.png"/>
@@ -69,7 +86,7 @@ function Class(props) {
                 <h2>Scheduled Tests / Running Test</h2>
 
                 {classData.scheduledTest.map((test) => {
-                 
+                    console.log(test.date+"T"+test.startTime);
                  return (
 
                         <ListItem
@@ -78,31 +95,31 @@ function Class(props) {
                         >
                         <ListItemText primary={test.testName + " : ( "+test.date+" -- "+ test.startTime+" ) "} />
                         <ListItemSecondaryAction>
-                        <Link to={{
-                                pathname: "/student/attemptTest",
-                                
-                                state: { user: user , 
-                                        classId : classData._id,
-                                        testData : test,
-                                        classSubjectName: classData.classSubjectName,
-                                        classSubjectCode: classData.classSubjectCode
-                                        }}}
-                                replace >                                 
-                                <Button
-                                    style={{
-                                        width:"100px" , 
-                                        backgroundColor:"cyan"
-                                    }}
-                                >Start</Button>
-                            </Link>
-                        
+                        {today>=test.date+"T"+test.startTime &&
+                            <Link to={{
+                                    pathname: "/attemptTest",
+                                    
+                                    state: { user: user , 
+                                            classId : classData._id,
+                                            testData : test,
+                                            classSubjectName: classData.classSubjectName,
+                                            classSubjectCode: classData.classSubjectCode
+                                            }}}
+                                    replace >                                 
+                                    <Button
+                                        style={{
+                                            width:"100px" , 
+                                            backgroundColor:"cyan"
+                                        }}
+                                    >Start</Button>
+                                </Link>
+                        }
                         </ListItemSecondaryAction>
                     </ListItem> 
                )
             })
         }
-        </List>      
-          
+        </List>       
     } 
             <h2>Completed Tests</h2> 
             
@@ -131,8 +148,6 @@ function Class(props) {
                         );
                      })
                 }
-                    
-                
             </List>
             }        
         </div>

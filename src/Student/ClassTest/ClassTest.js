@@ -7,19 +7,10 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from "../../Axios.js";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-// const testData = {
-//     subjectName : "",
-//     subjectCode : "",
-//     testName : "",
-//     questionPaper :{
-//     },
-//     minuteLimit : 0,
-//     maximumMarks : 0,
-// }
 
 function ClassTest(props) {
-
     const user = props.location.state.user;
     const [minutes, setMinutes ] = useState(0);
     const [seconds, setSeconds ] =  useState(10);
@@ -35,8 +26,10 @@ function ClassTest(props) {
     });
     const [closeTest , setCloseTest] = useState(false);
     const [answers,setAnswers]=useState([]);
-    console.log(answers);
+    const handle = useFullScreenHandle();
 
+
+    
     useEffect(()=>{
     let myInterval = setInterval(() => {
             if (seconds > 0) {
@@ -60,6 +53,7 @@ function ClassTest(props) {
     useEffect(() => {
         loadTestData();
     }, [])
+    
 
     const loadTestData = async(event)=>{
         await  Axios.get('/Student/attempTest?questionPaperCode='+testData.questionPaperCode ,{withCredentials: true},
@@ -71,8 +65,10 @@ function ClassTest(props) {
             }
         })
         .then(data=>{
+
             data = data.data;
             setAnswers([]);
+            handle.enter();
             data.questionsList.forEach(element => {
                 setAnswers(prev=>[...prev , -2]);
             });
@@ -84,8 +80,8 @@ function ClassTest(props) {
                 }
             });
             setMinutes(data.timeLimit);
-           
         });
+
     }
 
     function addAnswer(answer , index){
@@ -104,7 +100,7 @@ function ClassTest(props) {
 
     const onSubmit = async(event)=>{
 
-        if(minutes>0 || seconds >0){
+        if((minutes>0 || seconds >0) && handle.active === true )  {
             const r = window.confirm("Do you really want to submit"); if(r == true){  } else{ return ;}
         }
         const dataToSend={
@@ -116,7 +112,7 @@ function ClassTest(props) {
             response : answers,
             maximumMarks : testData.maximumMarks,
         }
-        
+        console.log(dataToSend);
         await Axios.post('/Student/attempTest' , JSON.stringify(dataToSend), //{withCredentials: false},
         {
             headers: {
@@ -124,9 +120,20 @@ function ClassTest(props) {
             }
         })
         .then(data=>{
-            setCloseTest(true);
+            setTimeout(()=>{
+                setCloseTest(true);
+                console.log("submitted "+data);
+            },2000);
+            
          });
     }
+
+    setTimeout(()=>{
+        if(handle.active===false){
+            //onSubmit();
+        }
+    },10000);
+
     if(closeTest){
         return <Redirect to={{
             pathname: "/student/class",
@@ -137,60 +144,64 @@ function ClassTest(props) {
     }
 
     return (
-        <div className="classtest">
-            <div className="classtest__header">
-                <div className="classtest__headerLeft">
-                    <div className="classtest__headerSubjectName">
-                        <p>{testData.subjectName + " ["+testData.subjectCode +"]"}</p>
+        <FullScreen scrollBar  handle={handle}>
+            <div className="classtest">
+                <div className="classtest__header">
+                    <div className="classtest__headerLeft">
+                        <div className="classtest__headerSubjectName">
+                            <p>{testData.subjectName + " ["+testData.subjectCode +"]"}</p>
+                        </div>
+                        <br />
+                        <div className="classtest__headerTestName">
+                            <p>{testData.testName}</p>
+                        </div>
+                        <div className="classtest__headerMaxMarks">
+                            <p>{"Maximum Marks : "+testData.maximumMarks}</p>
+                        </div>
                     </div>
-                    <br />
-                    <div className="classtest__headerTestName">
-                        <p>{testData.testName}</p>
-                    </div>
-                    <div className="classtest__headerMaxMarks">
-                        <p>{"Maximum Marks : "+testData.maximumMarks}</p>
+                    <div className="classtest__headerRemTime">
+                        <p>Time Left: {minutes+" : "+seconds}</p>
                     </div>
                 </div>
-                <div className="classtest__headerRemTime">
-                    <p>Time Left: {minutes+" : "+seconds}</p>
+                <div className="classtest__body">
+                    {testData.questionsList.map((aQuestion,index) => {
+                        switch(aQuestion.questionType){
+                            case "type1":return <Type1 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer}/>;
+                            break;
+                            case "type2":return <Type2 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
+                            break;
+                            case "type3":return <Type3 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
+                            break;
+                            case "type4":return <Type4 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
+                            break;
+                        }
+                    })}
+                </div>
+                <div style={{
+                                width : "fit-content",
+                                margin:"20px auto"
+                            }}>
+                    <Button style={{
+                                width : "fit-content",
+                                minWidth :"100px",
+                                height:"50px",
+                                borderBottom:"1px solid black",
+                                backgroundColor:"white",
+                                fontSize:"20px",
+                                color:"purple",
+                                fontWeight:"500",
+                            }}
+                            onClick={()=>{
+                                    onSubmit();
+                                }}   
+                        >
+                        Submit
+                    </Button>
                 </div>
             </div>
-            <div className="classtest__body">
-                {testData.questionsList.map((aQuestion,index) => {
-                     switch(aQuestion.questionType){
-                         case "type1":return <Type1 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer}/>;
-                         break;
-                         case "type2":return <Type2 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
-                         break;
-                         case "type3":return <Type3 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
-                         break;
-                         case "type4":return <Type4 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
-                         break;
-                     }
-                })}
-            </div>
-            <div style={{
-                            width : "fit-content",
-                            margin:"20px auto"
-                        }}>
-                <Button style={{
-                            width : "fit-content",
-                            minWidth :"100px",
-                            height:"50px",
-                            borderBottom:"1px solid black",
-                            backgroundColor:"white",
-                            fontSize:"20px",
-                            color:"purple",
-                            fontWeight:"500",
-                        }}
-                        onClick={()=>{
-                                onSubmit();
-                            }}   
-                    >
-                    Submit
-                </Button>
-            </div>
-        </div>
+
+        </FullScreen>
+
     )
 }
 

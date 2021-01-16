@@ -8,7 +8,7 @@ import StudentEnrolledClass from './Student/EnrolledClasses/ClassList';
 import StudentClass from './Student/class/Class';
 
 import TeacherDashboard from './Teacher/Dashboard/Dashboard';
-import TeacherEnrolledClass from './Teacher/EnrolledClasses/ClassList';
+import ClassTest from './Student/ClassTest/ClassTest';
 import Teacher from './Teacher/Teacher';
 import Student from './Student/Student';
 
@@ -21,6 +21,8 @@ function App() {
           <Route path='/signUp' component={SignUp}></Route>
           <Route path='/student' component={Student}></Route>
           <Route path='/teacher' component={Teacher}></Route>
+          <Route path='/attemptTest' component={ClassTest}></Route>
+
         </Router>
     </div>
   );
