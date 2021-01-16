@@ -77,14 +77,22 @@ function SignUp() {
         if(user.userType === "Teacher"){
             return <Redirect to={{
                 pathname: "/teacher/dashboard",
-                state: { email: user.email }
+                state: { user: {  email: user.email,
+                                    name :user.name ,
+                                    collegeId : user.collegeId 
+                                }
+                       }
               }}
 
              /> 
         } else {
             return <Redirect to={{
                 pathname: "/student/dashboard",
-                state: { email: user.email }
+                state: {  user: {  email: user.email,
+                                    name :user.name ,
+                                    collegeId : user.collegeId 
+                                } 
+                        }
               }}
 
              />}   

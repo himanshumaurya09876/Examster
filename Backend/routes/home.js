@@ -24,7 +24,7 @@ router.post('/signUp' , (req ,res)=>{
                   newStudent
                     .save()
                     .then(user => {
-                        res.send({ msg: 'Student registration successful' });
+                        res.send(studentData);
                     })
                     .catch(err =>{ 
                         console.log(err);
@@ -51,7 +51,7 @@ router.post('/signUp' , (req ,res)=>{
                   newTeacher
                     .save()
                     .then(user => {
-                        res.send({ msg: 'Teacher registration successful' });
+                        res.send(teacherData);
                     })
                     .catch(err =>{ 
                         console.log(err);
@@ -74,7 +74,6 @@ router.post('/login', allowCrossDomain,(req, res, next) => {
             console.log(err);
             res.status(201).send(err);
           }
-          console.log(req.user);
             res.send(req.user);
         });
     }else{

@@ -128,11 +128,15 @@ function ClassTest(props) {
          });
     }
 
-    setTimeout(()=>{
-        if(handle.active===false){
-            onSubmit();
-        }
-    },10000);
+    useEffect(()=>{
+        setTimeout(()=>{
+            if(handle.active===false){
+                console.log("handle ::::::::::")
+                onSubmit();
+            }
+        },10000);
+        
+    }, [handle]);
 
     if(closeTest){
         return <Redirect to={{
