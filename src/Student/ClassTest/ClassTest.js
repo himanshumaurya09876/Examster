@@ -28,20 +28,29 @@ function ClassTest(props) {
     const [answers,setAnswers]=useState([]);
     // const handle = useFullScreenHandle();
     const screenfull = require('screenfull');
+
+
     useEffect(() => {
         screenfull.request();
-
     }, [])
-    useEffect(() => {
-        if (screenfull.isEnabled) {
-            screenfull.on('change', () => {
-                console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
-                if(screenfull.isFullscreen === false){
-                    onSubmit();
-                }  
-            });
-        }
-    }, [screenfull])
+    
+    // useEffect(() => {
+    //     if (screenfull.isEnabled) {
+    //         screenfull.on('change', () => {
+    //             console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
+    //             // if(screenfull.isFullscreen === false && closeTest===false){
+    //             //     console.log("out of fullscreen mode so submitted");
+    //             //     onSubmit();
+    //             // }  
+
+    //         });
+    //     }
+    // }, [screenfull])
+
+    screenfull.off('change');
+
+
+
         
     useEffect(()=>{
     let myInterval = setInterval(() => {
@@ -112,9 +121,7 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
-        if(screenfull.isFullscreen===false){
-            alert("test submitted, as you escaped full screen mode");
-        }else if(((minutes>0 || seconds >0 ))  )  {
+        if(((minutes>0 || seconds >0 ))  )  {
             const r = window.confirm("Do you really want to submit  "); if(r == true){  } else{ return ;}
         }
         const dataToSend={
