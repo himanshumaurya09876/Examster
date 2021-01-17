@@ -117,6 +117,9 @@ function TestList(props) {
                 { (scheduledTest && scheduledTest.length > 0) ?
                     <TList
                         testList ={scheduledTest}
+                        listType="ScheduledList"
+                        currentClass={currentClass}
+                        user={user}
                     />
                     :
                     <div className="emptyState" >
@@ -125,11 +128,14 @@ function TestList(props) {
                 }
             </div>
 
-            <div className="teacher__completedTestBody">
+            <div className="teacher__completedTestBody" style={{borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px"}}>
                 <h2 className="teacher__completedTest">Past Test</h2>
                 { (completedTest && completedTest.length >0)?
                     <TList
                         testList ={completedTest}
+                        listType="CompletedList"
+                        currentClass={currentClass}
+                        user={user}
                     />
                     :
                     <div className="emptyState" >
