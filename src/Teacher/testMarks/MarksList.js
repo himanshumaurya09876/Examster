@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MList from './MList';
+
+import Axios from "../../Axios";
 
 import './MarksList.css';
 
-function MarksList() {
+const qs = require('querystring')
+
+function MarksList(props) {
+
+    const currentClass=props.location.state.currentClass;
+    const testDetails=props.location.state.testDetails;
 
     const [marksList,setMarksList]=useState([]);
 
+    useEffect(() => {
+        loadMarksList();
+    }, [])
+
     const loadMarksList = async(event)=>{
-        // await Axios.get('/Teacher/getMarksList/'+classFormData.email,{withCredentials: true},
-        // {
-        //     headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded',
-        //     //  "Access-Control-Allow-Origin": "*",
-        //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        //     }
-        // })
-        // .then(data=>{
-        //     setMarksList(data.data);
-        //     });
+        await Axios.post('/Teacher/getMarksList',JSON.stringify(testDetails),
+        {
+            headers: {
+            'Content-Type': 'application/json',
+            }
+        })
+        .then(data=>{
+            console.log(data);
+            setMarksList(data.data);
+        });
     }
    
     return (
@@ -27,7 +37,7 @@ function MarksList() {
             {
                 <MList
                     marksList ={marksList}
-                    />
+                />
             }
         </div>
     );

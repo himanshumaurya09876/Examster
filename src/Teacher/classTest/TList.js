@@ -1,5 +1,6 @@
 import { Button, Checkbox, Divider, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core'
 import React from 'react'
+import {Link } from "react-router-dom";
 import './TList.css'
  function listItemStyle(){
      return {
@@ -13,6 +14,13 @@ import './TList.css'
 
 function TList(props) {
     const testList = props.testList;
+    const listType= props.listType;
+    const currentClass=props.currentClass;
+    const user=props.user;
+
+    function deleteClicked(){
+
+    }
 
     const listStyle = listItemStyle();
     return (
@@ -38,13 +46,49 @@ function TList(props) {
                     } />
                 </ListItem>
                 {testList.map((Atest)=>{
-                    return (
-                        <div>
-                            <ListItem
-                                style={listStyle}
-                                Disable
-                                // onClick={(event) => handleListItemClick(event, 2)}
-                                >
+
+                    if(listType === "ScheduledList"){
+                        return (
+                            <div>
+                                <ListItem
+                                    style={listStyle}
+                                    Disable
+                                    // onClick={(event) => handleListItemClick(event, 2)}
+                                    >
+                                    <ListItemText primary={
+                                        <div className="teacher__tlist__body">
+                                        <div className="teacher__tlist__testName">
+                                            {Atest.testName}
+                                        </div>
+                                        <div className="teacher__tlist__testCode">
+                                            {Atest.testCode}
+                                        </div>
+                                        <div className="teacher__tlist__testTime">
+                                            {Atest.date + "  " + Atest.startTime}
+                                        </div>
+                                    </div>
+                                    } />                                    <ListItemSecondaryAction>
+                                    <Button
+                                        style={{
+                                            width:"100px" , 
+                                            backgroundColor:"red",
+                                            color:"white"
+                                        }}
+
+                                        onClick={deleteClicked}
+                                    >Delete</Button>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            </div>
+                            );
+                    } else {
+                        return (
+                            <div>
+                                <ListItem
+                                    style={listStyle}
+                                    Disable
+                                    // onClick={(event) => handleListItemClick(event, 2)}
+                                    >
                                 <ListItemText primary={
                                     <div className="teacher__tlist__body">
                                         <div className="teacher__tlist__testName">
@@ -57,20 +101,28 @@ function TList(props) {
                                             {Atest.date + "  " + Atest.startTime}
                                         </div>
                                     </div>
-                                    } />
-                                <ListItemSecondaryAction>
-                                <Button
-                                    style={{
-                                        width:"100px" , 
-                                        backgroundColor:"red",
-                                        color:"white"
-                                    }}
-                                >Delete</Button>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        </div>
-                        );
-                     })
+                                } />                                    <ListItemSecondaryAction>
+                                    <Link to={{
+                                        pathname: "/teacher/marksList",
+                                        state: {
+                                                user:user,
+                                                testDetails:Atest, 
+                                                currentClass: currentClass }
+                                        }} replace>
+                                        <Button
+                                            style={{
+                                                width:"120px" , 
+                                                backgroundColor:"red",
+                                                color:"white"
+                                            }}
+                                        >Show Marks</Button>
+                                    </Link>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            </div>
+                            );
+                    }
+                })
                 }
             </List>
             }

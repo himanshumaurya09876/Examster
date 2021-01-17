@@ -11,7 +11,6 @@ import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Teacher(props) {
     const user = props.location.state.user;
-
     return (
         <div>
             <Header
@@ -21,6 +20,7 @@ function Teacher(props) {
             <Route path='/teacher/classList' component={ClassList}></Route>
             <Route path='/teacher/class' component={TestList}></Route>
             <Route path='/teacher/paper' component={QuestionPapersList}></Route>
+            <Route path='/teacher/marksList' component={MarksList}></Route>
             <Route path='/teacher/createPaper' component={CreatePaper}></Route>
             <Footer />
         </div>

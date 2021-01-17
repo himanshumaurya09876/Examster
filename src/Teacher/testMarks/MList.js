@@ -26,7 +26,7 @@ function MList(props) {
                                 style={listStyle}
                                 Disable
                                 >
-                                <ListItemText primary={marks.studentName + " ["+marks.studentRollNo+"]"} />
+                                <ListItemText primary={marks.studentName + " ["+marks.studentID+"]"} />
                                 <ListItemSecondaryAction>
                                 {marks.studentMarks}
                                 </ListItemSecondaryAction>

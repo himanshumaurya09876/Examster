@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const Student=require("../models/Schemas").Student;
 const Teacher=require("../models/Schemas").Teacher;
 const Class = require("../models/Schemas").Class;
 const Test = require("../models/Schemas").Test;
@@ -203,5 +204,32 @@ router.post("/createPaper",allowCrossDomain,function(req,res){
         }
     })
 });
+
+router.post("/getMarksList",allowCrossDomain,function(req,res){
+    const testDetails=req.body;
+    console.log(testDetails);
+    let marksList=[];
+    testDetails.studentResponse.forEach((student) => {
+        const email=student.studentEmail;
+        Student.findOne({email:email},function(err,foundStudent){
+            if(err){
+                console.log("Error in finding Student");
+            } else {
+                const data={
+                    studentName:foundStudent.firstName+" "+foundStudent.lastName,
+                    studentID:foundStudent.collegeID,
+                    studentMarks:student.marks
+                }
+
+                marksList.push(data);
+            }
+        })
+    })
+
+    setTimeout(() => {
+        res.send(marksList)
+    },
+    1000);
+})
 
 module.exports = router;
