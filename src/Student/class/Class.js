@@ -81,15 +81,36 @@ function Class(props) {
                 <h2 className="completedTest">Scheduled Tests / Running Test</h2>
                 { (classData.scheduledTest && classData.scheduledTest.length>0 ) ?
                     <List component="nav" aria-label="secondary mailbox folder" >
-
+                    <ListItem
+                        className="student__testList__header">
+                            <ListItemText primary={
+                                <div className="student__testList">
+                                        <div className="student__testList__testname">
+                                            {"Test Name"}
+                                        </div>
+                                        <div className="student__testList__time">
+                                            {"Time"}
+                                        </div>
+                                </div>
+                            } />
+                    </ListItem> 
                     {classData.scheduledTest.map((test) => {
                     return (
 
-                            <ListItem
+                        <ListItem
                             style={listStyle}
                             >
     
-                            <ListItemText primary={test.testName + " : ( "+test.date+" -- "+ test.startTime+" ) "} />
+                            <ListItemText primary={
+                                <div className="student__testList">
+                                        <div className="student__testList__testname">
+                                            {test.testName}
+                                        </div>
+                                        <div className="student__testList__time">
+                                            {test.date+" -- "+ test.startTime}
+                                        </div>
+                                </div>
+                            } />
                             <ListItemSecondaryAction>
                             {today>=test.date+"T"+test.startTime &&
                                 <Link to={{
@@ -129,16 +150,36 @@ function Class(props) {
                 
                 { (classData.oldTests && classData.oldTests.length >0 ) ?
                 <List component="nav" aria-label="secondary mailbox folder" >
-                    {
+                    <ListItem
+                        className="student__testList__header">
+                            <ListItemText primary={
+                                <div className="student__testList">
+                                        <div className="student__testList__testname">
+                                            {"Test Name"}
+                                        </div>
+                                        <div className="student__testList__time">
+                                            {"Time"}
+                                        </div>
+                                </div>
+                            } />
+                    </ListItem> 
+                    {    
                         classData.oldTests.map((test)=>{
                         return (
                             <div>
                                 <ListItem
-                                    style={listStyle}
-                                    // onClick={(event) => handleListItemClick(event, 2)}
-                                    >
-                                    <ListItemText primary={test.testName + " : ( "+test.date +" -- "+ test.startTime+" ) "} />
-                                    <ListItemSecondaryAction
+                                    style={listStyle} >
+                                <ListItemText primary={
+                                    <div className="student__testList">
+                                            <div className="student__testList__testname">
+                                                {test.testName}
+                                            </div>
+                                            <div className="student__testList__time">
+                                                {test.date+" -- "+ test.startTime}
+                                            </div>
+                                        </div>
+                                    } />                                    
+                                <ListItemSecondaryAction
                                         style={{
                                             fontSize:"20px",
                                             fontWeight:"bold",

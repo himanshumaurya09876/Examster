@@ -19,6 +19,28 @@ function MList(props) {
         <div className="list__block1">
             { marksList &&
             <List component="nav" aria-label="secondary mailbox folder" >
+                <ListItem
+                        className="mlist__header"
+                        Disable
+                        >
+                    <ListItemText 
+                        style={{fontWeight:"bolder"}}
+                        primary={
+                            <div className="teacher__mlist__body">
+                                <div className="teacher__mlist__Name">
+                                    {"Student Name"}
+                                </div>
+                                <div className="teacher__mlist__Roll">
+                                    {"Roll no."}
+                                </div>
+                            </div>                    
+                    } />
+                    <ListItemSecondaryAction
+                        style={{fontWeight:"bolder"}}
+                    >
+                        {"Student Marks"}
+                    </ListItemSecondaryAction>
+                </ListItem>
                 {marksList.map((marks)=>{
                     return (
                         <div>
@@ -26,8 +48,19 @@ function MList(props) {
                                 style={listStyle}
                                 Disable
                                 >
-                                <ListItemText primary={marks.studentName + " ["+marks.studentID+"]"} />
-                                <ListItemSecondaryAction>
+                                <ListItemText primary={
+                                        <div className="teacher__mlist__body">
+                                        <div className="teacher__mlist__Name">
+                                            {marks.studentName }
+                                        </div>
+                                        <div className="teacher__mlist__Roll">
+                                            {marks.studentID}
+                                        </div>
+                                    </div>
+                                    } />  
+                                <ListItemSecondaryAction
+                                style={{fontWeight:"bolder"}}
+                                >
                                 {marks.studentMarks}
                                 </ListItemSecondaryAction>
                             </ListItem>

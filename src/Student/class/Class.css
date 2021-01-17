@@ -60,3 +60,22 @@
     border-bottom-right-radius: 10px;
     text-align: center;
 }
+.student__testList__header{
+        border : 1px  solid black;
+        padding: 15px;
+        font-size:20px;
+        background-color: lightyellow;
+}
+.student__testList{
+    display: flex;
+    margin-right: 30%;
+}
+.student__testList__testname{
+    width: 25%;
+    flex: 1;
+}
+
+.student__testList__time{
+    width: 20%;
+    flex:1;
+}

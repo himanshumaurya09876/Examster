@@ -67,7 +67,8 @@ function TList(props) {
                                             {Atest.date + "  " + Atest.startTime}
                                         </div>
                                     </div>
-                                    } />                                    <ListItemSecondaryAction>
+                                    } />                                    
+                                <ListItemSecondaryAction>
                                     <Button
                                         style={{
                                             width:"100px" , 
@@ -121,8 +122,8 @@ function TList(props) {
                                 </ListItem>
                             </div>
                             );
-                    }
-                })
+                        }
+                    })
                 }
             </List>
             }

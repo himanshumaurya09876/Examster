@@ -33,7 +33,13 @@ function MarksList(props) {
    
     return (
         <div className="marksList__body">
+            <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , }}
+                className="teacher__mlist__details">
+                    <h3 className="teacher__testDetails">Class : {currentClass.classBranch +" - "+currentClass.classSection}</h3>
+                    <h3 className="teacher__subjectDetails">Subject : {currentClass.classSubjectName +" - "+currentClass.classSubjectCode}</h3>
+                    <h3 className="teacher__testDetails">Test : {testDetails.testName+" - "+testDetails.testCode}</h3>
 
+            </div>
             {
                 <MList
                     marksList ={marksList}
