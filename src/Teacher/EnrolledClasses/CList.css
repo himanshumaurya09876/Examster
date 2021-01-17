@@ -5,3 +5,19 @@
     padding: 5px;
 
 }
+.teacher__class__listLabelBody{
+    display: flex;
+}
+.teacher__class__listLabel__class{
+    width: 12%;
+}
+.teacher__class__listLabel__subject{
+    width: 25%;
+}
+.classList__header{
+    margin-top : 10px ;
+    border : 1px  solid black ;
+    padding: 10px ;
+    background-color: lightyellow;
+    font-weight: bolder;
+}

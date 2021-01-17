@@ -5,3 +5,18 @@
     padding: 5px;
     
 }
+.teacher__plist__header{
+    margin-top : 15px;
+    border : 2px  solid black;
+    padding: 10px;
+    background-color: lightyellow;
+}
+.teacher__plist__body{
+    display: flex;
+}
+.teacher__plist__code{
+    width: 15%;
+}
+.teacher__plist__name{
+    width: 40%;
+}

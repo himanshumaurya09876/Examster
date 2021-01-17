@@ -85,11 +85,15 @@ function TeacherClass(props) {
                 className="teacher__classlist__details">
                     <h3 className="teacher__head">Your Classes</h3>
             </div>
-            {
+            { (enrolledClasses && enrolledClasses.length >0)?
                 <CList
                     enrolledClasses ={enrolledClasses}
                     user = {user}
                     />
+                :  
+                <div className="teacher__noclass__emptyState" >
+                    <h2>You have not any class</h2> 
+                </div>
             }
            <div style={{
                             width : "fit-content",

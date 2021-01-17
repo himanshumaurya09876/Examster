@@ -20,33 +20,63 @@ function CList(props) {
         <div className="list__block1">
             { enrolledClasses &&
             <List component="nav" aria-label="secondary mailbox folder" >
-                {enrolledClasses.map((Aclass)=>{
-                    return (
-                        <div>
-                            <ListItem
-                                style={listStyle}
-                                Disable
-                                // onClick={(event) => handleListItemClick(event, 2)}
-                                >
-                                <ListItemText primary={Aclass.classBranch + " - "+Aclass.classSection + " " + Aclass.classSubjectName + " - "+Aclass.classSubjectCode} />
-                                <ListItemSecondaryAction>
-                                <Link to={{
-                                    pathname: "/teacher/class",
-                                    state: { user: user , 
-                                            currentClass: Aclass }
-                                }} replace>
-                                    <Button
-                                        style={{
-                                            width:"100px" , 
-                                            backgroundColor:"lightSkyBlue"
-                                        }}
-                                    >Open</Button>
-                                </Link>
-                                </ListItemSecondaryAction>
-                            </ListItem>
+            <ListItem
+                className="classList__header"
+                Disable >
+                <ListItemText primary={
+                    <div className="teacher__class__listLabelBody">
+                        <div className="teacher__class__listLabel__class">
+                            {"Class"}
                         </div>
-                        );
-                     })
+                        <div className="teacher__class__listLabel__subject">
+                            {"Subject Name"}
+                        </div>
+                        <div className="teacher__class__listLabel__class">
+                            {"Subject Code"}
+                        </div>
+                    </div>
+                } />
+            </ListItem>
+            {enrolledClasses.map((Aclass)=>{
+                return (
+                    <div>
+                        <ListItem
+                            style={listStyle}
+                            Disable
+                            // onClick={(event) => handleListItemClick(event, 2)}
+                            >
+                            <ListItemText primary={
+
+                                <div className="teacher__class__listLabelBody">
+                                    <div className="teacher__class__listLabel__class">
+                                        {Aclass.classBranch+" - "+Aclass.classSection}
+                                    </div>
+                                    <div className="teacher__class__listLabel__subject">
+                                        {Aclass.classSubjectName}
+                                    </div>
+                                    <div className="teacher__class__listLabel__subject">
+                                        {Aclass.classSubjectCode}
+                                    </div>
+                                </div>
+                            } />
+                            <ListItemSecondaryAction>
+                            <Link to={{
+                                pathname: "/teacher/class",
+                                state: { user: user , 
+                                        currentClass: Aclass }
+                            }} replace>
+                                <Button
+                                    style={{
+                                        width:"100px" , 
+                                        backgroundColor:"lightSkyBlue"
+                                    }}
+                                >Open</Button>
+                            </Link>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    </div>
+                    );
+                    })
                 }
             </List>
             }

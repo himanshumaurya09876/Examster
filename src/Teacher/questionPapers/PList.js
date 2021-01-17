@@ -17,8 +17,24 @@ function PList(props) {
     const listStyle = listItemStyle();
     return (
         <div className="list__block1">
+
             { papersList &&
             <List component="nav" aria-label="secondary mailbox folder" >
+                <ListItem
+                    className="teacher__plist__header"
+                    Disable
+                    >
+                    <ListItemText primary={
+                        <div className="teacher__plist__body">
+                            <div className="teacher__plist__code">
+                                { "Paper Code"}
+                            </div>
+                            <div className="teacher__plist__name">
+                                { "Paper Name"}
+                            </div>   
+                        </div>
+                    } />
+                </ListItem>
                 {papersList.map((paper)=>{
                     return (
                         <div>
@@ -27,7 +43,16 @@ function PList(props) {
                                 Disable
                                 // onClick={(event) => handleListItemClick(event, 2)}
                                 >
-                                <ListItemText primary={paper.paperName + " "+paper.paperCode} />
+                                <ListItemText primary={
+                                    <div className="teacher__plist__body">
+                                        <div className="teacher__plist__code">
+                                            { paper.paperCode}
+                                        </div>
+                                        <div className="teacher__plist__name">
+                                            { paper.paperName}
+                                        </div>   
+                                    </div>
+                                } />
                                 <ListItemSecondaryAction>
                                 <Button
                                     style={{

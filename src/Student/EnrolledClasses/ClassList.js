@@ -36,6 +36,7 @@ function ClassList(props) {
     }
     const onSubmit = async(event)=>{
         event.preventDefault();
+        console.log(joinClassFormData);
         if( joinClassFormData.className ==="" ||  joinClassFormData.classBranch=== ""|| 
             joinClassFormData.classSubjectCode === ""){
             alert("Fill all the fields");
@@ -50,13 +51,15 @@ function ClassList(props) {
                 }
             })
             .then((data)=>{
+                console.log(data);
                 if(data.status===201){
                     alert("Already Joined this class");
+                }else if (data.status === 202){
+                    alert("Class with provided details doesn't exists. Try Again" );
                 }
                 return loadClassList();
             });
         }
-        
     }
 
     useEffect(() => { 
@@ -86,16 +89,20 @@ function ClassList(props) {
                 className="classlist__details">
                     <h3 className="head">Your Enrolled Class</h3>
             </div>
-                {
+                { (enrolledClasses && enrolledClasses.length >0) ?
                     <CList
                         user = {user}
                         enrolledClasses ={enrolledClasses}
                         />
+                    :  
+                    <div className="emptyState" >
+                        <h2>You have not enrolled any class</h2> 
+                    </div>
                 }
             <div style={{
-                                width : "fit-content",
-                                margin:"20px auto"
-                            }}>
+                        width : "fit-content",
+                        margin:"20px auto"
+                        }}>
                     <Button style={{
                                 width : "200px",
                                 height:"50px",

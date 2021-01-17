@@ -35,10 +35,15 @@ function PapersList(props) {
                 className="teacher__paperImage">
                     <h3 className="teacher__paperTitle">Your Question Papers</h3>
             </div>
-            {
+            { (paperList && paperList.length > 0)?
                 <PList
                     papersList ={paperList}
                 />
+                :  
+                <div className="teacher__nopaper__emptyState" >
+                    <h2>You have no previous question paper</h2> 
+                </div>
+
             }
 
             <div style={{

@@ -163,18 +163,20 @@ router.post("/assignTest" ,allowCrossDomain, function(req ,res){
     QuestionPaper.findOne({paperCode:req.body.questionPaperCode},function(err,found){
         if(err || !found){
             res.status(201).send("Question paper doesnot exist");
+        }else{
+            Class.findOneAndUpdate({_id : classId} , {$push : {scheduledTest : req.body}} , 
+                function(err,data){
+                    if(err){
+                        console.log(err);
+                        res.status(500).send("error in Scheduling test in teacher ");
+                    }else{
+                        res.status(200).send("insert ok");
+                    }
+                });
         }
     })
 
-    Class.findOneAndUpdate({_id : classId} , {$push : {scheduledTest : req.body}} , 
-        function(err,data){
-            if(err){
-                console.log(err);
-                res.status(500).send("error in Scheduling test in teacher ");
-            }else{
-                res.status(200).send("insert ok");
-            }
-        }); 
+     
 });
 
 router.post("/createPaper",allowCrossDomain,function(req,res){

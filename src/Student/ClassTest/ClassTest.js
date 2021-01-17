@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress, makeStyles } from '@material-ui/core';
 import React ,{useState , useEffect} from 'react';
 import './ClassTest.css';
 import Type1 from './Type1';
@@ -7,8 +7,16 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from "../../Axios.js";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-// import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
+
+const useStyles3 = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      '& > * + *': {
+     
+      },
+    },
+  }));
 
 function ClassTest(props) {
     const user = props.location.state.user;
@@ -25,8 +33,11 @@ function ClassTest(props) {
         maximumMarks : 0,
     });
     const [closeTest , setCloseTest] = useState(false);
+    const [saveResponse , setSaveResponse] = useState(false);
     const [answers,setAnswers]=useState([]);
     const screenfull = require('screenfull');
+    const classes = useStyles3();
+
     useEffect(() => {
         screenfull.request();
     }, [])
@@ -66,7 +77,6 @@ function ClassTest(props) {
         loadTestData();
     }, [])
     
-
     const loadTestData = async(event)=>{
         await  Axios.get('/Student/attempTest?questionPaperCode='+testData.questionPaperCode ,{withCredentials: true},
         {
@@ -113,6 +123,7 @@ function ClassTest(props) {
 
     const onSubmit = async(event)=>{
        setTimeout(async()=>{
+            setSaveResponse(true);
             const dataToSend={
                 studentEmail :user.email,
                 classId : props.location.state.classId,
@@ -129,6 +140,7 @@ function ClassTest(props) {
                 }
             })
             .then(data=>{
+                setSaveResponse(false);
                 setCloseTest(true);            
             });
        },100); 
@@ -137,6 +149,7 @@ function ClassTest(props) {
    
 
     if(closeTest){
+        screenfull.exit();
         return <Redirect to={{
             pathname: "/student/class",
             state: { 
@@ -146,8 +159,26 @@ function ClassTest(props) {
     }
 
     return (
-        // <FullScreen scrollBar  handle={handle}>
-            <div className="classtest">
+            <div >
+            { saveResponse ? 
+                <div >
+                    <div style={{  height:"100%",
+                        marginTop :"20%",
+                        marginLeft:"50%",
+                        textAlign:"center"}}>
+                        <div className={classes.root}>
+                            <CircularProgress 
+                            size={80}
+                            color={'secondary'}
+                            />
+                        </div>
+                    </div>
+                    <div >
+                    <h2 style={{margin:"20px 0" , marginLeft:"38%"}}>Wait while we save your Response</h2> 
+                    </div>
+                </div>
+                :
+                <div  className="classtest">
                 <div className="classtest__header">
                     <div className="classtest__headerLeft">
                         <div className="classtest__headerSubjectName">
@@ -200,6 +231,8 @@ function ClassTest(props) {
                         Submit
                     </Button>
                 </div>
+                </div>
+            }
             </div>
     )
 }

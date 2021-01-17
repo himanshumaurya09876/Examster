@@ -13,3 +13,24 @@
     border-bottom-right-radius: 10px;
     text-align: center;
 }
+
+.tlist__header{
+    margin-top : 10px;
+    border : 2px  solid black;
+    padding: 10px;
+    background-color: lightyellow;
+
+}
+.teacher__tlist__body{
+    display: flex;
+}
+
+.teacher__tlist__testName{
+    width: 20%;
+}
+.teacher__tlist__testCode{
+    width: 15%;
+}
+.teacher__tlist__testTime{
+    width: 15%;
+}

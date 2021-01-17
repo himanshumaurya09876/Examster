@@ -12,8 +12,8 @@ router.post("/JoinClass",allowCrossDomain, function(req,res){
     
     const Classdata = req.body ; 
     const email = req.body.email;
-   
-    const classId = "";
+   console.log(email );
+   console.log(Classdata)
     Student.findOne({email :email}, function(err ,data){
         if(err){
             res.send("student not found");
@@ -23,6 +23,7 @@ router.post("/JoinClass",allowCrossDomain, function(req,res){
             classBranch : Classdata.classBranch,
             classSection :Classdata.classSection,
             classSubjectCode : Classdata.classSubjectCode} , function(err, cdata){
+                console.log(cdata);
                 if(err) {
                     res.send("error occured")
                 }else{
@@ -45,6 +46,8 @@ router.post("/JoinClass",allowCrossDomain, function(req,res){
                             data.save();
                             res.send("insert successful");
                         }  
+                    }else{
+                        res.status(202).send("class not found");
                     }
                 }
         });
@@ -133,15 +136,17 @@ router.get("/attempTest",allowCrossDomain,function(req,res){
     QuestionPaper.findOne({paperCode : questionPaperCode} , function(err ,data){
         if(err){
             res.send("No Question  paper found or not assigned any paper");
+        }else{
+            if(!data){
+                res.send("no question paper for req test");
+            }else{
+                res.status(200).send({
+                    maximumMarks : data.maximumMarks,
+                    questionsList:  data.questionsList,
+                    timeLimit : data.timeLimit
+                });
+            }
         }
-        if(!data){
-            res.send("no question paper for req test");
-        }
-        res.status(200).send({
-            maximumMarks : data.maximumMarks,
-            questionsList:  data.questionsList,
-            timeLimit : data.timeLimit
-        });
     });
 })
 
@@ -150,30 +155,33 @@ router.post("/attempTest",allowCrossDomain,function(req,res){
         response , maximumMarks} = req.body;
     QuestionPaper.findOne({paperCode : questionPaperCode}, function(err ,Paperdata){
         if(err || !Paperdata){
-            res.send("question paper not found");
+            //res.send("question paper not found");
         }
                 
         Class.findById(classId , function(err ,data){
             data.scheduledTest.map((aTest , outerIndex)=>{
                 if(aTest.testCode== testCode && aTest.testName==testName){
-
-                    let actualAnswer = Paperdata.answerList;
-                    let marksScored = 0 ;
-                    response.forEach((studentAnswer , index)=>{
-                        if(studentAnswer.toString() === actualAnswer[index].toString() ){
-                            marksScored = marksScored +Number(Paperdata.questionsList[index].points);
-                        }
-                        if(index === response.length-1){
-                            aTest.studentResponse.push(
-                                { studentEmail : studentEmail,
-                                   response : response,
-                                    marks : Number(marksScored)+"/"+maximumMarks
-                                }
-                            )
-                        return aTest;
-                          
-                        }
-                    })
+                    if(("filter",aTest.studentResponse.filter(e=>e.studentEmail+""=== studentEmail+"")).length>0){
+                    }else{
+                        let actualAnswer = Paperdata.answerList;
+                        let marksScored = 0 ;
+                        response.forEach((studentAnswer , index)=>{
+                            if(studentAnswer.toString() === actualAnswer[index].toString() ){
+                                marksScored = marksScored +Number(Paperdata.questionsList[index].points);
+                            }
+                            if(index === response.length-1){
+                                aTest.studentResponse.push(
+                                    { studentEmail : studentEmail,
+                                       response : response,
+                                        marks : Number(marksScored)+"/"+maximumMarks
+                                    }
+                                )
+                            return aTest;
+                              
+                            }
+                        })
+                    }
+                
                 }else{
                         return aTest;
                 }

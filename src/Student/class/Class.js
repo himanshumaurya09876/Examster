@@ -1,4 +1,4 @@
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { Button, CircularProgress, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from '@material-ui/core';
 import React , {useEffect , useState} from 'react';
 import Footer from '../General/Footer';
 import Header from '../General/Header';
@@ -16,6 +16,7 @@ function listItemStyle(){
 
     }
 }
+
 function getTime(){
     var objToday = new Date(),
 	dayOfMonth = today + ( objToday.getDate() < 10) ? '0' + objToday.getDate()  : objToday.getDate() ,
@@ -68,7 +69,9 @@ function Class(props) {
 
      const today =getTime();
     return (
+    
         <div className="class__list__block">
+               
             <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , }}
                 className="list__details">
                     <h3 className="classDetails">Class : {classData.classBranch +" - "+classData.classSection}</h3>
@@ -156,8 +159,8 @@ function Class(props) {
                 </div>
                 }       
             </div>
- 
         </div>
+        
     )
 }
 
