@@ -16,7 +16,7 @@ function TList(props) {
 
     const listStyle = listItemStyle();
     return (
-        <div className="list__block1">
+        <div className="teacher__list__block1">
             { testList &&
             <List component="nav" aria-label="secondary mailbox folder" >
                 {testList.map((Atest)=>{

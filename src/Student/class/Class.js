@@ -6,7 +6,6 @@ import "./Class.css";
 import Axios from '../../Axios';
 import {Link} from 'react-router-dom';
 
-
 function listItemStyle(){
     return {
         marginTop : "20px",
@@ -70,82 +69,94 @@ function Class(props) {
      const today =getTime();
     return (
         <div className="class__list__block">
-            <img  src="../Images/Student/head.png"/>
-            <div>
-                    <h2>{user.name}</h2>
-                    <h3>{user.collegeId}</h3>
-                    <h3>{classData.classBranch +" "+classData.classSection}</h3>
-                    <h3>{classData.classSubjectName +" "+classData.classSubjectCodes}</h3>
-                </div>
-            { classData.scheduledTest && 
-                <List component="nav" aria-label="secondary mailbox folder" >
+            <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , }}
+                className="list__details">
+                    <h3 className="classDetails">Class : {classData.classBranch +" - "+classData.classSection}</h3>
+                    <h3 className="subjectDetails">Subject : {classData.classSubjectName +" - "+classData.classSubjectCode}</h3>
+            </div>
+            <div className="completedTestBody">
+                <h2 className="completedTest">Scheduled Tests / Running Test</h2>
+                { (classData.scheduledTest && classData.scheduledTest.length>0 ) ?
+                    <List component="nav" aria-label="secondary mailbox folder" >
 
-                <h2>Scheduled Tests / Running Test</h2>
-
-                {classData.scheduledTest.map((test) => {
-                 return (
-
-                        <ListItem
-                        style={listStyle}
-                        // onClick={(event) => handleListItemClick(event, 2)}
-                        >
-                        <ListItemText primary={test.testName + " : ( "+test.date+" -- "+ test.startTime+" ) "} />
-                        <ListItemSecondaryAction>
-                        {today>=test.date+"T"+test.startTime &&
-                            <Link to={{
-                                    pathname: "/attemptTest",
-                                    
-                                    state: { user: user , 
-                                            classId : classData._id,
-                                            testData : test,
-                                            classSubjectName: classData.classSubjectName,
-                                            classSubjectCode: classData.classSubjectCode
-                                            }}}
-                                    replace >                                 
-                                    <Button
-                                        style={{
-                                            width:"100px" , 
-                                            backgroundColor:"cyan"
-                                        }}
-                                    >Start</Button>
-                                </Link>
-                        }
-                        </ListItemSecondaryAction>
-                    </ListItem> 
-               )
-            })
-        }
-        </List>       
-    } 
-            <h2>Completed Tests</h2> 
-            
-            {classData.oldTests &&
-            <List component="nav" aria-label="secondary mailbox folder" >
-                {
-                    classData.oldTests.map((test)=>{
+                    {classData.scheduledTest.map((test) => {
                     return (
-                        <div>
+
                             <ListItem
-                                style={listStyle}
-                                // onClick={(event) => handleListItemClick(event, 2)}
-                                >
-                                <ListItemText primary={test.testName + " : ( "+test.date +" -- "+ test.startTime+" ) "} />
-                                <ListItemSecondaryAction
-                                    style={{
-                                        fontSize:"20px",
-                                        fontWeight:"bold",
-                                        paddingRight:"4%"
-                                    }}
-                                >
-                                {test.marksObtained }
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        </div>
-                        );
-                     })
+                            style={listStyle}
+                            >
+    
+                            <ListItemText primary={test.testName + " : ( "+test.date+" -- "+ test.startTime+" ) "} />
+                            <ListItemSecondaryAction>
+                            {today>=test.date+"T"+test.startTime &&
+                                <Link to={{
+                                        pathname: "/attemptTest",
+                                        
+                                        state: { user: user , 
+                                                classId : classData._id,
+                                                testData : test,
+                                                classSubjectName: classData.classSubjectName,
+                                                classSubjectCode: classData.classSubjectCode
+                                                }}}
+                                        replace >                                 
+                                        <Button
+                                            style={{
+                                                width:"100px" , 
+                                                backgroundColor:"cyan"
+                                            }}
+                                        >Start</Button>
+                                    </Link>
+                            }
+                            </ListItemSecondaryAction>
+                        </ListItem> 
+                    )
+                    })
                 }
-            </List>
-            }        
+                </List> 
+
+                :
+                <div className="emptyState" >
+                <h2>Hurray!! You have no remaining Test</h2> 
+                </div>      
+                } 
+            </div>
+            <div className="completedTestBody">
+
+                <h2 className="completedTest">Completed Tests</h2> 
+                
+                { (classData.oldTests && classData.oldTests.length >0 ) ?
+                <List component="nav" aria-label="secondary mailbox folder" >
+                    {
+                        classData.oldTests.map((test)=>{
+                        return (
+                            <div>
+                                <ListItem
+                                    style={listStyle}
+                                    // onClick={(event) => handleListItemClick(event, 2)}
+                                    >
+                                    <ListItemText primary={test.testName + " : ( "+test.date +" -- "+ test.startTime+" ) "} />
+                                    <ListItemSecondaryAction
+                                        style={{
+                                            fontSize:"20px",
+                                            fontWeight:"bold",
+                                            paddingRight:"4%"
+                                        }}
+                                    >
+                                    {test.marksObtained }
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            </div>
+                            );
+                        })
+                    }
+                </List>
+                :
+                <div className="emptyState" >
+                    <h2>You have no past test</h2> 
+                </div>
+                }       
+            </div>
+ 
         </div>
     )
 }

@@ -106,24 +106,37 @@ function TestList(props) {
     }
     return (
         <div className="testList__body">
-            <div>
-                    <h2>{user.name}</h2>
-                    <h3>{user.collegeId}</h3>
-                    <h3>{currentClass.classBranch +" "+currentClass.classSection}</h3>
-                    <h3>{currentClass.classSubjectName +" "+currentClass.classSubjectCodes}</h3>
-                </div>
-            <h2>Scheduled Test List</h2>
-            {
-                <TList
-                    testList ={scheduledTest}
+            <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , }}
+                className="teacher__list__details">
+                    <h3 className="teacher__classDetails">Class : {currentClass.classBranch +" - "+currentClass.classSection}</h3>
+                    <h3 className="teacher__subjectDetails">Subject : {currentClass.classSubjectName +" - "+currentClass.classSubjectCode}</h3>
+            </div>
+
+            <div className="teacher__completedTestBody">
+                <h2 className="teacher__completedTest">Scheduled Tests / Running Test</h2>
+                { (scheduledTest && scheduledTest.length > 0) ?
+                    <TList
+                        testList ={scheduledTest}
                     />
-            }
-            <h2>Completed Test List</h2>
-            {
-                <TList
-                    testList ={completedTest}
+                    :
+                    <div className="emptyState" >
+                         <h2>You have no Scheduled Assigned Test</h2> 
+                    </div> 
+                }
+            </div>
+
+            <div className="teacher__completedTestBody">
+                <h2 className="teacher__completedTest">Past Test</h2>
+                { (completedTest && completedTest.length >0)?
+                    <TList
+                        testList ={completedTest}
                     />
-            }
+                    :
+                    <div className="emptyState" >
+                        <h2>No Past Test</h2> 
+                    </div>
+                }
+            </div>
            <div style={{
                             width : "fit-content",
                             margin:"20px auto"

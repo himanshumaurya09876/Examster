@@ -82,10 +82,10 @@ function ClassList(props) {
             
         <div>
             <div className="classList__body">
-                <div>
-                    <h1>{user.name}</h1>
-                    <h3>{user.collegeId}</h3>
-                </div>
+            <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , objectFit:"center"}}
+                className="classlist__details">
+                    <h3 className="head">Your Enrolled Class</h3>
+            </div>
                 {
                     <CList
                         user = {user}

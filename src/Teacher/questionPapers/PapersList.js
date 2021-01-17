@@ -31,7 +31,10 @@ function PapersList(props) {
 
     return (
         <div className="papersList__body">
-
+            <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , }}
+                className="teacher__paperImage">
+                    <h3 className="teacher__paperTitle">Your Question Papers</h3>
+            </div>
             {
                 <PList
                     papersList ={paperList}
