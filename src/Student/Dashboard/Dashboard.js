@@ -20,6 +20,7 @@ function Dashboard(props) {
     ];
     const img_style = { height: '50%', width: '50%' , margin : 'auto' };
     return (
+     
         <div>
             <div className="dashboard">
                 <div className="dashboard__slider">

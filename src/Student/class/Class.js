@@ -13,7 +13,6 @@ function listItemStyle(){
         borderRadius : "5px",
         padding: "15px",
         fontSize:"20px",
-
     }
 }
 

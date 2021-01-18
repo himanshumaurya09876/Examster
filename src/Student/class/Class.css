@@ -68,7 +68,7 @@
 }
 .student__testList{
     display: flex;
-    margin-right: 30%;
+    
 }
 .student__testList__testname{
     width: 25%;

@@ -2,7 +2,7 @@
     width: 100%;
     margin: 20px auto;
     border: 1px solid rgb(112, 109, 109) ;
-    background-color: #F0EBF8;
+    background-color: hsl(263, 48%, 95%);
     overflow:scroll ;
     overflow-x: hidden; 
     overflow-anchor: auto;
