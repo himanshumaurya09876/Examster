@@ -7,14 +7,13 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from "../../Axios.js";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+// import Tagscript from 'react-script-tag';
+import proc from "./proc";
 
 
 const useStyles3 = makeStyles((theme) => ({
     root: {
-      display: 'flex',
-      '& > * + *': {
-     
-      },
+      display: 'flex'
     },
   }));
 
@@ -75,6 +74,7 @@ function ClassTest(props) {
 
     useEffect(() => {
         loadTestData();
+        proc();
     }, [])
     
     const loadTestData = async(event)=>{
@@ -162,6 +162,9 @@ function ClassTest(props) {
 
         
             <div >
+            {/* <Tagscript defer src="../Proctoring/face-api.min.js"></Tagscript> */}
+            <video id="cum_video" width="720" height="560" autoPlay muted></video>
+            {/* <Tagscript defer src="../Proctoring/script.js"></Tagscript> */}
             { saveResponse ? 
                 <div >
                     <div style={{  height:"100%",
