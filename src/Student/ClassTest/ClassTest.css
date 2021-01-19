@@ -45,6 +45,17 @@
     color: red;
 }
 .classtest__body{
-    
+}
 
+.classtest__proctoring{
+    width: 70% ;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+}
+.proc__video{
+    flex: 1;
+}
+.proc__info{
+    float: 1;
 }

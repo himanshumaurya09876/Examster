@@ -37,7 +37,9 @@ function ClassTest(props) {
     const screenfull = require('screenfull');
     const classes = useStyles3();
     const [ mvideo , setmvideo ] = useState(null) ;
-    var video;
+    const[global_interval , set_global_interval] = useState("hiiii");
+    const [cheat , setCheat] = useState(Number(0));
+     var video;
     useEffect(() => {
         screenfull.request();
     }, [])
@@ -72,7 +74,6 @@ function ClassTest(props) {
             clearInterval(myInterval);
           };
     });
-
     function startProc(){
         console.log("in proctoring ");
         Promise.all([
@@ -86,8 +87,6 @@ function ClassTest(props) {
           navigator.mediaDevices.getUserMedia({
             video: true
         }).then(
-        //   stream => {video.srcObject = stream , Stream= stream},
-        //   err => console.log(err)
             (stream,err) => {
                 if(err)console.log(err);
                 else{
@@ -97,41 +96,47 @@ function ClassTest(props) {
                 }
             );
         }
-    
-        video.addEventListener('play', () => {
-          const canvas = faceapi.createCanvasFromMedia(video)
-          document.body.append(canvas)
-          const displaySize = { width: video.width, height: video.height }
-          faceapi.matchDimensions(canvas, displaySize)
-              let ans = 0 ;
-              setInterval(async () => {
-                  var time = Number(0) ;
-                  var count = Number( 0) ;
-                  let inter =  await setInterval(async () => {
-                    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-                    count = Math.max(count ,Number( detections.length) );
-                    time = time +1;
-                    ans = count;
-                    console.log("cur detections 1" ,count);
-                    if(time >=10){
-                      clearInterval(inter);
-                      console.log("cur detections " , count);
-                    }
-                }, 1000);
-              },3000);
-    
-        });
+        video.addEventListener('play',detect);
         console.log(" video inside proc : ",video);
     }
-    console.log("video in outside proc" ,video);
+    function detect() {
+        console.log("detect ",global_interval);
+        const canvas = faceapi.createCanvasFromMedia(video)
+        document.body.append(canvas)
+        const displaySize = { width: video.width, height: video.height }
+        faceapi.matchDimensions(canvas, displaySize)
+        var ans = 0 ;
+        let time = 0 ;
+        var cheat = 0 ;
+        const  inter = setInterval(async () => {
+                time = time +1;
+                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+                ans = Math.max(ans ,Number( detections.length) );
+                if(time >= 10){
+                    await console.log("cur detections " ,ans , time);
+                    if(ans ==0){
+                        cheat++;
+                        setCheat(prev => {return prev +1});
+                    }  
+                    if(cheat>=Number(2)){
+                        console.log(cheat);
+                        setMinutes(0);
+                        setSeconds(0);
+                    }
+                    console.log(cheat);
+                    time = 0 ;
+                    ans =0;
+                }
+            },1000);
+        set_global_interval(inter);
+    }
 
-    async function endVideo() {
+    async function endVideo(video) {
         await window.localStream.getTracks().forEach(function(track) {
           track.stop();
         });
-        //video.removeEventListener();
-
-      } 
+        video.removeEventListener('play' , detect);
+    } 
     useEffect(async() => {
         await loadTestData();
         video = document.getElementById('cum_video');
@@ -152,7 +157,6 @@ function ClassTest(props) {
 
             data = data.data;
             setAnswers([]);
-            // handle.enter();
             data.questionsList.forEach(element => {
                 setAnswers(prev=>[...prev , -2]);
             });
@@ -166,7 +170,6 @@ function ClassTest(props) {
             setMinutes(data.timeLimit);
             setSeconds(0);
         });
-
     }
 
     function addAnswer(answer , index){
@@ -184,8 +187,9 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
-      await endVideo();        
-       setTimeout(async()=>{
+        clearInterval(global_interval);
+        await endVideo(mvideo);        
+        setTimeout(async()=>{
             setSaveResponse(true);
             const dataToSend={
                 studentEmail :user.email,
@@ -222,84 +226,89 @@ function ClassTest(props) {
     }
 
     return (
-
-        
+        <div >
+        { saveResponse ? 
             <div >
-            <video id="cum_video" width="720" height="560" autoPlay muted></video>
-            { saveResponse ? 
+                <div style={{  height:"100%",
+                    marginTop :"20%",
+                    marginLeft:"50%",
+                    textAlign:"center"}}>
+                    <div className={classes.root}>
+                        <CircularProgress 
+                        size={80}
+                        color={'secondary'}
+                        />
+                    </div>
+                </div>
                 <div >
-                    <div style={{  height:"100%",
-                        marginTop :"20%",
-                        marginLeft:"50%",
-                        textAlign:"center"}}>
-                        <div className={classes.root}>
-                            <CircularProgress 
-                            size={80}
-                            color={'secondary'}
-                            />
-                        </div>
-                    </div>
-                    <div >
-                    <h2 style={{margin:"20px 0" , marginLeft:"38%"}}>Wait while we save your Response</h2> 
-                    </div>
+                <h2 style={{margin:"20px 0" , marginLeft:"38%"}}>Wait while we save your Response</h2> 
                 </div>
-                :
-                <div  className="classtest">
-                <div className="classtest__header">
-                    <div className="classtest__headerLeft">
-                        <div className="classtest__headerSubjectName">
-                            <p>{testData.subjectName + " ["+testData.subjectCode +"]"}</p>
-                        </div>
-                        <br />
-                        <div className="classtest__headerTestName">
-                            <p>{testData.testName}</p>
-                        </div>
-                        <div className="classtest__headerMaxMarks">
-                            <p>{"Maximum Marks : "+testData.maximumMarks}</p>
-                        </div>
-                    </div>
-                    <div className="classtest__headerRemTime">
-                        <p>Time Left: {minutes+" : "+seconds}</p>
-                    </div>
-                </div>
-                <div className="classtest__body">
-                    {testData.questionsList.map((aQuestion,index) => {
-                        switch(aQuestion.questionType){
-                            case "type1":return <Type1 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer}/>;
-                            break;
-                            case "type2":return <Type2 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
-                            break;
-                            case "type3":return <Type3 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
-                            break;
-                            case "type4":return <Type4 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
-                            break;
-                        }
-                    })}
-                </div>
-                <div style={{
-                                width : "fit-content",
-                                margin:"20px auto"
-                            }}>
-                    <Button style={{
-                                width : "fit-content",
-                                minWidth :"100px",
-                                height:"50px",
-                                borderBottom:"1px solid black",
-                                backgroundColor:"white",
-                                fontSize:"20px",
-                                color:"purple",
-                                fontWeight:"500",
-                            }}
-                            onClick={()=>{
-                                onSubmit();
-                                }}   
-                        >
-                        Submit
-                    </Button>
-                </div>
-                </div>
-            }
             </div>
+            :
+            <div  className="classtest">
+            <div className="classtest__header">
+                <div className="classtest__headerLeft">
+                    <div className="classtest__headerSubjectName">
+                        <p>{testData.subjectName + " ["+testData.subjectCode +"]"}</p>
+                    </div>
+                    <br />
+                    <div className="classtest__headerTestName">
+                        <p>{testData.testName}</p>
+                    </div>
+                    <div className="classtest__headerMaxMarks">
+                        <p>{"Maximum Marks : "+testData.maximumMarks}</p>
+                    </div>
+                </div>
+                <div className="classtest__headerRemTime">
+                    <p>Time Left: {minutes+" : "+seconds}</p>
+                </div>
+            </div>
+            <div className="classtest__proctoring">
+                <div className="proc__video">
+                    <video id="cum_video" style={{width:"50%" , height:"50%"}} autoPlay muted></video>
+                </div>
+                <div className="proc__info">
+                    <h2>{cheat}</h2>
+                </div>
+            </div>
+            <div className="classtest__body">
+                {testData.questionsList.map((aQuestion,index) => {
+                    switch(aQuestion.questionType){
+                        case "type1":return <Type1 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer}/>;
+                        break;
+                        case "type2":return <Type2 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
+                        break;
+                        case "type3":return <Type3 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
+                        break;
+                        case "type4":return <Type4 key={index} id={index} questionData={aQuestion} addAnswer={addAnswer} />;
+                        break;
+                    }
+                })}
+            </div>
+            <div style={{
+                            width : "fit-content",
+                            margin:"20px auto"
+                        }}>
+                <Button style={{
+                            width : "fit-content",
+                            minWidth :"100px",
+                            height:"50px",
+                            borderBottom:"1px solid black",
+                            backgroundColor:"white",
+                            fontSize:"20px",
+                            color:"purple",
+                            fontWeight:"500",
+                        }}
+                        onClick={()=>{
+                            onSubmit();
+                            }}   
+                    >
+                    Submit
+                </Button>
+            </div>
+            </div>
+        }
+        </div>
     )
 }
 
