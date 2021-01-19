@@ -7,8 +7,8 @@ import Type3 from './Type3';
 import Type4 from './Type4';
 import Axios from "../../Axios.js";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
-// import Tagscript from 'react-script-tag';
-import proc from "./proc";
+import * as faceapi from 'face-api.js';
+// import proc from "./proc";
 
 
 const useStyles3 = makeStyles((theme) => ({
@@ -36,7 +36,8 @@ function ClassTest(props) {
     const [answers,setAnswers]=useState([]);
     const screenfull = require('screenfull');
     const classes = useStyles3();
-
+    const [ mvideo , setmvideo ] = useState(null) ;
+    var video;
     useEffect(() => {
         screenfull.request();
     }, [])
@@ -72,9 +73,70 @@ function ClassTest(props) {
           };
     });
 
-    useEffect(() => {
-        loadTestData();
-        proc();
+    function startProc(){
+        console.log("in proctoring ");
+        Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri('./Proctoring/models'),
+          faceapi.nets.faceLandmark68Net.loadFromUri('./Proctoring/models'),
+          faceapi.nets.faceRecognitionNet.loadFromUri('./Proctoring/models'),
+          faceapi.nets.faceExpressionNet.loadFromUri('./Proctoring/models')
+        ]).then(startVideo);
+    
+        async function startVideo() {
+          navigator.mediaDevices.getUserMedia({
+            video: true
+        }).then(
+        //   stream => {video.srcObject = stream , Stream= stream},
+        //   err => console.log(err)
+            (stream,err) => {
+                if(err)console.log(err);
+                else{
+                    video.srcObject = stream ;
+                    window.localStream = stream;
+                    }
+                }
+            );
+        }
+    
+        video.addEventListener('play', () => {
+          const canvas = faceapi.createCanvasFromMedia(video)
+          document.body.append(canvas)
+          const displaySize = { width: video.width, height: video.height }
+          faceapi.matchDimensions(canvas, displaySize)
+              let ans = 0 ;
+              setInterval(async () => {
+                  var time = Number(0) ;
+                  var count = Number( 0) ;
+                  let inter =  await setInterval(async () => {
+                    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+                    count = Math.max(count ,Number( detections.length) );
+                    time = time +1;
+                    ans = count;
+                    console.log("cur detections 1" ,count);
+                    if(time >=10){
+                      clearInterval(inter);
+                      console.log("cur detections " , count);
+                    }
+                }, 1000);
+              },3000);
+    
+        });
+        console.log(" video inside proc : ",video);
+    }
+    console.log("video in outside proc" ,video);
+
+    async function endVideo() {
+        await window.localStream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+        //video.removeEventListener();
+
+      } 
+    useEffect(async() => {
+        await loadTestData();
+        video = document.getElementById('cum_video');
+        startProc();
+        setmvideo(video);
     }, [])
     
     const loadTestData = async(event)=>{
@@ -122,6 +184,7 @@ function ClassTest(props) {
     }
 
     const onSubmit = async(event)=>{
+      await endVideo();        
        setTimeout(async()=>{
             setSaveResponse(true);
             const dataToSend={
@@ -141,7 +204,7 @@ function ClassTest(props) {
             })
             .then(data=>{
                 setSaveResponse(false);
-                setCloseTest(true);            
+                setCloseTest(true);    
             });
        },100); 
         
@@ -162,9 +225,7 @@ function ClassTest(props) {
 
         
             <div >
-            {/* <Tagscript defer src="../Proctoring/face-api.min.js"></Tagscript> */}
             <video id="cum_video" width="720" height="560" autoPlay muted></video>
-            {/* <Tagscript defer src="../Proctoring/script.js"></Tagscript> */}
             { saveResponse ? 
                 <div >
                     <div style={{  height:"100%",
