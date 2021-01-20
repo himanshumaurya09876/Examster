@@ -232,4 +232,23 @@ router.post("/getMarksList",allowCrossDomain,function(req,res){
     1000);
 })
 
+router.post("/deleteScheduledTest",allowCrossDomain,function(req,res){
+    const testData=req.body;
+
+    const testID=testData.testID;
+    const classID=testData.classID;
+
+    // console.log(testData);
+
+    Class.findById(classID , function(err , data){
+        if(err){
+            res.send("error in finding  class data");
+        }else{
+            data.scheduledTest=data.scheduledTest.filter(Atest => Atest._id!=testID);
+            data.save();
+            setTimeout(()=>{res.send(data);} , 100);
+        }
+    }) 
+})
+
 module.exports = router;

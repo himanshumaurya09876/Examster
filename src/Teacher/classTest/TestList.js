@@ -104,6 +104,29 @@ function TestList(props) {
             }
         });
     }
+
+    const deleteTest= async(testID) => {
+        const data={
+            testID:testID,
+            classID:currentClass.classId
+        }
+        await  axios.post('/Teacher/deleteScheduledTest' ,qs.stringify(data),{withCredentials: true},
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                // "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                       }
+        })
+        .then(data=>{
+            if(data.status === 201){
+                alert("Unable to delete the selected test.");
+            } else {
+                loadClassTestData();
+            }
+        });
+    }
+
     return (
         <div className="testList__body">
             <div style={{ backgroundImage : "url("+ "../Images/Student/head.png"+")" , }}
@@ -120,6 +143,7 @@ function TestList(props) {
                         listType="ScheduledList"
                         currentClass={currentClass}
                         user={user}
+                        deleteTest={deleteTest}
                     />
                     :
                     <div className="emptyState" >

@@ -18,10 +18,6 @@ function TList(props) {
     const currentClass=props.currentClass;
     const user=props.user;
 
-    function deleteClicked(){
-
-    }
-
     const listStyle = listItemStyle();
     return (
         <div className="teacher__list__block1">
@@ -76,7 +72,9 @@ function TList(props) {
                                             color:"white"
                                         }}
 
-                                        onClick={deleteClicked}
+                                        onClick={() => {
+                                            return props.deleteTest(Atest._id);
+                                        }}
                                     >Delete</Button>
                                     </ListItemSecondaryAction>
                                 </ListItem>

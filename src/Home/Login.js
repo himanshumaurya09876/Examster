@@ -97,7 +97,7 @@ function Login() {
     return (
         <div>
         <Header/>
-        <div className="login">
+        <div className="login1">
             <div className="login__header">
                 <i className="fas fa-laptop-code"></i>
                 <h1>Exam Master</h1>
