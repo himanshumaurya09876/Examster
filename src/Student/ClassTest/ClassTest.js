@@ -114,11 +114,11 @@ function ClassTest(props) {
                 ans = Math.max(ans ,Number( detections.length) );
                 if(time >= 10){
                     await console.log("cur detections " ,ans , time);
-                    if(ans ==0){
-                        cheat++;
+                    if(ans ==0 || ans >1){
+                        cheat++ ;
                         setCheat(prev => {return prev +1});
                     }  
-                    if(cheat>=Number(2)){
+                    if(cheat>=Number(5) ){
                         console.log(cheat);
                         setMinutes(0);
                         setSeconds(0);
@@ -264,12 +264,15 @@ function ClassTest(props) {
                 </div>
             </div>
             <div className="classtest__proctoring">
-                <div className="proc__video">
-                    <video id="cum_video" style={{width:"50%" , height:"50%"}} autoPlay muted></video>
-                </div>
                 <div className="proc__info">
-                    <h2>{cheat}</h2>
+                    <h2>*Your are not allowed to move anywhere from the screen*</h2>
+                    <br/>
+                    <h3>Maximum Allowed Attempts : 5</h3>
+                    <h3 style={{color :"red"}}>No of times you displaced :{cheat} </h3>
                 </div>
+                <div className="proc__video">
+                    <video id="cum_video" style={{width:"100%" , height:"100%"}} autoPlay muted></video>
+                </div> 
             </div>
             <div className="classtest__body">
                 {testData.questionsList.map((aQuestion,index) => {
