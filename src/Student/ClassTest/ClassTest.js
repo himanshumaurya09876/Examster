@@ -132,9 +132,10 @@ function ClassTest(props) {
         //video.removeEventListener();
 
       } 
-    useEffect(async() => {
+    useEffect(async(video) => {
         await loadTestData();
         video = document.getElementById('cum_video');
+        console.log(video);
         startProc();
         setmvideo(video);
     }, [])
