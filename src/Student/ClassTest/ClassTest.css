@@ -45,6 +45,24 @@
     color: red;
 }
 .classtest__body{
-    
+}
 
+.classtest__proctoring{
+    width: 65% ;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+}
+.proc__video{
+    flex: 1;
+    background-color: lightgrey;
+    padding: 10px;
+}
+.proc__info{
+    flex: 1;
+    padding: 3%;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    margin: 10px;
 }

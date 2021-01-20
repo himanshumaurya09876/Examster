@@ -39,7 +39,6 @@
     flex-direction: column;
     align-content: center;
     justify-content: space-around;
-
 }
 
 .review__img{
@@ -88,3 +87,6 @@
     object-fit: contain;
     width: 100%
 }
+
+
+
