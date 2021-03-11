@@ -82,7 +82,8 @@ function Class(props) {
                     <List component="nav" aria-label="secondary mailbox folder" >
                     <ListItem
                         className="student__testList__header">
-                            <ListItemText primary={
+                            <ListItemText
+                             primary={
                                 <div className="student__testList">
                                         <div className="student__testList__testname">
                                             {"Test Name"}
@@ -112,7 +113,9 @@ function Class(props) {
                             } />
                             <ListItemSecondaryAction>
                             {today>=test.date+"T"+test.startTime &&
-                                <Link to={{
+                                <Link 
+                                style={{textDecorationLine:"none"}}
+                                to={{
                                         pathname: "/attemptTest",
                                         
                                         state: { user: user , 

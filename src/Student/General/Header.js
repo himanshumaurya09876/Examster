@@ -6,8 +6,8 @@ import './Header.css';
 function Header(props) {
     const user = props.user;
     return (
-        <div className="home__header">
-            <div className="home__headerLeft">
+        <div className="home__headerStudent">
+            <div className="home__headerStudentLeft">
             <Link to={{
                         pathname: "/student/dashboard",
                         state: { user: user },
@@ -19,22 +19,22 @@ function Header(props) {
             </Link> 
                 <h3>Hey! {user.name}</h3>
             </div>
-            <div className="home__headerRight">
+            <div className="home__headerStudentRight">
                 
-                    <div className = "home__nav">
+                    <div className = "home__navStudent">
                         <Link to={{
                             pathname: "/student/EnrolledClasses",
                             state: { user: user }}}
-                            style={{color:"white"}}
+                            style={{color:"white",textDecorationLine:"none"}}
                             replace
                             >                                 
                             <h4>Class</h4>
                             </Link>
                     </div>
-                    <div className = "home__nav">
+                    <div className = "home__navStudent">
                         <h4>Profile</h4>
                     </div>
-                    <div className = "home__nav">
+                    <div className = "home__navStudent">
                         <h4>LogOut</h4>
                     </div>
                    

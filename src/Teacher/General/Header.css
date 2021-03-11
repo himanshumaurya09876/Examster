@@ -1,7 +1,7 @@
 *{
     margin: 0;
 }
-.home__header{
+.home__headerTeacher{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -13,10 +13,10 @@
     color:white;
 
 }
-.home__headerLeft{
+.home__headerTeacherLeft{
     flex: 3; 
 }
-.home__headerRight{
+.home__headerTeacherRight{
     flex: 1;
     display: flex;
     justify-content: space-around;
@@ -25,7 +25,7 @@
     
 }
 
-.home__nav{
+.home__navTeacher{
     flex: 1;
     width: 60px;
 }

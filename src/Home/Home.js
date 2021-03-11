@@ -29,7 +29,7 @@ function Home() {
                         {
                             items.map( (item, i) => {
                                 return (  
-                                    <Paper>
+                                    <Paper style={{border:"2px solid #ffe0db"}}>
                                         <div className="home__slides">
                                             <img src={item.img} className="home__slider__img" />
                                         </div>

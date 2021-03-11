@@ -102,8 +102,8 @@ function SignUp() {
         <Header/>
         <div className="login">
             <div className="login__header">
-                <i className="fas fa-laptop-code"></i>
-                <h1>Exam Master</h1>
+                <i style={{color:" #ffbdb3"}} className="fas fa-laptop-code"></i>
+                <h1>Examster</h1>
             </div>
             <div className="login__body">
                 <h2>Sign Up</h2>
@@ -179,7 +179,7 @@ function SignUp() {
                 <div className="input__field">
                     <Button
                         className={classes.selectEmpty}
-                        style={{width:'100%' , backgroundColor:"lightBlue"}}
+                        style={{width:'100%' , backgroundColor:"#ffbdb3"}}
                         onClick={onSubmit}
                      >Submit</Button>
                 </div>

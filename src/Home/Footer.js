@@ -3,7 +3,7 @@ import './Footer.css'
 
 function Footer() {
     return (
-        <div className="footer">
+        <div className="homeFooter">
             <h2>Online Examination System</h2>
             <h3>Copyright @2020</h3>
             <h3>Developers :</h3>

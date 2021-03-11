@@ -6,14 +6,14 @@
     width:fit-content;
     margin: 50px auto 75px;
     background-color: white;
-    border:  2px solid  black;
+    border:  2px solid  #ffbdb3;
 
 }
-.login__header{
+.login__header1{
     text-align: center;
     margin: 20px 10px;
     font-size: x-large;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #ffbdb3;
 }
 
 .login__body{

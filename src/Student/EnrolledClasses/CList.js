@@ -46,6 +46,9 @@ function CList(props) {
 
                                 <ListItemSecondaryAction>
                                 <Link 
+                                    style={{
+                                            textDecorationLine:"none"
+                                        }}
                                     to={{
                                         pathname: "/student/class",
                                         state: { user: user , 
