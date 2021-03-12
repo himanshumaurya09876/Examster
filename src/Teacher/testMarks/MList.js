@@ -24,19 +24,18 @@ function MList(props) {
                         Disable
                         >
                     <ListItemText 
-                        style={{fontWeight:"bolder"}}
                         primary={
                             <div className="teacher__mlist__body">
-                                <div className="teacher__mlist__Name">
+                                <div className="teacher__mlist__Name" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                                     {"Student Name"}
                                 </div>
-                                <div className="teacher__mlist__Roll">
+                                <div className="teacher__mlist__Roll"  style={{fontSize: "1.25rem", fontWeight:"bold"}} >
                                     {"Roll no."}
                                 </div>
                             </div>                    
                     } />
                     <ListItemSecondaryAction
-                        style={{fontWeight:"bolder"}}
+                       style={{fontSize: "1.25rem", fontWeight:"bold"}}
                     >
                         {"Student Marks"}
                     </ListItemSecondaryAction>

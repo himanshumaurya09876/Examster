@@ -25,13 +25,13 @@ function CList(props) {
                 Disable >
                 <ListItemText primary={
                     <div className="teacher__class__listLabelBody">
-                        <div className="teacher__class__listLabel__class">
+                        <div className="teacher__class__listLabel__class" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                             {"Class"}
                         </div>
-                        <div className="teacher__class__listLabel__subject">
+                        <div className="teacher__class__listLabel__subject" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                             {"Subject Name"}
                         </div>
-                        <div className="teacher__class__listLabel__class">
+                        <div className="teacher__class__listLabel__subject" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                             {"Subject Code"}
                         </div>
                     </div>
@@ -43,7 +43,6 @@ function CList(props) {
                         <ListItem
                             style={listStyle}
                             Disable
-                            // onClick={(event) => handleListItemClick(event, 2)}
                             >
                             <ListItemText primary={
 
@@ -64,11 +63,15 @@ function CList(props) {
                                 pathname: "/teacher/class",
                                 state: { user: user , 
                                         currentClass: Aclass }
-                            }} replace>
+                            }} 
+                            style={{
+                                        textDecorationLine :"none",
+                                    }}
+                            replace>
                                 <Button
                                     style={{
                                         width:"100px" , 
-                                        backgroundColor:"lightSkyBlue"
+                                        backgroundColor:"lightSkyBlue",
                                     }}
                                 >Open</Button>
                             </Link>

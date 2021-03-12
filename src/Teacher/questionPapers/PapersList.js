@@ -58,6 +58,7 @@ function PapersList(props) {
                                 width : "200px",
                                 height:"50px",
                                 backgroundColor:"cyan",
+                                textDecorationLine:"none",
                             }}>
                             Create Test
                     </Button>

@@ -103,6 +103,7 @@ function TeacherClass(props) {
                             width : "200px",
                             height:"50px",
                             backgroundColor:"cyan",
+                            fontSize :"1rem",
                         }}
                         onClick={()=>{
                                 setNewClass((prev)=>{return !prev;});
@@ -153,6 +154,7 @@ function TeacherClass(props) {
                                         width : "200px",
                                         height:"50px",
                                         backgroundColor:"cyan",
+                                        textDecorationLine :"none",
                                     }}
 
                                     onClick={submitted}

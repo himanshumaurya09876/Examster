@@ -16,8 +16,8 @@
 }
 .classList__header{
     margin-top : 10px ;
-    border : 1px  solid black ;
+    border : 2px  solid black ;
     padding: 10px ;
-    background-color: lightyellow;
+    background-color: lightgray;
     font-weight: bolder;
 }

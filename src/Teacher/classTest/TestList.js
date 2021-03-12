@@ -174,6 +174,7 @@ function TestList(props) {
                 <Button style={{
                             width : "200px",
                             height:"50px",
+                            fontSize : "1rem"     ,                       
                             backgroundColor:"cyan",
                         }}
                         onClick={()=>{

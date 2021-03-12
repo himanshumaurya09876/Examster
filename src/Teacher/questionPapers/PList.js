@@ -26,10 +26,10 @@ function PList(props) {
                     >
                     <ListItemText primary={
                         <div className="teacher__plist__body">
-                            <div className="teacher__plist__code">
+                            <div className="teacher__plist__code"  style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                                 { "Paper Code"}
                             </div>
-                            <div className="teacher__plist__name">
+                            <div className="teacher__plist__name" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                                 { "Paper Name"}
                             </div>   
                         </div>

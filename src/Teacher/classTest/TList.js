@@ -29,13 +29,13 @@ function TList(props) {
                     >
                     <ListItemText primary={
                         <div className="teacher__tlist__body">
-                            <div className="teacher__tlist__testName">
+                            <div className="teacher__tlist__testName" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                                 {"Test Name"}
                             </div>
-                            <div className="teacher__tlist__testCode">
+                            <div className="teacher__tlist__testCode" style={{fontSize: "1.25rem", fontWeight:"bold"}}>
                                 {"Test Code"}
                             </div>
-                            <div className="teacher__tlist__testTime">
+                            <div className="teacher__tlist__testTime" style={{fontSize: "1.25rem", fontWeight:"bold"}}> 
                                 {"Time"}
                             </div>
                         </div>                    
@@ -69,7 +69,8 @@ function TList(props) {
                                         style={{
                                             width:"100px" , 
                                             backgroundColor:"red",
-                                            color:"white"
+                                            color:"white",
+                                            textDecorationLine : "none",
                                         }}
 
                                         onClick={() => {
@@ -107,12 +108,15 @@ function TList(props) {
                                                 user:user,
                                                 testDetails:Atest, 
                                                 currentClass: currentClass }
-                                        }} replace>
+                                        }} 
+                                        replace
+                                        style={{textDecorationLine : "none",}}
+                                        >
                                         <Button
                                             style={{
                                                 width:"120px" , 
-                                                backgroundColor:"red",
-                                                color:"white"
+                                                backgroundColor:"lightskyblue",
+                                                color:"black",
                                             }}
                                         >Show Marks</Button>
                                     </Link>
