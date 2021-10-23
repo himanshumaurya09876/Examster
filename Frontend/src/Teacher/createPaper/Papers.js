@@ -116,6 +116,7 @@ function Papers(props) {
     }
 
     function deleteQuestion(index){
+        console.log("Before ",paperData)
         setPaperData((prevData) => {
             return {
                 ...prevData,
@@ -126,8 +127,10 @@ function Papers(props) {
                     return id !== index;
                 })
             }
-        })    
+        })
+        console.log("After ",paperData)
     }
+
 
 
     const onSubmit = async(event)=>{

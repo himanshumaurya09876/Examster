@@ -8,7 +8,7 @@ const passport = require('passport');
 require('dotenv').config();
 
 // mongoose connection
-const db_url = "mongodb+srv://admin:"+ "77YDVesgrUVqBPuZ"+"@cluster0.gygcf.mongodb.net/OnlineExaminationSystem?retryWrites=true&w=majority";
+const db_url = "mongodb+srv://himanshu:12345@cluster0.v9xex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 mongoose.connect(db_url , {useNewUrlParser:true ,useUnifiedTopology: true,useCreateIndex : true });
 
 

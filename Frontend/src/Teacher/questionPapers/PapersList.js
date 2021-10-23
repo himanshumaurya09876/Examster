@@ -53,7 +53,9 @@ function PapersList(props) {
                 <Link to={{
                         pathname: "/teacher/createPaper",
                         state: { user: user }
-                    }} replace>
+                    }} 
+                    style={{textDecorationLine:"none"}}
+                    replace>
                     <Button style={{
                                 width : "200px",
                                 height:"50px",
